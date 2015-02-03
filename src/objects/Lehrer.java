@@ -2,25 +2,27 @@ package objects;
 
 public class Lehrer {
 
-	private int ID;
-	private String nachname;
+	private String ID;
+	private String name;
 	private String vorname;
 	private String telefon;
 
-	public int getID() {
+	private Login login;
+
+	public String getID() {
 		return ID;
 	}
 
-	public void setID(int iD) {
+	public void setID(String iD) {
 		ID = iD;
 	}
 
-	public String getNachname() {
-		return nachname;
+	public String getName() {
+		return name;
 	}
 
-	public void setNachname(String nachname) {
-		this.nachname = nachname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getVorname() {
@@ -37,6 +39,14 @@ public class Lehrer {
 
 	public void setTelefon(String telefon) {
 		this.telefon = telefon;
+	}
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 }

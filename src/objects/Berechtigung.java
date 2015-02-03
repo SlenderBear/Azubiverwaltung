@@ -1,7 +1,7 @@
 package objects;
 
-public class Fach {
-	
+public class Berechtigung {
+
 	private String ID;
 	private String Bezeichnung;
 

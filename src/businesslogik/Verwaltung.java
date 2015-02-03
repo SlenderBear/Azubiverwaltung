@@ -1,6 +1,6 @@
 package businesslogik;
 
-import gui.GUIController;
+import gui.GUIConnector;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -12,11 +12,17 @@ import javax.swing.JOptionPane;
 
 public class Verwaltung {
 
-	public enum DBOptions {
+	private enum DBOptions {
 		EMPTY, MYSQL, XML
 	};
 
-	DBOptions dbWahl;
+	private DBOptions dbWahl;
+	private Object dbRef = null;
+	private Delete delete;
+	private Insert insert;
+	private Update update;
+	private LeseAus lese;
+
 
 	public Verwaltung() {
 		Properties properties = new Properties();
@@ -25,21 +31,44 @@ public class Verwaltung {
 					new FileInputStream("verwaltung.properties"));
 			properties.load(stream);
 			stream.close();
-			if ((dbWahl = DBOptions.valueOf(properties.getProperty("lang")))
-					.equals("empty")) {
-				JOptionPane
-						.showMessageDialog(
-								new JFrame(),
-								"Diese Anwendung wurde nicht ordnungsgem‰ﬂ konfiguriert.n.\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
-			}
+			dbWahl = DBOptions.valueOf(properties.getProperty("db"));
+			referenziereDB();
+			delete = new Delete(dbRef);
+			insert = new Insert(dbRef);
+			update = new Update(dbRef);
+			lese = new LeseAus(dbRef);
+
+			@SuppressWarnings("unused")
+			GUIConnector GuiCon = new GUIConnector(delete, insert, update, lese);
+
 		} catch (IOException e) {
+			e.printStackTrace();
 			JOptionPane
 					.showMessageDialog(
 							new JFrame(),
-							"Das gewuenschte Datenhaltungssytem konnte nicht gestartet werden.\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
+							"Die Anwedung konnte nicht gestartet werden.\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
+			System.exit(0);
 		}
 
-		GUIController GuiCon = new GUIController(this);
+	}
+
+	public void referenziereDB() {
+		switch (dbWahl) {
+		case EMPTY:
+		default:
+			JOptionPane
+					.showMessageDialog(
+							new JFrame(),
+							"Diese Anwendung wurde nicht ordnungsgem‰ﬂ konfiguriert.\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
+			System.exit(0);
+			break;
+		case MYSQL: // TO DO Referenziere MySQL Datenbank
+			break;
+		case XML: // TO DO Referenziere XML
+			break;
+
+		}
+
 	}
 
 }

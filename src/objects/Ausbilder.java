@@ -2,19 +2,28 @@ package objects;
 
 public class Ausbilder {
 
-	private int ID;
+	private String ID;
+	private String name;
 	private String vorname;
-	private String nachname;
 	private String telefon;
-	private String eMail;
-	private String IDBetrieb;
+	private String email;
 
-	public int getID() {
+	private Betrieb betrieb;
+
+	public String getID() {
 		return ID;
 	}
 
-	public void setID(int iD) {
+	public void setID(String iD) {
 		ID = iD;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getVorname() {
@@ -25,14 +34,6 @@ public class Ausbilder {
 		this.vorname = vorname;
 	}
 
-	public String getNachname() {
-		return nachname;
-	}
-
-	public void setNachname(String nachname) {
-		this.nachname = nachname;
-	}
-
 	public String getTelefon() {
 		return telefon;
 	}
@@ -41,20 +42,20 @@ public class Ausbilder {
 		this.telefon = telefon;
 	}
 
-	public String geteMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getID_Betrieb() {
-		return IDBetrieb;
+	public Betrieb getBetrieb() {
+		return betrieb;
 	}
 
-	public void setID_Betrieb(String iD_Betrieb) {
-		IDBetrieb = iD_Betrieb;
+	public void setBetrieb(Betrieb betrieb) {
+		this.betrieb = betrieb;
 	}
 
 }

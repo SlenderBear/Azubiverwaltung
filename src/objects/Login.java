@@ -2,16 +2,17 @@ package objects;
 
 public class Login {
 
-	private int ID;
+	private String ID;
 	private String loginName;
 	private String loginPasswort;
-	private short IDRechte;
 
-	public int getID() {
+	private Berechtigung berechtigung;
+
+	public String getID() {
 		return ID;
 	}
 
-	public void setID(int iD) {
+	public void setID(String iD) {
 		ID = iD;
 	}
 
@@ -31,12 +32,12 @@ public class Login {
 		this.loginPasswort = loginPasswort;
 	}
 
-	public short getIDRechte() {
-		return IDRechte;
+	public Berechtigung getBerechtigung() {
+		return berechtigung;
 	}
 
-	public void setIDRechte(short iDRechte) {
-		IDRechte = iDRechte;
+	public void setBerechtigung(Berechtigung berechtigung) {
+		this.berechtigung = berechtigung;
 	}
 
 }

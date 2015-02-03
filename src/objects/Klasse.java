@@ -1,9 +1,10 @@
 package objects;
 
-public class Fach {
+public class Klasse {
 	
 	private String ID;
 	private String Bezeichnung;
+	private Lehrer lehrer;
 
 	public String getID() {
 		return ID;
@@ -19,6 +20,14 @@ public class Fach {
 
 	public void setBezeichnung(String bezeichnung) {
 		Bezeichnung = bezeichnung;
+	}
+
+	public Lehrer getLehrer() {
+		return lehrer;
+	}
+
+	public void setLehrer(Lehrer lehrer) {
+		this.lehrer = lehrer;
 	}
 
 }
