@@ -1,5 +1,13 @@
 package objects;
 
+/**
+ * @author backs.anna
+ * 
+ *         Klasse zur Darstellung vob Ausbildern. Diese Klasse enthaelt alle
+ *         noetigen Attribute sowie getter- und setter-Methoden um auf diese
+ *         zuzugreifen.
+ */
+
 public class Ausbilder {
 
 	private String ID;

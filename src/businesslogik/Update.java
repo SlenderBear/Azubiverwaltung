@@ -21,6 +21,9 @@ public class Update {
 
 	}
 
+	/**
+	 * @param azubi
+	 */
 	public void update(Azubi azubi) {
 
 	}

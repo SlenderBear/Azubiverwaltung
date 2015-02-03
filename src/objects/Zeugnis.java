@@ -1,5 +1,13 @@
 package objects;
 
+/**
+ * @author backs.kristin-anna
+ * 
+ *         Klasse zur Darstellung von Zeugnissen. Diese Klasse enthaelt alle
+ *         noetigen Attribute sowie getter- und setter-Methoden um auf diese
+ *         zuzugreifen.
+ */
+
 public class Zeugnis {
 
 	private String ID;

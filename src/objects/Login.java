@@ -1,5 +1,13 @@
 package objects;
 
+/**
+ * @author backs.kristin-anna
+ * 
+ *         Klasse zur Darstellung von Login-Daten. Diese Klasse enthaelt alle
+ *         noetigen Attribute sowie getter- und setter-Methoden um auf diese
+ *         zuzugreifen.
+ */
+
 public class Login {
 
 	private String ID;

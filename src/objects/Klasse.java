@@ -1,7 +1,15 @@
 package objects;
 
+/**
+ * @author backs.kristin-anna
+ * 
+ *         Klasse zur Darstellung von (Schul-)Klassen. Diese Klasse enthaelt
+ *         alle noetigen Attribute sowie getter- und setter-Methoden um auf
+ *         diese zuzugreifen.
+ */
+
 public class Klasse {
-	
+
 	private String ID;
 	private String Bezeichnung;
 	private Lehrer lehrer;

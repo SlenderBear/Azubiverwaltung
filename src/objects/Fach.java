@@ -1,7 +1,15 @@
 package objects;
 
+/**
+ * @author backs.kristin-anna
+ * 
+ *         Klasse zur Darstellung von Faechern. Diese Klasse enthaelt alle
+ *         noetigen Attribute sowie getter- und setter-Methoden um auf diese
+ *         zuzugreifen.
+ */
+
 public class Fach {
-	
+
 	private String ID;
 	private String Bezeichnung;
 
@@ -12,7 +20,6 @@ public class Fach {
 	public void setID(String iD) {
 		ID = iD;
 	}
-
 
 	public String getBezeichnung() {
 		return Bezeichnung;
