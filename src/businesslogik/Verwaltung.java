@@ -10,39 +10,51 @@ import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+/**
+ * @author backs.kristin-anna
+ * 
+ *         Hauptklasse der Business-Logik. Diese Klasse wird aus der
+ *         Main-Methode aus aufgerufen und bereitet alle fuer den Programmablauf
+ *         noetige vor.
+ * 
+ *         DPS = Datenpersistierungssystem
+ */
+
 public class Verwaltung {
 
+	// Enum zur Darstellung der angebotenen DPS
 	private enum DBOptions {
 		EMPTY, MYSQL, XML
 	};
 
-	private DBOptions dbWahl;
-	private Object dbRef = null;
-	private Delete delete;
-	private Insert insert;
-	private Update update;
-	private LeseAus lese;
+	private DBOptions dbWahl = null; // gewaehltes DPS
+	private Object dbRef = null; // Referenz auf das DPS
 
-
+	/**
+	 * Konstruktor
+	 */
 	public Verwaltung() {
-		Properties properties = new Properties();
 		try {
+			// Auslesen des DPS-Properties
+			Properties properties = new Properties();
 			BufferedInputStream stream = new BufferedInputStream(
 					new FileInputStream("verwaltung.properties"));
 			properties.load(stream);
 			stream.close();
+
+			// Merken des ausgelesen DPS-Properties
 			dbWahl = DBOptions.valueOf(properties.getProperty("db"));
 			referenziereDB();
-			delete = new Delete(dbRef);
-			insert = new Insert(dbRef);
-			update = new Update(dbRef);
-			lese = new LeseAus(dbRef);
 
+			// Erstellen des GUI-Konnektors
 			@SuppressWarnings("unused")
-			GUIConnector GuiCon = new GUIConnector(delete, insert, update, lese);
+			GUIConnector GuiCon = new GUIConnector((new Delete(dbRef)),
+					(new Insert(dbRef)), (new Update(dbRef)), (new LeseAus(
+							dbRef)));
 
+			// Im Falle eines Fehlers
 		} catch (IOException e) {
-			e.printStackTrace();
+			// 
 			JOptionPane
 					.showMessageDialog(
 							new JFrame(),

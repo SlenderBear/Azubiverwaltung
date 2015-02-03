@@ -1,7 +1,7 @@
 package objects;
 
 /**
- * @author backs.anna
+ * @author backs.kristin-anna
  * 
  *         Klasse zur Darstellung vob Ausbildern. Diese Klasse enthaelt alle
  *         noetigen Attribute sowie getter- und setter-Methoden um auf diese
