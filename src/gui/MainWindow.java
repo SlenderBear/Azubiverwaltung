@@ -28,7 +28,7 @@ public class MainWindow {
 	private JFrame mainFrame;
 	private JPanel mainPanel;
 	private JPanel shownPanel, loginPanel, menuePanel, azubiPanel,
-			ausbilderPanel, registerPanel;
+			ausbilderPanel, registerPanel, betriebsPanel;
 	private int zugangsStufe;
 
 	public void initialize() {
@@ -46,9 +46,10 @@ public class MainWindow {
 		logoPanel.add(jLogo);
 		// setShownLogin();
 		// setShownMenue();
-		// setShownAzubi();
-//		setShownAusbilder();
-		setShownRegister();
+		 setShownAzubi();
+//			setShownAusbilder();
+//			setShownRegister();
+//		setShowBetrieb();
 		mainPanel.add(logoPanel, BorderLayout.NORTH);
 		mainPanel.add(shownPanel, BorderLayout.CENTER);
 
@@ -90,6 +91,96 @@ public class MainWindow {
 			createRegister();
 		}
 		shownPanel = registerPanel;
+	}
+	
+	private void setShowBetrieb(){
+		if(betriebsPanel == null){
+			createBetriebVerw();
+		}
+		shownPanel = betriebsPanel;
+	}
+	
+	private void createBetriebVerw(){
+		betriebsPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(5, 5, 5, 5);
+		JLabel label = new JLabel("Betriebsverwaltung");
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 3;
+		betriebsPanel.add(label, c);
+		label = new JLabel("Betriebe");
+		c.gridy = 1;
+		c.gridx = 0;
+		c.gridwidth = 1;
+		betriebsPanel.add(label, c);
+		JList betriebsListList = new JList();
+		betriebsListList.setPreferredSize(new Dimension(200, 150));
+		c.gridy = 2;
+		c.gridheight = 6;
+		betriebsPanel.add(betriebsListList, c);
+		
+		label = new JLabel("Bezeichnung");
+		c.gridx = 1;
+		c.gridy = 2;
+		c.gridheight = 1;
+		betriebsPanel.add(label,c);
+		label = new JLabel("PLZ / Ort");
+		c.gridy++;
+		betriebsPanel.add(label, c);
+		label = new JLabel("Straße / HausNr");
+		c.gridy++;
+		betriebsPanel.add(label, c);
+		label = new JLabel("Ansprechpartner");
+		c.gridy++;
+		betriebsPanel.add(label,c);
+		label = new JLabel("Telefonnummer");
+		c.gridy++;
+		betriebsPanel.add(label,c);
+		label = new JLabel("E-Mail");
+		c.gridy++;
+		betriebsPanel.add(label,c);
+		
+		JTextField bezField = new JTextField(20);
+		c.gridx = 2;
+		c.gridy = 2;
+		c.gridwidth = 1;
+		betriebsPanel.add(bezField,c);
+		JPanel ortPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		JTextField plzField = new JTextField(6);
+		JTextField ortField = new JTextField(13);
+		ortPanel.add(plzField);
+		ortPanel.add(new JLabel(" / "));
+		ortPanel.add(ortField);
+		c.gridy++;
+		betriebsPanel.add(ortPanel,c);
+		JTextField adresseField = new JTextField(20);
+		c.gridy++;
+		betriebsPanel.add(adresseField,c);
+		JTextField ansprechField = new JTextField(20);
+		c.gridy++;
+		betriebsPanel.add(ansprechField,c);
+		JTextField teleField = new JTextField(20);
+		c.gridy++;
+		betriebsPanel.add(teleField,c);
+		JTextField eMailField = new JTextField(20);
+		c.gridy++;
+		betriebsPanel.add(eMailField,c);
+		
+		JButton closeButton = createButton("Schließen", 150, 25);
+		JButton	addButton = createButton("Erstellen", 150, 25);
+		JButton editButton = createButton("Ändern", 150, 25);
+		JButton	eraseButton = createButton("Löschen", 150, 25);
+		
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		buttonPanel.add(closeButton);
+		buttonPanel.add(addButton);
+		buttonPanel.add(editButton);
+		buttonPanel.add(eraseButton);
+		c.gridy++;
+		c.gridx = 0;
+		c.gridwidth = 3;
+		betriebsPanel.add(buttonPanel,c);
 	}
 
 	private void createRegister() {
@@ -263,20 +354,20 @@ public class MainWindow {
 		JTextField eMailField = new JTextField(20);
 		c.gridy = 9;
 		ausbilderPanel.add(eMailField, c);
-		JButton editButton = createButton("Ändern", 100, 25);
-		c.gridy = 10;
-		c.gridx = 1;
-		c.gridwidth = 1;
-		ausbilderPanel.add(editButton, c);
-		JButton delButton = createButton("Löschen", 100, 25);
-		c.gridx = 2;
-		ausbilderPanel.add(delButton, c);
-		JButton neuButton = createButton("Neu", 100, 25);
-		c.gridx = 3;
-		ausbilderPanel.add(neuButton, c);
-		JButton exitButton = createButton("Schließen", 100, 25);
+		JButton closeButton = createButton("Schließen", 150, 25);
+		JButton	addButton = createButton("Erstellen", 150, 25);
+		JButton editButton = createButton("Ändern", 150, 25);
+		JButton	eraseButton = createButton("Löschen", 150, 25);
+		
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		buttonPanel.add(closeButton);
+		buttonPanel.add(addButton);
+		buttonPanel.add(editButton);
+		buttonPanel.add(eraseButton);
+		c.gridy++;
 		c.gridx = 0;
-		ausbilderPanel.add(exitButton, c);
+		c.gridwidth = 4;
+		ausbilderPanel.add(buttonPanel, c);
 
 	}
 
@@ -374,20 +465,20 @@ public class MainWindow {
 		JTextField eMailField = new JTextField(20);
 		c.gridy = 11;
 		azubiPanel.add(eMailField, c);
-		JButton editButton = createButton("Ändern", 100, 25);
-		c.gridy = 12;
-		c.gridx = 1;
-		c.gridwidth = 1;
-		azubiPanel.add(editButton, c);
-		JButton delButton = createButton("Löschen", 100, 25);
-		c.gridx = 2;
-		azubiPanel.add(delButton, c);
-		JButton neuButton = createButton("Neu", 100, 25);
-		c.gridx = 3;
-		azubiPanel.add(neuButton, c);
-		JButton exitButton = createButton("Schließen", 100, 25);
+		JButton closeButton = createButton("Schließen", 150, 25);
+		JButton	addButton = createButton("Erstellen", 150, 25);
+		JButton editButton = createButton("Ändern", 150, 25);
+		JButton	eraseButton = createButton("Löschen", 150, 25);
+		
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		buttonPanel.add(closeButton);
+		buttonPanel.add(addButton);
+		buttonPanel.add(editButton);
+		buttonPanel.add(eraseButton);
+		c.gridy++;
 		c.gridx = 0;
-		azubiPanel.add(exitButton, c);
+		c.gridwidth = 4;
+		azubiPanel.add(buttonPanel, c);
 
 	}
 
