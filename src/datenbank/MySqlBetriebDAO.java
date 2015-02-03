@@ -1,6 +1,7 @@
 package datenbank;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Betrieb;
@@ -38,9 +39,7 @@ public class MySqlBetriebDAO implements StandardMySqlDAO<Betrieb> {
 		return connector.statementExecute(sql);
 	}
 
-	/* 
-	 * @see datenbank.StandardMySqlDAO#getAll()
-	 */
+
 	@Override
 	public ArrayList<Betrieb> getAll() {
 		String sql = "select * from betrieb";
@@ -62,6 +61,23 @@ public class MySqlBetriebDAO implements StandardMySqlDAO<Betrieb> {
 			System.out.println("Fehler in MySQLBetriebDAO");
 		}
 		return betriebsListe;
+	}
+	public Betrieb getBetriebByGUID(String guid){
+		String sql = "select * from betrieb where betriebid="+guid+"";
+		ResultSet rs = connector.executeQuery(sql);
+		Betrieb b = new Betrieb();
+		try {
+			rs.next();
+	        b.setID(rs.getString("betriebid"));
+	        b.setFirmenbezeichnung(rs.getString("firmenbezeichnung"));
+	        b.setStrasse(rs.getString("strasse"));
+	        b.setPlz(rs.getString("plz"));
+	        b.setOrt(rs.getString("ort")); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+		
 	}
 
 }
