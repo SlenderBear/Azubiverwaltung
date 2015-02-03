@@ -2,8 +2,10 @@ package datenbank;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import com.sun.xml.internal.fastinfoset.algorithm.UUIDEncodingAlgorithm;
@@ -44,52 +46,78 @@ public class MySQLConnector {
 			mySQLConnection();
 		return con;
 	}
-	
-	protected void statementExecute(String sql){
+
+	protected boolean statementExecute(String sql) {
 		if (con != null) {
 			// Statement erzeugen.
 			Statement st;
 			try {
 				st = con.createStatement();
 
-				st.executeUpdate(sql);
+				int result = st.executeUpdate(sql);
+				if (result > 0) {
+					return true;
+				} else {
+					return false;
+				}
 
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+		return false;
 	}
 
-//	public void ausbilderEinfuegen(String name, String vorname,
-//			String telefonnummer, String eMail, String BetriebID) {
-//		con = getInstance();
-//
-//		if (con != null) {
-//			// Statement erzeugen.
-//			Statement st;
-//			try {
-//				st = con.createStatement();
-//
-//				String sql = "INSERT INTO ausbilder values(" 
-//						+ getNewGUID()
-//						+ ",'" + name 
-//						+ ",'" + vorname 
-//						+ ",'" + plz 
-//						+ ",'" + ort 
-//						+ ")";
-//				st.executeUpdate(sql);
-//				
-//
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+	protected ResultSet executeQuery(String sql){
+		if (con != null) {
+			Statement st;
+			try {
+				st = con.createStatement();
+				
+				 ResultSet rs = st.executeQuery(sql);
+				 
+				return rs;
+			}
+		    catch (Exception e)
+		    {
+		      System.err.println("Got an exception! ");
+		      System.err.println(e.getMessage());
+		    }
+		}
+		return null;
+		
+	}
+
+	// public void ausbilderEinfuegen(String name, String vorname,
+	// String telefonnummer, String eMail, String BetriebID) {
+	// con = getInstance();
+	//
+	// if (con != null) {
+	// // Statement erzeugen.
+	// Statement st;
+	// try {
+	// st = con.createStatement();
+	//
+	// String sql = "INSERT INTO ausbilder values("
+	// + getNewGUID()
+	// + ",'" + name
+	// + ",'" + vorname
+	// + ",'" + plz
+	// + ",'" + ort
+	// + ")";
+	// st.executeUpdate(sql);
+	//
+	//
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// }
 
 	public String getNewGUID() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
 	}
-//	public String getBetriebGUID
+	// public String getBetriebGUID
 
 }
