@@ -2,16 +2,16 @@ package objects;
 
 public class Login {
 
-	private int ID;
+	private String ID;
 	private String loginName;
 	private String loginPasswort;
 	private short IDRechte;
 
-	public int getID() {
+	public String getID() {
 		return ID;
 	}
 
-	public void setID(int iD) {
+	public void setID(String iD) {
 		ID = iD;
 	}
 

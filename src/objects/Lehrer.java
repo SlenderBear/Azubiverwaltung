@@ -2,16 +2,16 @@ package objects;
 
 public class Lehrer {
 
-	private int ID;
+	private String ID;
 	private String nachname;
 	private String vorname;
 	private String telefon;
 
-	public int getID() {
+	public String getID() {
 		return ID;
 	}
 
-	public void setID(int iD) {
+	public void setID(String iD) {
 		ID = iD;
 	}
 

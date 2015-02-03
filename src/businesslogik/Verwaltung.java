@@ -12,11 +12,14 @@ import javax.swing.JOptionPane;
 
 public class Verwaltung {
 
-	public enum DBOptions {
+	private enum DBOptions {
 		EMPTY, MYSQL, XML
 	};
 
-	DBOptions dbWahl;
+	private DBOptions dbWahl;
+	private Object dbRef = null;
+	private Speichere speicher;
+
 
 	public Verwaltung() {
 		Properties properties = new Properties();
@@ -25,21 +28,41 @@ public class Verwaltung {
 					new FileInputStream("verwaltung.properties"));
 			properties.load(stream);
 			stream.close();
-			if ((dbWahl = DBOptions.valueOf(properties.getProperty("lang")))
-					.equals("empty")) {
-				JOptionPane
-						.showMessageDialog(
-								new JFrame(),
-								"Diese Anwendung wurde nicht ordnungsgem‰ﬂ konfiguriert.n.\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
-			}
+			dbWahl = DBOptions.valueOf(properties.getProperty("db"));
+			referenziereDB();
+			speicher = new Speichere(dbRef);
+
+			@SuppressWarnings("unused")
+			GUIController GuiCon = new GUIController(this, speicher);
+
 		} catch (IOException e) {
+			e.printStackTrace();
 			JOptionPane
 					.showMessageDialog(
 							new JFrame(),
-							"Das gewuenschte Datenhaltungssytem konnte nicht gestartet werden.\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
+							"Die Anwedung konnte nicht gestartet werden.\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
+			System.exit(0);
 		}
 
-		GUIController GuiCon = new GUIController(this);
+	}
+
+	public void referenziereDB() {
+		switch (dbWahl) {
+		case EMPTY:
+		default:
+			JOptionPane
+					.showMessageDialog(
+							new JFrame(),
+							"Diese Anwendung wurde nicht ordnungsgem‰ﬂ konfiguriert.\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
+			System.exit(0);
+			break;
+		case MYSQL: // TO DO Referenziere MySQL Datenbank
+			break;
+		case XML: // TO DO Referenziere XML
+			break;
+
+		}
+
 	}
 
 }

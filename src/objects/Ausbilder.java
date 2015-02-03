@@ -2,18 +2,18 @@ package objects;
 
 public class Ausbilder {
 
-	private int ID;
+	private String ID;
 	private String vorname;
 	private String nachname;
 	private String telefon;
 	private String eMail;
 	private String IDBetrieb;
 
-	public int getID() {
+	public String getID() {
 		return ID;
 	}
 
-	public void setID(int iD) {
+	public void setID(String iD) {
 		ID = iD;
 	}
 
