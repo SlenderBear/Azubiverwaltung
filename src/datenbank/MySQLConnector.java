@@ -45,7 +45,6 @@ public class MySQLConnector {
 		return con;
 	}
 
-	// Gebe Tabelle in die Konsole aus
 	public void betriebEinfuegen(String firmenBezeichnung, String strasse,
 			String plz, String ort) {
 		con = getInstance();
@@ -56,7 +55,6 @@ public class MySQLConnector {
 			try {
 				st = con.createStatement();
 
-				// Tabelle anzeigen
 				String sql = "INSERT INTO betrieb values(" 
 						+ getNewGUID()
 						+ ",'" + firmenBezeichnung 
@@ -72,9 +70,36 @@ public class MySQLConnector {
 		}
 	}
 
+//	public void ausbilderEinfuegen(String name, String vorname,
+//			String telefonnummer, String eMail, String BetriebID) {
+//		con = getInstance();
+//
+//		if (con != null) {
+//			// Statement erzeugen.
+//			Statement st;
+//			try {
+//				st = con.createStatement();
+//
+//				String sql = "INSERT INTO ausbilder values(" 
+//						+ getNewGUID()
+//						+ ",'" + name 
+//						+ ",'" + vorname 
+//						+ ",'" + plz 
+//						+ ",'" + ort 
+//						+ ")";
+//				st.executeUpdate(sql);
+//				
+//
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+
 	public String getNewGUID() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
 	}
+//	public String getBetriebGUID
 
 }
