@@ -6,7 +6,7 @@ public class Azubi {
 	private String nachname;
 	private String vorname;
 	private String telefon;
-	private String email;
+	private String emai;
 	private String geburtstag;
 	private String geschlecht;
 
