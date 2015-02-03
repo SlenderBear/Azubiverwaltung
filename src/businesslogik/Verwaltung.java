@@ -54,16 +54,18 @@ public class Verwaltung {
 
 			// Im Falle eines Fehlers
 		} catch (IOException e) {
-			// 
+			// Gebe Fehlermeldung aus
 			JOptionPane
 					.showMessageDialog(
 							new JFrame(),
 							"Die Anwedung konnte nicht gestartet werden.\nBitte sprechen Sie mit dem zuständigen Administrator.");
+			// Beende das Programm
 			System.exit(0);
 		}
 
 	}
 
+	
 	public void referenziereDB() {
 		switch (dbWahl) {
 		case EMPTY:

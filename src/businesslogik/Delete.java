@@ -10,8 +10,18 @@ import objects.Lehrer;
 import objects.Login;
 import objects.Zeugnis;
 
+/**
+ * @author backs.kristin-anna
+ * 
+ *         Verbindungsklasse zwischen Der GUI und dem DPS in Bezug auf das
+ *         Loeschen von Daten aus dem DPS.
+ * 
+ *         DPS = Datenpersistierungssystem
+ * 
+ */
+
 public class Delete {
-	
+
 	Object dbRef;
 
 	public Delete(Object dbRef) {
@@ -53,6 +63,5 @@ public class Delete {
 	public void delete(Zeugnis zeignis) {
 
 	}
-
 
 }

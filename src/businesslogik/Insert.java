@@ -10,8 +10,18 @@ import objects.Lehrer;
 import objects.Login;
 import objects.Zeugnis;
 
+/**
+ * @author backs.kristin-anna
+ * 
+ *         Verbindungsklasse zwischen Der GUI und dem DPS in Bezug auf das
+ *         Schreiben neuer Daten in das DPS.
+ * 
+ *         DPS = Datenpersistierungssystem
+ * 
+ */
+
 public class Insert {
-	
+
 	Object dbRef;
 
 	public Insert(Object dbRef) {
