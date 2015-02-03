@@ -6,7 +6,7 @@ public class Ausbilder {
 	private String vorname;
 	private String nachname;
 	private String telefon;
-	private String eMail;
+	private String eMai;
 	private String IDBetrieb;
 
 	public int getID() {
