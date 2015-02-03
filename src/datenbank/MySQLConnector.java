@@ -39,29 +39,19 @@ public class MySQLConnector {
 		}
 	}
 
-	private static Connection getInstance() {
+	protected static Connection getInstance() {
 		if (con == null)
 			mySQLConnection();
 		return con;
 	}
-
-	public void betriebEinfuegen(String firmenBezeichnung, String strasse,
-			String plz, String ort) {
-		con = getInstance();
-
+	
+	protected void statementExecute(String sql){
 		if (con != null) {
 			// Statement erzeugen.
 			Statement st;
 			try {
 				st = con.createStatement();
 
-				String sql = "INSERT INTO betrieb values(" 
-						+ getNewGUID()
-						+ ",'" + firmenBezeichnung 
-						+ ",'" + strasse 
-						+ ",'" + plz 
-						+ ",'" + ort 
-						+ ")";
 				st.executeUpdate(sql);
 
 			} catch (SQLException e) {
