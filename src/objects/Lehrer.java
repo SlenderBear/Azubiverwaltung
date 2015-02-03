@@ -3,9 +3,11 @@ package objects;
 public class Lehrer {
 
 	private String ID;
-	private String nachname;
+	private String name;
 	private String vorname;
 	private String telefon;
+
+	private Login login;
 
 	public String getID() {
 		return ID;
@@ -15,12 +17,12 @@ public class Lehrer {
 		ID = iD;
 	}
 
-	public String getNachname() {
-		return nachname;
+	public String getName() {
+		return name;
 	}
 
-	public void setNachname(String nachname) {
-		this.nachname = nachname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getVorname() {
@@ -37,6 +39,14 @@ public class Lehrer {
 
 	public void setTelefon(String telefon) {
 		this.telefon = telefon;
+	}
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 }

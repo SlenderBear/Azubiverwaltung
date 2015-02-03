@@ -1,11 +1,10 @@
 package objects;
 
 public class Betrieb {
-	
+
 	private String ID;
-	private String firmenname;
+	private String firmenbezeichnung;
 	private String strasse;
-	private String hausnummer;
 	private String plz;
 	private String ort;
 
@@ -17,12 +16,12 @@ public class Betrieb {
 		ID = iD;
 	}
 
-	public String getFirmenname() {
-		return firmenname;
+	public String getFirmenbezeichnung() {
+		return firmenbezeichnung;
 	}
 
-	public void setFirmenname(String firmenname) {
-		this.firmenname = firmenname;
+	public void setFirmenbezeichnung(String firmenbezeichnung) {
+		this.firmenbezeichnung = firmenbezeichnung;
 	}
 
 	public String getStrasse() {
@@ -31,14 +30,6 @@ public class Betrieb {
 
 	public void setStrasse(String strasse) {
 		this.strasse = strasse;
-	}
-
-	public String getHausnummer() {
-		return hausnummer;
-	}
-
-	public void setHausnummer(String hausnummer) {
-		this.hausnummer = hausnummer;
 	}
 
 	public String getPlz() {

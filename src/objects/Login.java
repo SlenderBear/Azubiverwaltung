@@ -5,7 +5,8 @@ public class Login {
 	private String ID;
 	private String loginName;
 	private String loginPasswort;
-	private short IDRechte;
+
+	private Berechtigung berechtigung;
 
 	public String getID() {
 		return ID;
@@ -31,12 +32,12 @@ public class Login {
 		this.loginPasswort = loginPasswort;
 	}
 
-	public short getIDRechte() {
-		return IDRechte;
+	public Berechtigung getBerechtigung() {
+		return berechtigung;
 	}
 
-	public void setIDRechte(short iDRechte) {
-		IDRechte = iDRechte;
+	public void setBerechtigung(Berechtigung berechtigung) {
+		this.berechtigung = berechtigung;
 	}
 
 }

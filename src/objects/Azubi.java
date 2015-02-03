@@ -3,18 +3,19 @@ package objects;
 public class Azubi {
 
 	private String ID;
-	private String nachname;
+	private String name;
 	private String vorname;
 	private String strasse;
-	private String hausnummer;
 	private String plz;
 	private String ort;
 	private String telefon;
 	private String email;
-	private String geburtstag;
+	private String geburtsdatum;
 	private char geschlecht;
 
-	private String IDBetrieb;
+	private Betrieb betrieb;
+	private Ausbilder ausbilder;
+	private Klasse klasse;
 
 	public String getID() {
 		return ID;
@@ -24,12 +25,12 @@ public class Azubi {
 		ID = iD;
 	}
 
-	public String getNachname() {
-		return nachname;
+	public String getName() {
+		return name;
 	}
 
-	public void setNachname(String nachname) {
-		this.nachname = nachname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getVorname() {
@@ -46,14 +47,6 @@ public class Azubi {
 
 	public void setStrasse(String strasse) {
 		this.strasse = strasse;
-	}
-
-	public String getHausnummer() {
-		return hausnummer;
-	}
-
-	public void setHausnummer(String hausnummer) {
-		this.hausnummer = hausnummer;
 	}
 
 	public String getPlz() {
@@ -88,12 +81,12 @@ public class Azubi {
 		this.email = email;
 	}
 
-	public String getGeburtstag() {
-		return geburtstag;
+	public String getGeburtsdatum() {
+		return geburtsdatum;
 	}
 
-	public void setGeburtstag(String geburtstag) {
-		this.geburtstag = geburtstag;
+	public void setGeburtsdatum(String geburtsdatum) {
+		this.geburtsdatum = geburtsdatum;
 	}
 
 	public char getGeschlecht() {
@@ -104,12 +97,28 @@ public class Azubi {
 		this.geschlecht = geschlecht;
 	}
 
-	public String getIDBetrieb() {
-		return IDBetrieb;
+	public Betrieb getBetrieb() {
+		return betrieb;
 	}
 
-	public void setIDBetrieb(String iDBetrieb) {
-		IDBetrieb = iDBetrieb;
+	public void setBetrieb(Betrieb betrieb) {
+		this.betrieb = betrieb;
+	}
+
+	public Ausbilder getAusbilder() {
+		return ausbilder;
+	}
+
+	public void setAusbilder(Ausbilder ausbilder) {
+		this.ausbilder = ausbilder;
+	}
+
+	public Klasse getKlasse() {
+		return klasse;
+	}
+
+	public void setKlasse(Klasse klasse) {
+		this.klasse = klasse;
 	}
 
 }
