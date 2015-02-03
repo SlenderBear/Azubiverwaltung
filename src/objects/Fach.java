@@ -13,6 +13,7 @@ public class Fach {
 		ID = iD;
 	}
 
+
 	public String getBezeichnung() {
 		return Bezeichnung;
 	}
