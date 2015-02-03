@@ -1,6 +1,6 @@
 package businesslogik;
 
-import gui.GUIController;
+import gui.GUIConnector;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -18,7 +18,10 @@ public class Verwaltung {
 
 	private DBOptions dbWahl;
 	private Object dbRef = null;
-	private Speichere speicher;
+	private Delete delete;
+	private Insert insert;
+	private Update update;
+	private LeseAus lese;
 
 
 	public Verwaltung() {
@@ -30,10 +33,13 @@ public class Verwaltung {
 			stream.close();
 			dbWahl = DBOptions.valueOf(properties.getProperty("db"));
 			referenziereDB();
-			speicher = new Speichere(dbRef);
+			delete = new Delete(dbRef);
+			insert = new Insert(dbRef);
+			update = new Update(dbRef);
+			lese = new LeseAus(dbRef);
 
 			@SuppressWarnings("unused")
-			GUIController GuiCon = new GUIController(this, speicher);
+			GUIConnector GuiCon = new GUIConnector(delete, insert, update, lese);
 
 		} catch (IOException e) {
 			e.printStackTrace();

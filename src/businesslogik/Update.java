@@ -1,0 +1,55 @@
+package businesslogik;
+
+import objects.Ausbilder;
+import objects.Azubi;
+import objects.Berechtigung;
+import objects.Betrieb;
+import objects.Fach;
+import objects.Klasse;
+import objects.Lehrer;
+import objects.Login;
+import objects.Zeugnis;
+
+public class Update {
+	Object dbRef;
+
+	public Update(Object dbRef) {
+		this.dbRef = dbRef;
+	}
+
+	public void update(Ausbilder ausbilder) {
+
+	}
+
+	public void update(Azubi azubi) {
+
+	}
+
+	public void update(Berechtigung berechtigung) {
+
+	}
+
+	public void update(Betrieb betrieb) {
+
+	}
+
+	public void update(Fach fach) {
+
+	}
+
+	public void update(Lehrer lehrer) {
+
+	}
+
+	public void update(Klasse klasse) {
+
+	}
+
+	public void update(Login login) {
+
+	}
+
+	public void update(Zeugnis zeignis) {
+
+	}
+}
