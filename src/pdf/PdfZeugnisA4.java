@@ -29,7 +29,7 @@ public class PdfZeugnisA4 {
 					+ azubi.getName() + ".pdf"));
 			document.open();
 
-			Paragraph title = new Paragraph(150);
+			Paragraph title = new Paragraph();
 			title.add(new Paragraph("Zeugnis der Berufsschule", fTitle));
 
 			document.add(title);
@@ -48,25 +48,29 @@ public class PdfZeugnisA4 {
 
 	public void schreibeAzubi(Azubi azubi) throws Exception{
 		Paragraph azubiDaten = new Paragraph();
+		azubiDaten.setLeading(25.0f);
 		
-		Phrase name = new Phrase(150);
+		Phrase name = new Phrase();
 		name.add(new Chunk("Vor- und Zuname:"));
 		name.setTabSettings(new TabSettings(56f));
+        name.add(Chunk.TABBING);
         name.add(Chunk.TABBING);
 		name.add(new Chunk(azubi.getVorname() + " " + azubi.getName(), fBold));
 		name.add(Chunk.NEWLINE);
 		
-		Phrase gebi = new Phrase(150);
+		Phrase gebi = new Phrase();
 		gebi.add(new Chunk("geboren am:"));
 		gebi.setTabSettings(new TabSettings(56f));
         gebi.add(Chunk.TABBING);
         gebi.add(Chunk.TABBING);
+        gebi.add(Chunk.TABBING); 
 		gebi.add(new Chunk(azubi.getGeburtsdatum(), fBold));
 		gebi.add(Chunk.NEWLINE);
 		
-		Phrase beruf = new Phrase(150);
+		Phrase beruf = new Phrase();
 		beruf.add(new Chunk("Ausbildungsberuf:"));
 		beruf.setTabSettings(new TabSettings(56f));
+        beruf.add(Chunk.TABBING);
         beruf.add(Chunk.TABBING);
 		if(azubi.getGeschlecht() == 'f'){
 			beruf.add(new Chunk("Fachinformatikerin", fBold));
@@ -75,22 +79,20 @@ public class PdfZeugnisA4 {
 		}
 		beruf.add(Chunk.NEWLINE);
 		
-		Phrase richtung = new Phrase(150);
+		Phrase richtung = new Phrase();
 		richtung.add(new Chunk("Fachrichtung:"));
 		richtung.setTabSettings(new TabSettings(56f));
+        richtung.add(Chunk.TABBING);
         richtung.add(Chunk.TABBING);
 		richtung.add(new Chunk("Anwendungsentwicklung", fBold));
 		richtung.add(Chunk.NEWLINE);
 		
-		Phrase klasse = new Phrase(150);
+		Phrase klasse = new Phrase();
 		klasse.add(new Chunk("Fachklasse:"));
 		klasse.setTabSettings(new TabSettings(56f));
         klasse.add(Chunk.TABBING);
+        klasse.add(Chunk.TABBING);
 		klasse.add(Chunk.NEWLINE);
-	
-		name.setLeading(11.0f);
-		gebi.setLeading(11.0f);
-		beruf.setLeading(11.0f);
 		
 		azubiDaten.add(name);
 		azubiDaten.add(gebi);
