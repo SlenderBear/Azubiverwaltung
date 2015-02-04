@@ -373,74 +373,77 @@ public class MainWindow {
 		c.gridwidth = 3;
 		betriebsPanel.add(buttonPanel,c);
 	}
+	
+	private JPanel createTitlePanel(String title){
+		JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JLabel titleLabel = new JLabel(title);
+		titlePanel.add(titleLabel);
+		return titlePanel;
+	}
 
 	private void createRegister() {
-		registerPanel = new JPanel(new GridBagLayout());
+		registerPanel = new JPanel(new BorderLayout());
+		JPanel innerRegisterPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(5, 5, 5, 5);
-		JLabel label = new JLabel("Registrierung");
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 3;
-		registerPanel.add(label, c);
-		label = new JLabel("Nutzer");
+		JLabel label = new JLabel("Nutzer");
 		c.gridy = 1;
 		c.gridx = 0;
 		c.gridwidth = 1;
-		registerPanel.add(label, c);
+		innerRegisterPanel.add(label, c);
 		JList nutzerList = new JList();
 		nutzerList.setPreferredSize(new Dimension(200, 250));
 		c.gridy = 2;
 		c.gridheight = 8;
-		registerPanel.add(nutzerList, c);
+		innerRegisterPanel.add(nutzerList, c);
 		
 		label = new JLabel("Vorname");
 		c.gridx = 1;
 		c.gridy = 2;
 		c.gridheight = 1;
-		registerPanel.add(label,c);
+		innerRegisterPanel.add(label,c);
 		label = new JLabel("Name");
 		c.gridy++;
-		registerPanel.add(label,c);
+		innerRegisterPanel.add(label,c);
 		label = new JLabel("Username");
 		c.gridy++;
-		registerPanel.add(label,c);
+		innerRegisterPanel.add(label,c);
 		label = new JLabel("Passwort");
 		c.gridy++;
-		registerPanel.add(label,c);
+		innerRegisterPanel.add(label,c);
 		label = new JLabel("Telefonnummer");
 		c.gridy++;
-		registerPanel.add(label,c);
+		innerRegisterPanel.add(label,c);
 		label = new JLabel("E-Mail");
 		c.gridy++;
-		registerPanel.add(label,c);
+		innerRegisterPanel.add(label,c);
 		label = new JLabel("Berechtigung");
 		c.gridy++;
-		registerPanel.add(label,c);
+		innerRegisterPanel.add(label,c);
 		label = new JLabel("Klasse");
 		c.gridy++;
-		registerPanel.add(label,c);
+		innerRegisterPanel.add(label,c);
 		
 		JTextField vorField = new JTextField(20);
 		c.gridx = 2;
 		c.gridy = 2;
 		c.gridwidth = 1;
-		registerPanel.add(vorField,c);
+		innerRegisterPanel.add(vorField,c);
 		JTextField nameField = new JTextField(20);
 		c.gridy++;
-		registerPanel.add(nameField,c);
+		innerRegisterPanel.add(nameField,c);
 		JTextField userField = new JTextField(20);
 		c.gridy++;
-		registerPanel.add(userField,c);
+		innerRegisterPanel.add(userField,c);
 		JTextField passField = new JTextField(20);
 		c.gridy++;
-		registerPanel.add(passField,c);
+		innerRegisterPanel.add(passField,c);
 		JTextField teleField = new JTextField(20);
 		c.gridy++;
-		registerPanel.add(teleField,c);
+		innerRegisterPanel.add(teleField,c);
 		JTextField eMailField = new JTextField(20);
 		c.gridy++;
-		registerPanel.add(eMailField,c);
+		innerRegisterPanel.add(eMailField,c);
 		
 		JPanel berPanel = new JPanel(new GridLayout(0,1));
 		JCheckBox cbLehrer = new JCheckBox("Lehrer");
@@ -448,12 +451,12 @@ public class MainWindow {
 		berPanel.add(cbLehrer);
 		berPanel.add(cbLeitung);
 		c.gridy++;
-		registerPanel.add(berPanel,c);
+		innerRegisterPanel.add(berPanel,c);
 		
 		JComboBox cmbKlasse = new JComboBox();
 		cmbKlasse.setPreferredSize(new Dimension(200, 22));
 		c.gridy++;
-		registerPanel.add(cmbKlasse,c);
+		innerRegisterPanel.add(cmbKlasse,c);
 		
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
@@ -463,62 +466,58 @@ public class MainWindow {
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
-		c.gridy++;
-		c.gridx = 0;
-		c.gridwidth = 3;
-		registerPanel.add(buttonPanel,c);
+		registerPanel.add(createTitlePanel("Registrierung"),BorderLayout.NORTH);
+		registerPanel.add(innerRegisterPanel,BorderLayout.CENTER);
+		registerPanel.add(buttonPanel,BorderLayout.SOUTH);
 	}
 
 	private void createAusbilderVerwaltung() {
-		ausbilderPanel = new JPanel(new GridBagLayout());
+		ausbilderPanel = new JPanel(new BorderLayout());
+		JPanel innerAusbilderPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(5, 5, 5, 5);
-		JLabel label = new JLabel("Ausbilderverwaltung");
-		c.gridx = 1;
-		c.gridy = 0;
-		ausbilderPanel.add(label, c);
-		label = new JLabel("Betriebswahl");
+		JLabel label = new JLabel("Betriebswahl");
 		c.gridx = 0;
 		c.gridy = 1;
-		ausbilderPanel.add(label, c);
+		innerAusbilderPanel.add(label, c);
 		JComboBox cmbBetrieb = new JComboBox();
 		cmbBetrieb.setPreferredSize(new Dimension(200, 25));
 		c.gridy = 2;
-		ausbilderPanel.add(cmbBetrieb, c);
+		innerAusbilderPanel.add(cmbBetrieb, c);
 		label = new JLabel("Ausbilder");
 		c.gridy = 3;
-		ausbilderPanel.add(label, c);
+		innerAusbilderPanel.add(label, c);
 		JList ausbilderList = new JList();
 		ausbilderList.setPreferredSize(new Dimension(200, 150));
 		c.gridy = 4;
 		c.gridheight = 5;
-		ausbilderPanel.add(ausbilderList, c);
+		innerAusbilderPanel.add(ausbilderList, c);
 		label = new JLabel("Vorname");
 		c.gridy = 4;
 		c.gridx = 1;
 		c.gridheight = 1;
-		ausbilderPanel.add(label, c);
+		innerAusbilderPanel.add(label, c);
 		label = new JLabel("Name");
 		c.gridy++;
-		ausbilderPanel.add(label, c);
+		innerAusbilderPanel.add(label, c);
 		label = new JLabel("Geschlecht");
 		c.gridy++;
-		ausbilderPanel.add(label, c);
+		innerAusbilderPanel.add(label, c);
 		label = new JLabel("Telefonnummer");
 		c.gridy++;
-		ausbilderPanel.add(label, c);
+		innerAusbilderPanel.add(label, c);
 		label = new JLabel("E-Mail");
 		c.gridy++;
-		ausbilderPanel.add(label, c);
+		innerAusbilderPanel.add(label, c);
 
 		JTextField vorField = new JTextField(20);
 		c.gridx = 2;
 		c.gridy = 4;
 		c.gridwidth = 2;
-		ausbilderPanel.add(vorField, c);
+		innerAusbilderPanel.add(vorField, c);
 		JTextField nachField = new JTextField(20);
 		c.gridy++;
-		ausbilderPanel.add(nachField, c);
+		innerAusbilderPanel.add(nachField, c);
 		ButtonGroup btgr = new ButtonGroup();
 		JRadioButton rbMann = new JRadioButton("Herr");
 		JRadioButton rbFrau = new JRadioButton("Frau");
@@ -529,14 +528,14 @@ public class MainWindow {
 		rbPanel.add(rbMann);
 		c.gridy++;
 		c.gridwidth = 2;
-		ausbilderPanel.add(rbPanel, c);
+		innerAusbilderPanel.add(rbPanel, c);
 
 		JTextField tNummerField = new JTextField(20);
 		c.gridy++;
-		ausbilderPanel.add(tNummerField, c);
+		innerAusbilderPanel.add(tNummerField, c);
 		JTextField eMailField = new JTextField(20);
 		c.gridy++;
-		ausbilderPanel.add(eMailField, c);
+		innerAusbilderPanel.add(eMailField, c);
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
@@ -545,76 +544,73 @@ public class MainWindow {
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
-		c.gridy++;
-		c.gridx = 0;
-		c.gridwidth = 4;
-		ausbilderPanel.add(buttonPanel, c);
+		ausbilderPanel.add(createTitlePanel("Ausbilderverwaltung"),BorderLayout.NORTH);
+		ausbilderPanel.add(innerAusbilderPanel,BorderLayout.CENTER);
+		ausbilderPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 	}
 
 	private void createAzubiVerwaltung() {
-		azubiPanel = new JPanel(new GridBagLayout());
+		azubiPanel = new JPanel(new BorderLayout());
+		
+		JPanel innerAzubiPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(5, 5, 5, 5);
-		JLabel label = new JLabel("Azubiverwaltung");
-		c.gridx = 1;
-		c.gridy = 0;
-		azubiPanel.add(label, c);
-		label = new JLabel("Klassenwahl");
+		JLabel label = new JLabel("Klassenwahl");
 		c.gridx = 0;
 		c.gridy = 1;
-		azubiPanel.add(label, c);
+		innerAzubiPanel.add(label, c);
 		JComboBox cmbKlasse = new JComboBox();
 		cmbKlasse.setPreferredSize(new Dimension(200, 25));
 		c.gridy = 2;
-		azubiPanel.add(cmbKlasse, c);
+		innerAzubiPanel.add(cmbKlasse, c);
 		label = new JLabel("Azubis");
 		c.gridy = 3;
-		azubiPanel.add(label, c);
+		innerAzubiPanel.add(label, c);
 		JList azubiList = new JList();
 		azubiList.setPreferredSize(new Dimension(200, 200));
 		c.gridy = 4;
 		c.gridheight = 8;
-		azubiPanel.add(azubiList, c);
+		innerAzubiPanel.add(azubiList, c);
 		label = new JLabel("Vorname");
 		c.gridy = 4;
 		c.gridx = 1;
 		c.gridheight = 1;
-		azubiPanel.add(label, c);
+		innerAzubiPanel.add(label, c);
 		label = new JLabel("Name");
 		c.gridy++;
-		azubiPanel.add(label, c);
+		innerAzubiPanel.add(label, c);
 		label = new JLabel("Geburtsdatum");
 		c.gridy++;
-		azubiPanel.add(label, c);
+		innerAzubiPanel.add(label, c);
 		label = new JLabel("Geschlecht");
 		c.gridy++;
-		azubiPanel.add(label, c);
+		innerAzubiPanel.add(label, c);
 		label = new JLabel("PLZ / Ort");
 		c.gridy++;
-		azubiPanel.add(label, c);
+		innerAzubiPanel.add(label, c);
 		label = new JLabel("Straße / HausNr");
 		c.gridy++;
-		azubiPanel.add(label, c);
+		innerAzubiPanel.add(label, c);
 		label = new JLabel("Telefonnummer");
 		c.gridy++;
-		azubiPanel.add(label, c);
+		innerAzubiPanel.add(label, c);
 		label = new JLabel("E-Mail");
 		c.gridy++;
-		azubiPanel.add(label, c);
+		innerAzubiPanel.add(label, c);
 
 		JTextField vorField = new JTextField(20);
 		c.gridx = 2;
 		c.gridy = 4;
 		c.gridwidth = 2;
-		azubiPanel.add(vorField, c);
+		innerAzubiPanel.add(vorField, c);
 		JTextField nachField = new JTextField(20);
 		c.gridy = 5;
-		azubiPanel.add(nachField, c);
+		innerAzubiPanel.add(nachField, c);
 		//
 	    JDatePickerImpl datePicker = new JDatePickerImpl(datePanel,dlf);
 		c.gridy = 6;
-		azubiPanel.add(datePicker, c);
+		innerAzubiPanel.add(datePicker, c);
 		//
 		ButtonGroup btgr = new ButtonGroup();
 		JRadioButton rbMann = new JRadioButton("Männlich");
@@ -626,7 +622,7 @@ public class MainWindow {
 		rbPanel.add(rbMann);
 		c.gridy = 7;
 		c.gridwidth = 2;
-		azubiPanel.add(rbPanel, c);
+		innerAzubiPanel.add(rbPanel, c);
 		JPanel ortPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		JTextField plzField = new JTextField(6);
 		JTextField ortField = new JTextField(13);
@@ -635,19 +631,19 @@ public class MainWindow {
 		ortPanel.add(ortField);
 		c.gridx = 2;
 		c.gridy = 8;
-		azubiPanel.add(ortPanel, c);
+		innerAzubiPanel.add(ortPanel, c);
 
 		JTextField strField = new JTextField(20);
 		c.gridx = 2;
 		c.gridy = 9;
 		c.gridwidth = 2;
-		azubiPanel.add(strField, c);
+		innerAzubiPanel.add(strField, c);
 		JTextField tNummerField = new JTextField(20);
 		c.gridy = 10;
-		azubiPanel.add(tNummerField, c);
+		innerAzubiPanel.add(tNummerField, c);
 		JTextField eMailField = new JTextField(20);
 		c.gridy = 11;
-		azubiPanel.add(eMailField, c);
+		innerAzubiPanel.add(eMailField, c);
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
@@ -656,10 +652,12 @@ public class MainWindow {
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
-		c.gridy++;
-		c.gridx = 0;
-		c.gridwidth = 4;
-		azubiPanel.add(buttonPanel, c);
+//		c.gridy++;
+//		c.gridx = 0;
+//		c.gridwidth = 4;
+		azubiPanel.add(createTitlePanel("Ausbilderverwaltung"), BorderLayout.NORTH);
+		azubiPanel.add(innerAzubiPanel,BorderLayout.CENTER);
+		azubiPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 	}
 
