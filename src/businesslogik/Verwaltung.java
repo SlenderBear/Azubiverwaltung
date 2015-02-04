@@ -3,8 +3,10 @@ package businesslogik;
 import gui.GUIConnector;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 
 import javax.swing.JFrame;
@@ -28,44 +30,24 @@ public class Verwaltung {
 	};
 
 	private DBOptions dbWahl = null; // gewaehltes DPS
+
 	private Object dbRef = null; // Referenz auf das DPS
+
+	private final String filenameProp = "verwaltung.properties";
 
 	/**
 	 * Konstruktor
 	 */
 	public Verwaltung() {
-		try {
-			// Auslesen des DPS-Properties
-			Properties properties = new Properties();
-			BufferedInputStream stream = new BufferedInputStream(
-					new FileInputStream("verwaltung.properties"));
-			properties.load(stream);
-			stream.close();
-
-			// Merken des ausgelesen DPS-Properties
-			dbWahl = DBOptions.valueOf(properties.getProperty("db"));
-			referenziereDB();
-
-			// Erstellen des GUI-Konnektors
-			@SuppressWarnings("unused")
-			GUIConnector GuiCon = new GUIConnector((new Delete(dbRef)),
-					(new Insert(dbRef)), (new Update(dbRef)), (new LeseAus(
-							dbRef)));
-
-			// Im Falle eines Fehlers
-		} catch (IOException e) {
-			// Gebe Fehlermeldung aus
-			JOptionPane
-					.showMessageDialog(
-							new JFrame(),
-							"Die Anwedung konnte nicht gestartet werden.\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
-			// Beende das Programm
-			System.exit(0);
-		}
+		dbWahl = DBOptions.valueOf(liesPropAus("db"));
+		referenziereDB();
+		// Erstellen des GUI-Konnektors
+		@SuppressWarnings("unused")
+		GUIConnector GuiCon = new GUIConnector((new Delete(dbRef)),
+				(new Insert(dbRef)), (new Update(dbRef)), (new LeseAus(dbRef)));
 
 	}
 
-	
 	public void referenziereDB() {
 		switch (dbWahl) {
 		case EMPTY:
@@ -76,13 +58,40 @@ public class Verwaltung {
 							"Diese Anwendung wurde nicht ordnungsgem‰ﬂ konfiguriert.\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
 			System.exit(0);
 			break;
-		case MYSQL: // TO DO Referenziere MySQL Datenbank
+		case MYSQL:
 			break;
 		case XML: // TO DO Referenziere XML
 			break;
 
 		}
 
+	}
+
+	public String liesPropAus(String prop) {
+		// Auslesen des DPS-Properties
+		Properties properties = new Properties();
+		try {
+			BufferedInputStream stream;
+			stream = new BufferedInputStream(new FileInputStream(filenameProp));
+			properties.load(stream);
+			stream.close();
+		} catch (Exception e) {
+			return "EMPTY";
+		}
+		return properties.getProperty(prop);
+	}
+
+	public boolean schreibeProp(String prop, String value) {
+		Properties props = new Properties();
+		props.setProperty("db", value);
+		OutputStream out;
+		try {
+			out = new FileOutputStream(new File(filenameProp));
+			props.store(out, "");
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 }
