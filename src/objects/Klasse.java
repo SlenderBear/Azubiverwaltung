@@ -13,6 +13,7 @@ public class Klasse {
 	private String ID;
 	private String Bezeichnung;
 	private Lehrer lehrer;
+	private int jahr;
 
 	public String getID() {
 		return ID;
@@ -37,10 +38,18 @@ public class Klasse {
 	public void setLehrer(Lehrer lehrer) {
 		this.lehrer = lehrer;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Bezeichnung;
+	}
+
+	public int getJahr() {
+		return jahr;
+	}
+
+	public void setJahr(int jahr) {
+		this.jahr = jahr;
 	}
 
 }
