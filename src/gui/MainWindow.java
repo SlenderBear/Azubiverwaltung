@@ -22,8 +22,11 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -33,8 +36,9 @@ public class MainWindow {
 	private JFrame mainFrame;
 	private JPanel mainPanel;
 	private JPanel shownPanel, loginPanel, menuePanel, azubiPanel,
-			ausbilderPanel, registerPanel, betriebsPanel, klassenPanel;
+			ausbilderPanel, registerPanel, betriebsPanel, klassenPanel, zeugnisPanel;
 	private int zugangsStufe;
+	private String[] tHeads = {"Fach","Note"};
 
 	public void initialize() {
 		mainFrame = new JFrame("HHBK Azubiverwaltung");
@@ -55,7 +59,8 @@ public class MainWindow {
 //			setShownAusbilder();
 //			setShownRegister();
 //		setShowBetrieb();
-		 setShownKlassen();
+//		 setShownKlassen();
+		setShownZeugnis();
 		mainPanel.add(logoPanel, BorderLayout.NORTH);
 		mainPanel.add(shownPanel, BorderLayout.CENTER);
 
@@ -111,6 +116,63 @@ public class MainWindow {
 			createKlassenVerwaltung();
 		}
 		shownPanel = klassenPanel;
+	}
+	
+	private void setShownZeugnis(){
+		if(zeugnisPanel == null){
+			createZeugnisVerwaltung();
+		}
+		shownPanel = zeugnisPanel;
+	}
+	
+	private void createZeugnisVerwaltung(){
+		zeugnisPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(5, 5, 5, 5);
+		JLabel label = new JLabel("Zeugnisverwaltung");
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 3;
+		zeugnisPanel.add(label, c);
+		label = new JLabel("Klassenwahl");
+		c.gridy++;
+		c.gridwidth = 1;
+		zeugnisPanel.add(label, c);
+		JComboBox cmbKlasse = new JComboBox();
+		cmbKlasse.setPreferredSize(new Dimension(200, 25));
+		c.gridy++;
+		zeugnisPanel.add(cmbKlasse, c);
+		label = new JLabel("Azubis");
+		c.gridy++;
+		zeugnisPanel.add(label, c);
+		JList azubiList = new JList();
+		azubiList.setPreferredSize(new Dimension(200, 150));
+		c.gridy++;
+		c.gridheight = 6;
+		zeugnisPanel.add(azubiList, c);
+		
+		//
+		DefaultTableModel dtmNoten = new MyTable(8, 2);
+		dtmNoten.setColumnIdentifiers(tHeads);
+		JTable notenTable = new JTable(dtmNoten);
+		JScrollPane tableScrollPane = new JScrollPane(notenTable);
+		tableScrollPane.setPreferredSize(new Dimension(250, 148));
+		c.gridx = 1;
+		c.gridy = 4;
+		c.gridheight = 6;
+		zeugnisPanel.add(tableScrollPane, c);
+		//
+		
+		//
+		JButton btZeugDruck = createButton("Zeugnis drucken", 150, 25);
+		
+		JButton btClose = createButton("Schlieﬂen", 150, 25);
+		c.gridx = 2;
+		c.gridheight = 1;
+		zeugnisPanel.add(btZeugDruck,c);
+		c.gridy++;
+		zeugnisPanel.add(btClose,c);
+		
 	}
 	
 	private void createKlassenVerwaltung(){
