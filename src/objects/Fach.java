@@ -28,5 +28,10 @@ public class Fach {
 	public void setBezeichnung(String bezeichnung) {
 		Bezeichnung = bezeichnung;
 	}
+	
+	@Override
+	public String toString() {
+		return Bezeichnung;
+	}
 
 }

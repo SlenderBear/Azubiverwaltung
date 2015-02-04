@@ -128,5 +128,10 @@ public class Azubi {
 	public void setKlasse(Klasse klasse) {
 		this.klasse = klasse;
 	}
+	
+	@Override
+	public String toString() {
+		return name+" , "+vorname;
+	}
 
 }

@@ -55,5 +55,10 @@ public class Betrieb {
 	public void setOrt(String ort) {
 		this.ort = ort;
 	}
+	
+	@Override
+	public String toString() {
+		return firmenbezeichnung;
+	}
 
 }

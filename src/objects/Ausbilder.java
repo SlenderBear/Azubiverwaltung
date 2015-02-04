@@ -65,5 +65,10 @@ public class Ausbilder {
 	public void setBetrieb(Betrieb betrieb) {
 		this.betrieb = betrieb;
 	}
+	
+	@Override
+	public String toString() {
+		return name+" , "+vorname;
+	}
 
 }

@@ -56,5 +56,10 @@ public class Lehrer {
 	public void setLogin(Login login) {
 		this.login = login;
 	}
+	
+	@Override
+	public String toString() {
+		return name+" , "+vorname;
+	}
 
 }

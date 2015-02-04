@@ -37,5 +37,10 @@ public class Klasse {
 	public void setLehrer(Lehrer lehrer) {
 		this.lehrer = lehrer;
 	}
+	
+	@Override
+	public String toString() {
+		return Bezeichnung;
+	}
 
 }
