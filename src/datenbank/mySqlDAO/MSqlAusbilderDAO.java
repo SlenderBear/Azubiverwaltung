@@ -1,13 +1,18 @@
-package datenbank;
+package datenbank.mySqlDAO;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import datenbank.MySQLConnector;
+import datenbank.StandardMySqlDAO;
 import objects.Ausbilder;
+import objects.Betrieb;
 
 public class MSqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
 
 	private MySQLConnector connector = new MySQLConnector();
+	private MySqlBetriebDAO dao = new MySqlBetriebDAO();
 
 	@Override
 	public Ausbilder insert(Ausbilder b) {
@@ -49,7 +54,6 @@ public class MSqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
 	public ArrayList<Ausbilder> getAll() {
 		String sql = "select * from ausbilder";
 		ResultSet rs = connector.executeQuery(sql);
-		MySqlBetriebDAO dao = new MySqlBetriebDAO();
 		ArrayList<Ausbilder> ausbilderListe = new ArrayList<Ausbilder>();
 		try{
 		 while (rs.next())
@@ -60,7 +64,7 @@ public class MSqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
 	        b.setVorname(rs.getString("vorname"));
 	        b.setTelefon(rs.getString("telefonnummer"));
 	        b.setEmail(rs.getString("email"));  
-	        b.setBetrieb(dao.getBetriebByGUID(rs.getString("betriebid")));  
+	        b.setBetrieb(dao.getByGuid(rs.getString("betriebid")));  
 	        
 	        ausbilderListe.add(b);
 	      }
@@ -68,6 +72,26 @@ public class MSqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
 			System.out.println("Fehler in MySQLBetriebDAO");
 		}
 		return ausbilderListe;
+	}
+
+	@Override
+	public Ausbilder getByGuid(String guid) {
+		String sql = "select * from ausbilder where ausbilderid="+guid+"";
+		ResultSet rs = connector.executeQuery(sql);
+		Ausbilder a = new Ausbilder();
+		try {
+			rs.next();
+	        a.setID(rs.getString("ausbilderid"));
+	        a.setName(rs.getString("name"));
+	        a.setVorname(rs.getString("vorname"));
+	        a.setTelefon(rs.getString("telefonnummer"));
+	        a.setEmail(rs.getString("email")); 
+	        a.setBetrieb(dao.getByGuid(rs.getString("betriebid"))); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return a;
+		
 	}
 	
 }

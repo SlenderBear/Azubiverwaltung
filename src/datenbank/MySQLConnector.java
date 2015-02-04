@@ -41,13 +41,13 @@ public class MySQLConnector {
 		}
 	}
 
-	protected static Connection getInstance() {
+	public static Connection getInstance() {
 		if (con == null)
 			mySQLConnection();
 		return con;
 	}
 
-	protected boolean statementExecute(String sql) {
+	public boolean statementExecute(String sql) {
 		if (con != null) {
 			// Statement erzeugen.
 			Statement st;
@@ -68,7 +68,7 @@ public class MySQLConnector {
 		return false;
 	}
 
-	protected ResultSet executeQuery(String sql){
+	public ResultSet executeQuery(String sql){
 		if (con != null) {
 			Statement st;
 			try {
@@ -88,36 +88,9 @@ public class MySQLConnector {
 		
 	}
 
-	// public void ausbilderEinfuegen(String name, String vorname,
-	// String telefonnummer, String eMail, String BetriebID) {
-	// con = getInstance();
-	//
-	// if (con != null) {
-	// // Statement erzeugen.
-	// Statement st;
-	// try {
-	// st = con.createStatement();
-	//
-	// String sql = "INSERT INTO ausbilder values("
-	// + getNewGUID()
-	// + ",'" + name
-	// + ",'" + vorname
-	// + ",'" + plz
-	// + ",'" + ort
-	// + ")";
-	// st.executeUpdate(sql);
-	//
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// }
-
 	public String getNewGUID() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
 	}
-	// public String getBetriebGUID
 
 }

@@ -1,9 +1,11 @@
-package datenbank;
+package datenbank.mySqlDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import datenbank.MySQLConnector;
+import datenbank.StandardMySqlDAO;
 import objects.Betrieb;
 
 public class MySqlBetriebDAO implements StandardMySqlDAO<Betrieb> {
@@ -62,7 +64,7 @@ public class MySqlBetriebDAO implements StandardMySqlDAO<Betrieb> {
 		}
 		return betriebsListe;
 	}
-	public Betrieb getBetriebByGUID(String guid){
+	public Betrieb getByGuid(String guid){
 		String sql = "select * from betrieb where betriebid="+guid+"";
 		ResultSet rs = connector.executeQuery(sql);
 		Betrieb b = new Betrieb();

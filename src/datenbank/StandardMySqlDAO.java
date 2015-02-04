@@ -7,4 +7,5 @@ public interface StandardMySqlDAO<T> {
 	boolean update(T t);
 	boolean delete(T t);
 	ArrayList<T> getAll();
+	T getByGuid(String guid);
 }
