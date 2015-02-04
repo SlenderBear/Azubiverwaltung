@@ -9,9 +9,14 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Properties;
+import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,9 +28,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -35,14 +43,29 @@ import org.jdatepicker.impl.UtilDateModel;
 public class MainWindow {
 	private JFrame mainFrame;
 	private JPanel mainPanel;
-	private JPanel shownPanel, loginPanel, menuePanel, azubiPanel,
+	private JPanel loginPanel, azubiPanel,userPanel,
 			ausbilderPanel, registerPanel, betriebsPanel, klassenPanel, zeugnisPanel;
+	private JTabbedPane menuePanel;
 	private int zugangsStufe;
 	private String[] tHeads = {"Fach","Note"};
+	private Properties p;
+	private UtilDateModel model;
+    private JDatePanelImpl datePanel;
+    private DateLabelFormatter dlf;
+    
+    public MainWindow() {
+    	dlf = new DateLabelFormatter();
+    	p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		model=new UtilDateModel();
+	    datePanel = new JDatePanelImpl(model,p);
+	}
 
 	public void initialize() {
 		mainFrame = new JFrame("HHBK Azubiverwaltung");
-		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		mainFrame.setSize(800, 600);
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -53,16 +76,15 @@ public class MainWindow {
 		icon = new ImageIcon("stuff/DUNKEL_LOGO.gif");
 		jLogo = new JLabel(icon);
 		logoPanel.add(jLogo);
-		// setShownLogin();
-		// setShownMenue();
+		 setShownLogin();
+//		 setShownMenue();
 //		 setShownAzubi();
 //			setShownAusbilder();
 //			setShownRegister();
 //		setShowBetrieb();
 //		 setShownKlassen();
-		setShownZeugnis();
+//		setShownZeugnis();
 		mainPanel.add(logoPanel, BorderLayout.NORTH);
-		mainPanel.add(shownPanel, BorderLayout.CENTER);
 
 		mainFrame.add(mainPanel);
 		// mainFrame.pack();
@@ -72,58 +94,68 @@ public class MainWindow {
 	private void setShownLogin() {
 		if (loginPanel == null) {
 			createLoginPanel();
+			mainPanel.add(loginPanel,BorderLayout.CENTER);
 		}
-		shownPanel = loginPanel;
+		else
+		{
+			mainPanel.remove(menuePanel);
+			mainPanel.add(loginPanel);
+			mainFrame.invalidate();
+			mainFrame.validate();
+		}
 	}
 
 	private void setShownMenue() {
 		if (menuePanel == null) {
 			createMenuePanel();
 		}
-		shownPanel = menuePanel;
+		mainPanel.remove(loginPanel);
+		mainPanel.add(menuePanel);
+		mainFrame.invalidate();
+		mainFrame.validate();
 	}
-
-	private void setShownAzubi() {
-		if (azubiPanel == null) {
-			createAzubiVerwaltung();
-		}
-		shownPanel = azubiPanel;
-	}
-
-	private void setShownAusbilder() {
-		if (ausbilderPanel == null) {
-			createAusbilderVerwaltung();
-		}
-		shownPanel = ausbilderPanel;
-	}
-
-	private void setShownRegister() {
-		if (registerPanel == null) {
-			createRegister();
-		}
-		shownPanel = registerPanel;
-	}
-	
-	private void setShowBetrieb(){
-		if(betriebsPanel == null){
-			createBetriebVerw();
-		}
-		shownPanel = betriebsPanel;
-	}
-	
-	private void setShownKlassen(){
-		if(klassenPanel == null){
-			createKlassenVerwaltung();
-		}
-		shownPanel = klassenPanel;
-	}
-	
-	private void setShownZeugnis(){
-		if(zeugnisPanel == null){
-			createZeugnisVerwaltung();
-		}
-		shownPanel = zeugnisPanel;
-	}
+//
+//	private void setShownAzubi() {
+//		if (azubiPanel == null) {
+//			createAzubiVerwaltung();
+//		}
+//		shownPanel = azubiPanel;
+//	}
+//
+//	private void setShownAusbilder() {
+//		if (ausbilderPanel == null) {
+//			createAusbilderVerwaltung();
+//		}
+//		shownPanel = ausbilderPanel;
+//	}
+//
+//	private void setShownRegister() {
+//		if (registerPanel == null) {
+//			createRegister();
+//		}
+//		shownPanel = registerPanel;
+//	}
+//	
+//	private void setShowBetrieb(){
+//		if(betriebsPanel == null){
+//			createBetriebVerw();
+//		}
+//		shownPanel = betriebsPanel;
+//	}
+//	
+//	private void setShownKlassen(){
+//		if(klassenPanel == null){
+//			createKlassenVerwaltung();
+//		}
+//		shownPanel = klassenPanel;
+//	}
+//	
+//	private void setShownZeugnis(){
+//		if(zeugnisPanel == null){
+//			createZeugnisVerwaltung();
+//		}
+//		shownPanel = zeugnisPanel;
+//	}
 	
 	private void createZeugnisVerwaltung(){
 		zeugnisPanel = new JPanel(new GridBagLayout());
@@ -148,30 +180,60 @@ public class MainWindow {
 		JList azubiList = new JList();
 		azubiList.setPreferredSize(new Dimension(200, 150));
 		c.gridy++;
-		c.gridheight = 6;
+		c.gridheight = 4;
 		zeugnisPanel.add(azubiList, c);
+		//
+		label = new JLabel("Jahr");
+		c.gridx = 1;
+		c.gridy = 1;
+		c.gridheight = 1;
+		zeugnisPanel.add(label, c);
 		
+		Calendar now = Calendar.getInstance();
+		int jahr = now.get(Calendar.YEAR);
+		Vector years = new Vector();
+		for(int i = 0; i < 5; i++){
+			years.add(jahr-i);
+		}
+		
+		JComboBox cmbJahrBox = new JComboBox(years);
+		cmbJahrBox.setPreferredSize(new Dimension(150, 25));
+		c.gridy++;
+		zeugnisPanel.add(cmbJahrBox, c);
+		//
 		//
 		DefaultTableModel dtmNoten = new MyTable(8, 2);
 		dtmNoten.setColumnIdentifiers(tHeads);
 		JTable notenTable = new JTable(dtmNoten);
 		JScrollPane tableScrollPane = new JScrollPane(notenTable);
 		tableScrollPane.setPreferredSize(new Dimension(250, 148));
-		c.gridx = 1;
 		c.gridy = 4;
-		c.gridheight = 6;
+		c.gridheight = 4;
 		zeugnisPanel.add(tableScrollPane, c);
 		//
 		
 		//
-		JButton btZeugDruck = createButton("Zeugnis drucken", 150, 25);
-		
-		JButton btClose = createButton("Schließen", 150, 25);
+		label = new JLabel("Zeugniskonferenz am:");
 		c.gridx = 2;
 		c.gridheight = 1;
-		zeugnisPanel.add(btZeugDruck,c);
+		c.gridy = 1;
+		zeugnisPanel.add(label, c);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel,dlf);
 		c.gridy++;
-		zeugnisPanel.add(btClose,c);
+		zeugnisPanel.add(datePicker, c);
+		
+		//
+		label = new JLabel("Zeugnis drucken für:");
+		c.gridy++;
+		zeugnisPanel.add(label, c);
+		JButton btZeugDruck = createButton("Schüler", 150, 25);
+		JButton btZeugKlasseDruck = createButton("Gesamte Klasse", 150, 25);
+		JPanel druckPanel = new JPanel(new GridLayout(0, 1, 0, 25));
+//		druckPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+		druckPanel.add(btZeugDruck);
+		druckPanel.add(btZeugKlasseDruck);
+		c.gridy++;
+		zeugnisPanel.add(druckPanel,c);
 		
 	}
 	
@@ -217,13 +279,11 @@ public class MainWindow {
 		klassenPanel.add(cmbLehrer,c);
 		
 		
-		JButton closeButton = createButton("Schließen", 150, 25);
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		buttonPanel.add(closeButton);
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
@@ -300,13 +360,11 @@ public class MainWindow {
 		c.gridy++;
 		betriebsPanel.add(eMailField,c);
 		
-		JButton closeButton = createButton("Schließen", 150, 25);
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		buttonPanel.add(closeButton);
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
@@ -397,13 +455,11 @@ public class MainWindow {
 		c.gridy++;
 		registerPanel.add(cmbKlasse,c);
 		
-		JButton closeButton = createButton("Schließen", 150, 25);
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		buttonPanel.add(closeButton);
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
@@ -435,7 +491,7 @@ public class MainWindow {
 		JList ausbilderList = new JList();
 		ausbilderList.setPreferredSize(new Dimension(200, 150));
 		c.gridy = 4;
-		c.gridheight = 6;
+		c.gridheight = 5;
 		ausbilderPanel.add(ausbilderList, c);
 		label = new JLabel("Vorname");
 		c.gridy = 4;
@@ -443,9 +499,6 @@ public class MainWindow {
 		c.gridheight = 1;
 		ausbilderPanel.add(label, c);
 		label = new JLabel("Name");
-		c.gridy++;
-		ausbilderPanel.add(label, c);
-		label = new JLabel("Geburtsdatum");
 		c.gridy++;
 		ausbilderPanel.add(label, c);
 		label = new JLabel("Geschlecht");
@@ -464,36 +517,31 @@ public class MainWindow {
 		c.gridwidth = 2;
 		ausbilderPanel.add(vorField, c);
 		JTextField nachField = new JTextField(20);
-		c.gridy = 5;
+		c.gridy++;
 		ausbilderPanel.add(nachField, c);
-		label = new JLabel("Hier kommt der DatePicker rein");
-		c.gridy = 6;
-		ausbilderPanel.add(label, c);
 		ButtonGroup btgr = new ButtonGroup();
-		JRadioButton rbMann = new JRadioButton("Männlich");
-		JRadioButton rbFrau = new JRadioButton("Weiblich");
+		JRadioButton rbMann = new JRadioButton("Herr");
+		JRadioButton rbFrau = new JRadioButton("Frau");
 		btgr.add(rbMann);
 		btgr.add(rbFrau);
 		JPanel rbPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		rbPanel.add(rbFrau);
 		rbPanel.add(rbMann);
-		c.gridy = 7;
+		c.gridy++;
 		c.gridwidth = 2;
 		ausbilderPanel.add(rbPanel, c);
 
 		JTextField tNummerField = new JTextField(20);
-		c.gridy = 8;
+		c.gridy++;
 		ausbilderPanel.add(tNummerField, c);
 		JTextField eMailField = new JTextField(20);
-		c.gridy = 9;
+		c.gridy++;
 		ausbilderPanel.add(eMailField, c);
-		JButton closeButton = createButton("Schließen", 150, 25);
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		buttonPanel.add(closeButton);
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
@@ -563,15 +611,11 @@ public class MainWindow {
 		JTextField nachField = new JTextField(20);
 		c.gridy = 5;
 		azubiPanel.add(nachField, c);
-		Properties p = new Properties();
-		p.put("text.today", "Today");
-		p.put("text.month", "Month");
-		p.put("text.year", "Year");
-		UtilDateModel model=new UtilDateModel();
-	    JDatePanelImpl datePanel = new JDatePanelImpl(model,p);
-	    JDatePickerImpl datePicker = new JDatePickerImpl(datePanel,new DateLabelFormatter());
+		//
+	    JDatePickerImpl datePicker = new JDatePickerImpl(datePanel,dlf);
 		c.gridy = 6;
 		azubiPanel.add(datePicker, c);
+		//
 		ButtonGroup btgr = new ButtonGroup();
 		JRadioButton rbMann = new JRadioButton("Männlich");
 		JRadioButton rbFrau = new JRadioButton("Weiblich");
@@ -604,13 +648,11 @@ public class MainWindow {
 		JTextField eMailField = new JTextField(20);
 		c.gridy = 11;
 		azubiPanel.add(eMailField, c);
-		JButton closeButton = createButton("Schließen", 150, 25);
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		buttonPanel.add(closeButton);
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
@@ -622,41 +664,106 @@ public class MainWindow {
 	}
 
 	private void createMenuePanel() {
-		menuePanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(20, 20, 20, 20);
-		JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		JLabel jlabel = new JLabel("Benutzer:");
-		userPanel.add(jlabel);
-		JLabel benutzerLabel = new JLabel("Benutzername");
-		userPanel.add(benutzerLabel);
-		JButton logoutButton = createButton("Logout", 100, 25);
-		userPanel.add(logoutButton);
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 1;
-		menuePanel.add(userPanel, c);
-		JButton azubiButton = createButton("Azubiverwaltung", 175, 25);
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 1;
-		menuePanel.add(azubiButton, c);
-		JButton ausbilderButton = createButton("Ausbilderverwaltung", 175, 25);
-		c.gridx = 2;
-		menuePanel.add(ausbilderButton, c);
-		JButton regButton = createButton("Registrieren", 175, 25);
-		c.gridx = 1;
-		c.gridy = 2;
-		menuePanel.add(regButton, c);
-		JButton betriebButton = createButton("Betriebsverwaltung", 175, 25);
-		c.gridx = 0;
-		c.gridy = 3;
-		menuePanel.add(betriebButton, c);
-		JButton zeugnisButton = createButton("Zeugnisverwaltung", 175, 25);
-		c.gridx = 2;
-		c.gridy = 3;
-		menuePanel.add(zeugnisButton, c);
+//		addUserPanel();
+		menuePanel = new JTabbedPane();
+		if(zugangsStufe==0){
+			createAzubiVerwaltung();
+			menuePanel.addTab("Azubiverwaltung", azubiPanel);
+		}
+		if(zugangsStufe==0){
+			createBetriebVerw();
+			menuePanel.addTab("Betriebsverwaltung",	betriebsPanel);
+		}
+		if(zugangsStufe==0){
+			createAusbilderVerwaltung();
+			menuePanel.addTab("Ausbilderverwaltung", ausbilderPanel);
+		}
+		if(zugangsStufe==0){
+			createKlassenVerwaltung();
+			menuePanel.addTab("Klassenverwaltung", klassenPanel);
+		}
+		if(zugangsStufe==0){
+			createRegister();
+			menuePanel.addTab("Registrierung", registerPanel);
+		}
+		if(zugangsStufe==0){
+			createZeugnisVerwaltung();
+			menuePanel.addTab("Zeugnisverwaltung", zeugnisPanel);
+		}
+		
+		
+		
+//		menuePanel = new JPanel(new GridBagLayout());
+//		GridBagConstraints c = new GridBagConstraints();
+//		c.insets = new Insets(20, 20, 20, 20);
+//		JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+//		JLabel jlabel = new JLabel("Benutzer:");
+//		userPanel.add(jlabel);
+//		JLabel benutzerLabel = new JLabel("Benutzername");
+//		userPanel.add(benutzerLabel);
+//		JButton logoutButton = createButton("Logout", 100, 25);
+//		userPanel.add(logoutButton);
+//		c.gridx = 0;
+//		c.gridy = 0;
+//		c.gridwidth = 1;
+//		menuePanel.add(userPanel, c);
+//		JButton azubiButton = createButton("Azubiverwaltung", 175, 25);
+//		c.gridx = 0;
+//		c.gridy = 1;
+//		c.gridwidth = 1;
+//		menuePanel.add(azubiButton, c);
+//		JButton ausbilderButton = createButton("Ausbilderverwaltung", 175, 25);
+//		c.gridx = 2;
+//		menuePanel.add(ausbilderButton, c);
+//		JButton regButton = createButton("Registrieren", 175, 25);
+//		c.gridx = 1;
+//		c.gridy = 2;
+//		menuePanel.add(regButton, c);
+//		JButton betriebButton = createButton("Betriebsverwaltung", 175, 25);
+//		c.gridx = 0;
+//		c.gridy = 3;
+//		menuePanel.add(betriebButton, c);
+//		JButton zeugnisButton = createButton("Zeugnisverwaltung", 175, 25);
+//		c.gridx = 2;
+//		c.gridy = 3;
+//		menuePanel.add(zeugnisButton, c);
 
+	}
+	
+	private void addUserPanel(){
+		userPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JLabel label = new JLabel("Benutzer: ");
+		userPanel.add(label);
+		label = new JLabel("Hier Kommt benutzername");
+		userPanel.add(label);
+		JButton btLogout= createButton("Logout", 150, 25);
+		btLogout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setShownLogin();
+				removeUserPanel();
+			}
+		});
+		userPanel.add(btLogout);
+		JButton closeButton = createButton("Schließen", 150, 25);
+		closeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.dispose();
+			}
+		});
+		userPanel.add(closeButton);
+		mainPanel.add(userPanel,BorderLayout.SOUTH);
+	}
+	
+	private void removeUserPanel(){
+		mainPanel.remove(userPanel);
+		mainFrame.invalidate();
+		mainFrame.validate();
+		userPanel = null;
+		menuePanel = null;
 	}
 
 	private void createLoginPanel() {
@@ -695,17 +802,27 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				// TODO getZugangsStufe
 				zugangsStufe = 0;
+				addUserPanel();
 				setShownMenue();
 			}
 		});
-		// **************************************************
 		c.gridx = 0;
 		c.gridy = 3;
 		loginPanel.add(loginButton, c);
+		// **************************************************
+		// **************************************************
 		JButton abbruchButton = createButton("Abbrechen", 175, 25);
+		abbruchButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.dispose();
+			}
+		});
 		c.gridx = 3;
 		c.gridy = 3;
 		loginPanel.add(abbruchButton, c);
+		// **************************************************
 	}
 
 	private JButton createButton(String text, int wight, int height) {
