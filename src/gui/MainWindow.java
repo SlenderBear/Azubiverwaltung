@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -23,6 +24,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 public class MainWindow {
 	private JFrame mainFrame;
@@ -122,11 +127,11 @@ public class MainWindow {
 		c.gridx = 0;
 		c.gridwidth = 1;
 		klassenPanel.add(label, c);
-		JList betriebsListList = new JList();
-		betriebsListList.setPreferredSize(new Dimension(200, 150));
+		JList klassenList = new JList();
+		klassenList.setPreferredSize(new Dimension(200, 150));
 		c.gridy = 2;
 		c.gridheight = 6;
-		klassenPanel.add(betriebsListList, c);
+		klassenPanel.add(klassenList, c);
 		
 		label = new JLabel("Bezeichnung");
 		c.gridx = 1;
@@ -143,6 +148,12 @@ public class MainWindow {
 		c.gridy = 2;
 		c.gridwidth = 1;
 		klassenPanel.add(bezField,c);
+		
+		JComboBox cmbLehrer = new JComboBox();
+		cmbLehrer.setPreferredSize(new Dimension(200, 25));
+		c.gridy++;
+		klassenPanel.add(cmbLehrer,c);
+		
 		
 		JButton closeButton = createButton("Schlieﬂen", 150, 25);
 		JButton	addButton = createButton("Erstellen", 150, 25);
@@ -174,11 +185,11 @@ public class MainWindow {
 		c.gridx = 0;
 		c.gridwidth = 1;
 		betriebsPanel.add(label, c);
-		JList betriebsListList = new JList();
-		betriebsListList.setPreferredSize(new Dimension(200, 150));
+		JList betriebsList = new JList();
+		betriebsList.setPreferredSize(new Dimension(200, 150));
 		c.gridy = 2;
 		c.gridheight = 6;
-		betriebsPanel.add(betriebsListList, c);
+		betriebsPanel.add(betriebsList, c);
 		
 		label = new JLabel("Bezeichnung");
 		c.gridx = 1;
@@ -490,9 +501,15 @@ public class MainWindow {
 		JTextField nachField = new JTextField(20);
 		c.gridy = 5;
 		azubiPanel.add(nachField, c);
-		label = new JLabel("Hier kommt der DatePicker rein");
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		UtilDateModel model=new UtilDateModel();
+	    JDatePanelImpl datePanel = new JDatePanelImpl(model,p);
+	    JDatePickerImpl datePicker = new JDatePickerImpl(datePanel,new DateLabelFormatter());
 		c.gridy = 6;
-		azubiPanel.add(label, c);
+		azubiPanel.add(datePicker, c);
 		ButtonGroup btgr = new ButtonGroup();
 		JRadioButton rbMann = new JRadioButton("M‰nnlich");
 		JRadioButton rbFrau = new JRadioButton("Weiblich");
