@@ -9,7 +9,7 @@ import datenbank.StandardMySqlDAO;
 import objects.Ausbilder;
 import objects.Betrieb;
 
-public class MSqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
+public class MySqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
 
 	private MySQLConnector connector = new MySQLConnector();
 	private MySqlBetriebDAO dao = new MySqlBetriebDAO();
