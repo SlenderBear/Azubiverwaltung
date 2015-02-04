@@ -11,12 +11,11 @@ import objects.Betrieb;
 
 public class MySqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
 
-	private MySQLConnector connector = new MySQLConnector();
 	private MySqlBetriebDAO dao = new MySqlBetriebDAO();
 
 	@Override
 	public Ausbilder insert(Ausbilder b) {
-		String guid = connector.getNewGUID();
+		String guid = MySQLConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO ausbilder values(" 
 				+ guid 
 				+ ",'" + b.getName()
@@ -25,7 +24,7 @@ public class MySqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
 				+ ",'" + b.getEmail()
 				+ ",'" + b.getBetrieb().getID()
 				+ ")";
-		connector.statementExecute(sql);
+		MySQLConnector.getInstance().statementExecute(sql);
 		b.setID(guid);
 		return b;
 	}
@@ -39,21 +38,21 @@ public class MySqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
 				+",email="+t.getEmail()
 				+",betriebid="+t.getBetrieb().getID()
 				+" WHERE ausbilderid="+t.getID()+";";
-		return connector.statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public boolean delete(Ausbilder t) {
 		String sql = "delete from ausbilder"+
 				" WHERE ausbilderid="+t.getID()+";";
-		return connector.statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 
 	@Override
 	public ArrayList<Ausbilder> getAll() {
 		String sql = "select * from ausbilder";
-		ResultSet rs = connector.executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Ausbilder> ausbilderListe = new ArrayList<Ausbilder>();
 		try{
 		 while (rs.next())
@@ -77,7 +76,7 @@ public class MySqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
 	@Override
 	public Ausbilder getByGuid(String guid) {
 		String sql = "select * from ausbilder where ausbilderid="+guid+"";
-		ResultSet rs = connector.executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Ausbilder a = new Ausbilder();
 		try {
 			rs.next();

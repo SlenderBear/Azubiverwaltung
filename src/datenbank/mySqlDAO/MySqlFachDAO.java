@@ -10,16 +10,15 @@ import objects.Betrieb;
 import objects.Fach;
 
 public class MySqlFachDAO implements StandardMySqlDAO<Fach>{
-	private MySQLConnector connector = new MySQLConnector();
 
 	@Override
 	public Fach insert(Fach t) {
-		String guid = connector.getNewGUID();
+		String guid = MySQLConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO fach values(" 
 				+ guid 
 				+ ",'" + t.getBezeichnung() 
 				+ ")";
-		connector.statementExecute(sql);
+		MySQLConnector.getInstance().statementExecute(sql);
 		t.setID(guid);
 		return t;
 	}
@@ -29,20 +28,20 @@ public class MySqlFachDAO implements StandardMySqlDAO<Fach>{
 		String sql = "UPDATE fach"+
 				"SET bezeichnung="+t.getBezeichnung()+
 				" WHERE fachid="+t.getID()+";";
-		return connector.statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public boolean delete(Fach t) {
 		String sql = "delete from fach"+
 				" WHERE fachid="+t.getID()+";";
-		return connector.statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public ArrayList<Fach> getAll() {
 		String sql = "select * from fach";
-		ResultSet rs = connector.executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Fach> fachListe = new ArrayList<Fach>();
 		try{
 		 while (rs.next())
@@ -62,7 +61,7 @@ public class MySqlFachDAO implements StandardMySqlDAO<Fach>{
 	@Override
 	public Fach getByGuid(String guid) {
 		String sql = "select * from fach where fachid="+guid+"";
-		ResultSet rs = connector.executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Fach f = new Fach();
 		try {
 			rs.next();

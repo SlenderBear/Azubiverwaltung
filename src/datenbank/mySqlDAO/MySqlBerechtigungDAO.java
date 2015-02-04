@@ -9,16 +9,15 @@ import datenbank.MySQLConnector;
 import datenbank.StandardMySqlDAO;
 
 public class MySqlBerechtigungDAO implements StandardMySqlDAO<Berechtigung>{
-	private MySQLConnector connector = new MySQLConnector();
 
 	@Override
 	public Berechtigung insert(Berechtigung t) {
-		String guid = connector.getNewGUID();
+		String guid = MySQLConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO berechtigung values(" 
 				+ guid 
 				+ ",'" + t.getBezeichnung() 
 				+ ")";
-		connector.statementExecute(sql);
+		MySQLConnector.getInstance().statementExecute(sql);
 		t.setID(guid);
 		return t;
 	}
@@ -28,20 +27,20 @@ public class MySqlBerechtigungDAO implements StandardMySqlDAO<Berechtigung>{
 		String sql = "UPDATE berechtigung"+
 				"SET bezeichnung="+t.getBezeichnung()+
 				" WHERE berechtigungid="+t.getID()+";";
-		return connector.statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public boolean delete(Berechtigung t) {
 		String sql = "delete from berechtigung"+
 				" WHERE berechtigungid="+t.getID()+";";
-		return connector.statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public ArrayList<Berechtigung> getAll() {
 		String sql = "select * from berechtigung";
-		ResultSet rs = connector.executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Berechtigung> berechtigungListe = new ArrayList<Berechtigung>();
 		try{
 		 while (rs.next())
@@ -61,7 +60,7 @@ public class MySqlBerechtigungDAO implements StandardMySqlDAO<Berechtigung>{
 	@Override
 	public Berechtigung getByGuid(String bezeichnung) {
 		String sql = "select * from berechtigung where bezeichnung="+bezeichnung+"";
-		ResultSet rs = connector.executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Berechtigung b = new Berechtigung();
 		try {
 			rs.next();
