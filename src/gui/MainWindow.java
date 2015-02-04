@@ -28,7 +28,7 @@ public class MainWindow {
 	private JFrame mainFrame;
 	private JPanel mainPanel;
 	private JPanel shownPanel, loginPanel, menuePanel, azubiPanel,
-			ausbilderPanel, registerPanel, betriebsPanel;
+			ausbilderPanel, registerPanel, betriebsPanel, klassenPanel;
 	private int zugangsStufe;
 
 	public void initialize() {
@@ -46,10 +46,11 @@ public class MainWindow {
 		logoPanel.add(jLogo);
 		// setShownLogin();
 		// setShownMenue();
-		 setShownAzubi();
+//		 setShownAzubi();
 //			setShownAusbilder();
 //			setShownRegister();
 //		setShowBetrieb();
+		 setShownKlassen();
 		mainPanel.add(logoPanel, BorderLayout.NORTH);
 		mainPanel.add(shownPanel, BorderLayout.CENTER);
 
@@ -98,6 +99,65 @@ public class MainWindow {
 			createBetriebVerw();
 		}
 		shownPanel = betriebsPanel;
+	}
+	
+	private void setShownKlassen(){
+		if(klassenPanel == null){
+			createKlassenVerwaltung();
+		}
+		shownPanel = klassenPanel;
+	}
+	
+	private void createKlassenVerwaltung(){
+		klassenPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(5, 5, 5, 5);
+		JLabel label = new JLabel("Klassenverwaltung");
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 3;
+		klassenPanel.add(label, c);
+		label = new JLabel("Klassen");
+		c.gridy = 1;
+		c.gridx = 0;
+		c.gridwidth = 1;
+		klassenPanel.add(label, c);
+		JList betriebsListList = new JList();
+		betriebsListList.setPreferredSize(new Dimension(200, 150));
+		c.gridy = 2;
+		c.gridheight = 6;
+		klassenPanel.add(betriebsListList, c);
+		
+		label = new JLabel("Bezeichnung");
+		c.gridx = 1;
+		c.gridy = 2;
+		c.gridheight = 1;
+		klassenPanel.add(label,c);
+		
+		label = new JLabel("Lehrer");
+		c.gridy++;
+		klassenPanel.add(label,c);
+		
+		JTextField bezField = new JTextField(20);
+		c.gridx = 2;
+		c.gridy = 2;
+		c.gridwidth = 1;
+		klassenPanel.add(bezField,c);
+		
+		JButton closeButton = createButton("Schließen", 150, 25);
+		JButton	addButton = createButton("Erstellen", 150, 25);
+		JButton editButton = createButton("Ändern", 150, 25);
+		JButton	eraseButton = createButton("Löschen", 150, 25);
+		
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		buttonPanel.add(closeButton);
+		buttonPanel.add(addButton);
+		buttonPanel.add(editButton);
+		buttonPanel.add(eraseButton);
+		c.gridy = 8;
+		c.gridx = 0;
+		c.gridwidth = 3;
+		klassenPanel.add(buttonPanel,c);
 	}
 	
 	private void createBetriebVerw(){
