@@ -10,6 +10,13 @@ import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
 
+/**
+ * Stellt den {@link StandardDataProvider} dar. Er fasst alle Methoden, die den 
+ * Zugriff auf die Datenbank ermöglichen, zusammen.
+ * 
+ * @author dunkel.gregor
+ *
+ */
 public abstract class StandardDataProvider {
 
 	public static final String DB_MYSQL = "mysql";
