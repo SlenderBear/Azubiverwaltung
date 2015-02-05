@@ -2,6 +2,8 @@ package datenbank.provider;
 
 import java.util.ArrayList;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
 import datenbank.PropertyHandling;
 import objects.Ausbilder;
 import objects.Azubi;
@@ -11,11 +13,11 @@ import objects.Klasse;
 import objects.Lehrer;
 
 /**
- * Stellt den {@link StandardDataProvider} dar. Er fasst alle Methoden, die den 
+ * Stellt den {@link StandardDataProvider} dar. Er fasst alle Methoden, die den
  * Zugriff auf die Datenbank ermöglichen, zusammen.
  * 
  * @author dunkel.gregor
- *
+ * 
  */
 public abstract class StandardDataProvider {
 
@@ -25,17 +27,60 @@ public abstract class StandardDataProvider {
 	private String akt_db;
 	PropertyHandling propertieHandler;
 
-	abstract ArrayList<Lehrer> gibAlleLehrer();
+	/**
+	 * Liefert alle Lehrer.
+	 * @return {@link ArrayList}
+	 */
+	public abstract ArrayList<Lehrer> gibAlleLehrer();
 
-	abstract ArrayList<Klasse> gibAlleKlassen();
+	/**
+	 * Liefert alle Klassen.
+	 * @return {@link ArrayList}
+	 */
+	public abstract ArrayList<Klasse> gibAlleKlassen();
 
-	abstract ArrayList<Betrieb> gibAlleBetriebe();
+	/**
+	 * Liefert alle Betriebe.
+	 * @return {@link ArrayList}
+	 */
+	public abstract ArrayList<Betrieb> gibAlleBetriebe();
 
-	abstract ArrayList<Ausbilder> gibAlleAusbilder();
+	/**
+	 * Liefert alle Ausbilder.
+	 * @return {@link ArrayList}
+	 */
+	public abstract ArrayList<Ausbilder> gibAlleAusbilder();
 
-	abstract ArrayList<Azubi> gibAzubiVon(Klasse k);
+	/**
+	 * Liefert alle Azubis einer Klasse.
+	 * @param k {@link Klasse}
+	 * @return {@link ArrayList}
+	 */
+	public abstract ArrayList<Azubi> gibAzubiVon(Klasse k);
 
-	abstract ArrayList<Fach> gibAlleFaecher();
+	/**
+	 * Liefert alle Fächer-.
+	 * @return {@link ArrayList}
+	 */
+	public abstract ArrayList<Fach> gibAlleFaecher();
+	
+	
+	/**
+	 * Prüft ob Loginname bereits vorhanden.
+	 * @param login {@link String}
+	 * @return true wenn vorhanden.
+	 */
+	public abstract boolean gibtLogin(String login);
+
+	public abstract boolean gibtAzubi(Azubi azubi);
+
+	public abstract boolean gibtLehrer(Lehrer lehrer);
+
+	public abstract boolean gibtAusbilder(Ausbilder ausbilder);
+
+	public abstract boolean gibtBetrieb(Betrieb betrieb);
+
+	public abstract boolean gibtKlasse(Klasse klasse);
 
 	/**
 	 * Propertie-String wird übergeben und der eingestellte Provider zurück
@@ -77,23 +122,24 @@ public abstract class StandardDataProvider {
 	/**
 	 * Ändert die Einstellung im verwaltung.properties.
 	 * 
-	 * @param db String
-	 * @return true: der DataProvider wurde geändert
-	 * <br>false: wenn sich der Provider nicht geändert hat oder
-	 * 		  kein passender Provider gefunden wurde.
+	 * @param db
+	 *            String
+	 * @return true: der DataProvider wurde geändert <br>
+	 *         false: wenn sich der Provider nicht geändert hat oder kein
+	 *         passender Provider gefunden wurde.
 	 */
 	public boolean changeDataProvider(String db) {
-		if(db.compareTo(akt_db) != 0) {
+		if (db.compareTo(akt_db) != 0) {
 			return false;
 		}
-		if(db.compareTo(DB_MYSQL) == 0) {
+		if (db.compareTo(DB_MYSQL) == 0) {
 			propertieHandler.schreibeProp(DB_PROPERTY, DB_MYSQL);
 			return true;
 		} else if (db.compareTo(DB_SQLITE) == 0) {
 			propertieHandler.schreibeProp(DB_PROPERTY, DB_SQLITE);
 			return true;
-		} 
-		
+		}
+
 		return false;
 	}
 }
