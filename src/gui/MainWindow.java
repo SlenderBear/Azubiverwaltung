@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -9,23 +10,17 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Properties;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,12 +32,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.border.EtchedBorder;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -69,8 +60,10 @@ public class MainWindow {
 	private UtilDateModel model;
     private JDatePanelImpl datePanel;
     private DateLabelFormatter dlf;
+    private GridBagConstraints c;
     
     public MainWindow() {
+    	c = new GridBagConstraints();
     	dlf = new DateLabelFormatter();
     	p = new Properties();
 		p.put("text.today", "Today");
@@ -177,8 +170,7 @@ public class MainWindow {
 	private void createZeugnisVerwaltung(){
 		zeugnisPanel = new JPanel(new BorderLayout());
 		JPanel innerZeugnisPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
+		setConstraintsDefault();
 		JLabel label = new JLabel("Klassenwahl");
 		c.gridy=0;
 		c.gridwidth = 1;
@@ -257,8 +249,7 @@ public class MainWindow {
 	private void createKlassenVerwaltung(){
 		klassenPanel = new JPanel(new BorderLayout());
 		JPanel innerKlassenPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
+		setConstraintsDefault();
 		JLabel label = new JLabel("Klassen");
 		c.gridy = 1;
 		c.gridx = 0;
@@ -312,8 +303,7 @@ public class MainWindow {
 	private void createBetriebVerw(){
 		betriebsPanel = new JPanel(new BorderLayout());
 		JPanel innerBetriebsPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
+		setConstraintsDefault();
 		JLabel label = new JLabel("Betriebe");
 		c.gridy = 1;
 		c.gridx = 0;
@@ -395,8 +385,7 @@ public class MainWindow {
 	private void createRegister() {
 		registerPanel = new JPanel(new BorderLayout());
 		JPanel innerRegisterPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
+		setConstraintsDefault();
 		JLabel label = new JLabel("Nutzer");
 		c.gridy = 1;
 		c.gridx = 0;
@@ -613,22 +602,21 @@ public class MainWindow {
 	private void createAusbilderVerwaltung() {
 		ausbilderPanel = new JPanel(new BorderLayout());
 		JPanel innerAusbilderPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
+		setConstraintsDefault();
 		JLabel label = new JLabel("Betriebswahl");
 		c.gridx = 0;
 		c.gridy = 1;
 		innerAusbilderPanel.add(label, c);
 		JComboBox cmbBetrieb = new JComboBox();
 		cmbBetrieb.setPreferredSize(new Dimension(200, 25));
-		c.gridy = 2;
+		c.gridy++;
 		innerAusbilderPanel.add(cmbBetrieb, c);
 		label = new JLabel("Ausbilder");
-		c.gridy = 3;
+		c.gridy++;
 		innerAusbilderPanel.add(label, c);
 		JList ausbilderList = new JList();
 		ausbilderList.setPreferredSize(new Dimension(200, 150));
-		c.gridy = 4;
+		c.gridy++;
 		c.gridheight = 5;
 		innerAusbilderPanel.add(ausbilderList, c);
 		label = new JLabel("Vorname");
@@ -693,11 +681,10 @@ public class MainWindow {
 		azubiPanel = new JPanel(new BorderLayout());
 		
 		JPanel innerAzubiPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
+		setConstraintsDefault();
 		JLabel label = new JLabel("Klassenwahl");
 		c.gridx = 0;
-		c.gridy = 1;
+		c.gridy = 0;
 		innerAzubiPanel.add(label, c);
 		//
 		ArrayList<Klasse> klasseList = new ArrayList();
@@ -705,52 +692,60 @@ public class MainWindow {
 		JComboBox cmbKlasse = new JComboBox(dcbmKlasse);
 		//
 		cmbKlasse.setPreferredSize(new Dimension(200, 25));
-		c.gridy = 2;
+		c.gridy ++;
 		innerAzubiPanel.add(cmbKlasse, c);
 		label = new JLabel("Azubis");
-		c.gridy = 3;
+		c.gridy ++;
 		innerAzubiPanel.add(label, c);
 		JList azubiList = new JList();
 		azubiList.setPreferredSize(new Dimension(200, 300));
-		c.gridy = 4;
+		c.gridy ++;
 		c.gridheight = 10;
 		innerAzubiPanel.add(azubiList, c);
-		label = new JLabel("Vorname");
-		c.gridy = 4;
+		
+		/////////////////////////////////////////////////////////////
+		
+		c.gridy = 0;
 		c.gridx = 1;
 		c.gridheight = 1;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Name");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Geburtsdatum");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Geschlecht");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("PLZ / Ort");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Straße / HausNr");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Telefonnummer");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("E-Mail");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Betrieb");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Ausbilder");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-
+		innerAzubiPanel.add(new JLabel("Name"), c);
+		
+		addComponentNextLine(innerAzubiPanel, new JLabel("Telefon"));
+		addComponentNextLine(innerAzubiPanel, new JLabel("Geburtsdatum"));
+		addComponentNextLine(innerAzubiPanel, new JLabel("Straße / HausNr"));
+		addComponentNextLine(innerAzubiPanel, new JLabel("1. Staatsangehörigkeit"));
+		addComponentNextLine(innerAzubiPanel, new JLabel("Geburtsland Vater"));
+		
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 4;
+		innerAzubiPanel.add(new JLabel("Vorname"), c);
+		addComponentNextLine(innerAzubiPanel, new JLabel("Mobil"));
+		addComponentNextLine(innerAzubiPanel, new JLabel("Geburtsort"));
+		addComponentNextLine(innerAzubiPanel, new JLabel("PLZ / Ort"));
+		addComponentNextLine(innerAzubiPanel, new JLabel("2.Staatsangehörigkeit"));
+		addComponentNextLine(innerAzubiPanel, new JLabel("Geburtsland Mutter"));
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 6;
+		innerAzubiPanel.add(new JLabel("Geburtsname"), c);
+		addComponentNextLine(innerAzubiPanel, new JLabel("E-Mail"));
+		addComponentNextLine(innerAzubiPanel, new JLabel("Geburtsland"));
+		
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 8;
+		innerAzubiPanel.add(new JLabel("Geschlecht"), c);
+		addComponentNextLine(innerAzubiPanel, new JLabel("Volljährig"));
+		addComponentNextLine(innerAzubiPanel, new JLabel("Inklusionsberatung"));
+		
+		//////************/////////
+		//////************/////////
+		//////************/////////
+		//////************/////////
 		JTextField vorField = new JTextField(20);
 		c.gridx = 2;
-		c.gridy = 4;
+		c.gridy = 1;
 		c.gridwidth = 2;
 		innerAzubiPanel.add(vorField, c);
 		JTextField nachField = new JTextField(20);
@@ -933,8 +928,7 @@ public class MainWindow {
 	private void createLoginPanel() {
 		loginPanel = new JPanel();
 		loginPanel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(20, 20, 20, 20);
+		setConstraintsDefault();
 		JLabel jlabel = new JLabel("Login");
 		c.gridx = 2;
 		c.gridy = 0;
@@ -993,5 +987,18 @@ public class MainWindow {
 		JButton button = new JButton(text);
 		button.setPreferredSize(new Dimension(wight, height));
 		return button;
+	}
+	
+	private void setConstraintsDefault(){
+		c.gridx=0;
+		c.gridy=0;
+		c.gridheight=1;
+		c.gridwidth=1;
+		c.insets = new Insets(5, 5, 5, 5);
+	}
+	
+	private void addComponentNextLine(JPanel parent, Component addetCom){
+		c.gridy++;
+		parent.add(addetCom,c);
 	}
 }
