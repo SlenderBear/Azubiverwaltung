@@ -22,6 +22,7 @@ public class SqliteConnector {
 	
 	/**
 	 * Liefert die Instanz des {@link SqliteConnector}s.
+	 * 
 	 * @return
 	 */
 	public static SqliteConnector getInstance() {
