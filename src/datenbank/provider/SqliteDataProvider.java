@@ -12,39 +12,75 @@ import objects.Lehrer;
 public class SqliteDataProvider extends StandardDataProvider{
 
 	@Override
-	ArrayList<Lehrer> gibAlleLehrer() {
+	public ArrayList<Lehrer> gibAlleLehrer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	ArrayList<Klasse> gibAlleKlassen() {
+	public ArrayList<Klasse> gibAlleKlassen() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	ArrayList<Betrieb> gibAlleBetriebe() {
+	public ArrayList<Betrieb> gibAlleBetriebe() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	ArrayList<Ausbilder> gibAlleAusbilder() {
+	public ArrayList<Ausbilder> gibAlleAusbilder() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	ArrayList<Azubi> gibAzubiVon(Klasse k) {
+	public ArrayList<Azubi> gibAzubiVon(Klasse k) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	ArrayList<Fach> gibAlleFaecher() {
+	public ArrayList<Fach> gibAlleFaecher() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean gibtLogin(String login) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean gibtAzubi(Azubi azubi) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean gibtLehrer(Lehrer lehrer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean gibtAusbilder(Ausbilder ausbilder) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean gibtBetrieb(Betrieb betrieb) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean gibtKlasse(Klasse klasse) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
