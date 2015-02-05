@@ -131,6 +131,7 @@ public class PdfZeugnisA4 {
 		PdfPTable tableB1 = new PdfPTable(2);
 		tableB1.setWidthPercentage(100);
 		tableB1.setHorizontalAlignment(Element.ALIGN_TOP);
+		tableB1.setWidths(new int[]{2, 1});
 		
 		tableFach(tableB1, "Deutsch / Kommunikation");
 		tableNote(tableB1, "- gut -");
@@ -144,6 +145,7 @@ public class PdfZeugnisA4 {
 		PdfPTable tableB2 = new PdfPTable(2);
 		tableB2.setWidthPercentage(100);
 		tableB2.setHorizontalAlignment(Element.ALIGN_TOP);
+		tableB2.setWidths(new int[]{2, 1});
 		
 		Phrase bereich2 = new Phrase("II. Berufsbezogener Bereich", fBold);
 		tableFach(tableB2, "Informations- und Telekommunikationssysteme");
@@ -160,6 +162,7 @@ public class PdfZeugnisA4 {
 		PdfPTable tableB3 = new PdfPTable(2);
 		tableB3.setWidthPercentage(100);
 		tableB3.setHorizontalAlignment(Element.ALIGN_TOP);
+		tableB3.setWidths(new int[]{2, 1});
 		
 		tableFach(tableB3, "------------------------");
 		tableNote(tableB3, "------------------------");
@@ -181,6 +184,7 @@ public class PdfZeugnisA4 {
 		cellFach.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cellFach.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cellFach.setFixedHeight(20f);
+		
         table.addCell(cellFach);
 	}
 	
