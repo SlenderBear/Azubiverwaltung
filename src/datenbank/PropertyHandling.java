@@ -10,6 +10,7 @@ import java.util.Properties;
 public class PropertyHandling {
 	
 	private final String filenameProp = "verwaltung.properties";
+	public static final String PROP_EMPTY = "empty";
 	
 	public String liesPropAus(String prop) {
 		Properties properties = new Properties();
