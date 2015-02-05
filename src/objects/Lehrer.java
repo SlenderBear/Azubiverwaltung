@@ -20,12 +20,12 @@ public class Lehrer {
 	public Lehrer() {
 		// TODO Auto-generated constructor stub
 	}
-	public Lehrer(String iD, String name, String vorname, String telefon) {
+	public Lehrer(String name, String vorname, String telefon, Login login) {
 		super();
-		ID = iD;
 		this.name = name;
 		this.vorname = vorname;
 		this.telefon = telefon;
+		this.login = login;
 	}
 
 	public String getID() {

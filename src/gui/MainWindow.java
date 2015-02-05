@@ -9,16 +9,20 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -26,6 +30,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -36,13 +41,21 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import objects.Berechtigung;
 import objects.Klasse;
+import objects.Lehrer;
+import objects.Login;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+
 
 public class MainWindow {
 	private JFrame mainFrame;
@@ -174,7 +187,7 @@ public class MainWindow {
 		cmbKlasse.setPreferredSize(new Dimension(200, 25));
 		c.gridy++;
 		innerZeugnisPanel.add(cmbKlasse, c);
-		label = new JLabel("Azubis");
+		label = new JLabel("Fächer");
 		c.gridy++;
 		innerZeugnisPanel.add(label, c);
 		JList azubiList = new JList();
@@ -389,12 +402,17 @@ public class MainWindow {
 		c.gridx = 0;
 		c.gridwidth = 1;
 		innerRegisterPanel.add(label, c);
-		JList nutzerList = new JList();
-		nutzerList.setPreferredSize(new Dimension(200, 250));
+		//
+		
+		final DefaultListModel model = new DefaultListModel();
+		final JList userList = new JList(model);
+		userList.setPreferredSize(new Dimension(200, 250));
 		c.gridy = 2;
 		c.gridheight = 8;
-		innerRegisterPanel.add(nutzerList, c);
+		innerRegisterPanel.add(userList, c);
 		
+		
+		//
 		label = new JLabel("Vorname");
 		c.gridx = 1;
 		c.gridy = 2;
@@ -412,53 +430,139 @@ public class MainWindow {
 		label = new JLabel("Telefonnummer");
 		c.gridy++;
 		innerRegisterPanel.add(label,c);
-		label = new JLabel("E-Mail");
-		c.gridy++;
-		innerRegisterPanel.add(label,c);
 		label = new JLabel("Berechtigung");
 		c.gridy++;
 		innerRegisterPanel.add(label,c);
-		label = new JLabel("Klasse");
-		c.gridy++;
-		innerRegisterPanel.add(label,c);
 		
-		JTextField vorField = new JTextField(20);
+		final JTextField vorField = new JTextField(20);
 		c.gridx = 2;
 		c.gridy = 2;
 		c.gridwidth = 1;
 		innerRegisterPanel.add(vorField,c);
-		JTextField nameField = new JTextField(20);
+		final JTextField nameField = new JTextField(20);
 		c.gridy++;
 		innerRegisterPanel.add(nameField,c);
-		JTextField userField = new JTextField(20);
+		final JTextField userField = new JTextField(20);
 		c.gridy++;
 		innerRegisterPanel.add(userField,c);
-		JTextField passField = new JTextField(20);
+		final JTextField passField = new JTextField(20);
 		c.gridy++;
 		innerRegisterPanel.add(passField,c);
-		JTextField teleField = new JTextField(20);
+		final JTextField teleField = new JTextField(20);
 		c.gridy++;
 		innerRegisterPanel.add(teleField,c);
-		JTextField eMailField = new JTextField(20);
-		c.gridy++;
-		innerRegisterPanel.add(eMailField,c);
 		
 		JPanel berPanel = new JPanel(new GridLayout(0,1));
-		JCheckBox cbLehrer = new JCheckBox("Lehrer");
-		JCheckBox cbLeitung = new JCheckBox("Bereichsleitung");
-		berPanel.add(cbLehrer);
-		berPanel.add(cbLeitung);
+		ButtonGroup btgr = new ButtonGroup();
+		final JRadioButton rbLehrer = new JRadioButton("Klassenlehrer");
+		final JRadioButton rbLeitung = new JRadioButton("Bereichsleitung");
+		btgr.add(rbLeitung);
+		btgr.add(rbLehrer);
+		berPanel.add(rbLehrer);
+		berPanel.add(rbLeitung);
+		
+		rbLehrer.setSelected(true);
+		
 		c.gridy++;
 		innerRegisterPanel.add(berPanel,c);
-		
-		JComboBox cmbKlasse = new JComboBox();
-		cmbKlasse.setPreferredSize(new Dimension(200, 22));
-		c.gridy++;
-		innerRegisterPanel.add(cmbKlasse,c);
-		
+		//
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
+		//***************Listeners******************///
+		
+		userList.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(userList.getSelectedIndex() != -1){
+					Lehrer selectedLehrer = (Lehrer) model.get(userList.getSelectedIndex());
+					Login selectedLogin = selectedLehrer.getLogin();
+					Berechtigung selectedBer = selectedLogin.getBerechtigung();
+					nameField.setText(selectedLehrer.getName());
+					vorField.setText(selectedLehrer.getVorname());
+					teleField.setText(selectedLehrer.getTelefon());
+					userField.setText(selectedLogin.getLoginName());
+					passField.setText(selectedLogin.getLoginPasswort());
+					if(selectedBer.getID() == 1){
+						rbLehrer.setSelected(true);
+					}else if(selectedBer.getID() == 2){
+						rbLeitung.setSelected(true);
+					}
+					
+					
+				}
+			}
+		});
+		
+		//**********************************************
+		addButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(checkTFNamenLength(50,nameField,vorField)&&checkStringPassword(passField.getText())){
+					Login login = new Login(userField.getText(), passField.getText());
+					Berechtigung newBer = new Berechtigung();
+					if(rbLehrer.isSelected())
+						newBer.setID(1);
+					else if(rbLeitung.isSelected())
+						newBer.setID(2);
+					Lehrer newLehrer = new Lehrer(nameField.getText(), vorField.getText(), teleField.getText(),login);
+					newLehrer.getLogin().setBerechtigung(newBer);
+					model.addElement(newLehrer);
+					
+					clearTextFields(nameField,vorField,teleField,userField,passField);
+				}
+				else {
+					 JOptionPane.showMessageDialog(registerPanel, "Felder falsch gefüllt", "Fehler", JOptionPane.ERROR_MESSAGE);
+				}
+				
+				
+			}
+		});
+		//****************************************************
+		editButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(userList.getSelectedIndex() != -1){
+					if(checkTFNamenLength(50,nameField,vorField)){
+					Lehrer selectedLehrer = (Lehrer) model.get(userList.getSelectedIndex());
+					selectedLehrer.setName(nameField.getText());
+					selectedLehrer.setVorname(vorField.getText());
+					selectedLehrer.setTelefon(teleField.getText());
+					Login cLogin = selectedLehrer.getLogin();
+					cLogin.setLoginName(userField.getText());
+					cLogin.setLoginPasswort(passField.getText());
+					Berechtigung cBer = cLogin.getBerechtigung();
+					if(rbLehrer.isSelected())
+						cBer.setID(1);
+					else if(rbLeitung.isSelected())
+						cBer.setID(2);
+					}
+					else {
+						System.out.println("Fehler");
+					}
+					
+					
+				}
+				
+				clearTextFields(nameField,vorField,teleField,userField,passField);
+				userList.setModel(model);
+			}
+		});
+		//*******************************************
+		eraseButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(userList.getSelectedIndex() != -1)
+				model.remove(userList.getSelectedIndex());
+				clearTextFields(nameField,vorField,teleField,userField,passField);
+				
+			}
+		});
+		///*******************************************////
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		buttonPanel.add(addButton);
@@ -468,6 +572,43 @@ public class MainWindow {
 		registerPanel.add(innerRegisterPanel,BorderLayout.CENTER);
 		registerPanel.add(buttonPanel,BorderLayout.SOUTH);
 	}
+	
+	private void clearTextFields(JTextField... textFields){
+		for(int i = 0; i < textFields.length; i++){
+			textFields[i].setText("");
+		}
+	}
+	private boolean checkTFNamenLength(int length,JTextField... textFields){
+		boolean check = true;
+		for(int i = 0; i < textFields.length; i++){
+			String toCheck = textFields[i].getText();
+			if(!checkStringNamen(toCheck)||!(toCheck.length()<=length))
+			check = false;
+		}
+		return check;
+	}
+	private boolean checkTFZahlen(JTextField... textFields){
+		for(int i = 0; i < textFields.length; i++){
+		}
+		return true;
+	}
+	
+	private boolean checkStringBuch(String string){
+		return Pattern.matches("[A-Za-z]+", string);
+	}
+	private boolean checkStringBuchZahlen(String string){
+		return Pattern.matches("[A-Za-z0-9]+", string);
+	}
+	private boolean checkStringPassword(String string){
+		return Pattern.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%_]).{6,20})", string);
+	}
+	
+	private boolean checkStringNamen(String string){
+		return Pattern.matches("([A-Za-zÄäÜüÖöß ]|-)+", string);
+	}
+	
+	
+	
 
 	private void createAusbilderVerwaltung() {
 		ausbilderPanel = new JPanel(new BorderLayout());

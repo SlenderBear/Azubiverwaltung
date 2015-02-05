@@ -12,9 +12,18 @@ public class Login {
 
 	private String ID;
 	private String loginName;
-	private String loginPasswort;
 
+	private String loginPasswort;
 	private Berechtigung berechtigung;
+	
+	public Login(String loginName, String loginPasswort) {
+		super();
+		this.loginName = loginName;
+		this.loginPasswort = loginPasswort;
+	}
+	
+	public Login() {
+	}
 
 	public String getID() {
 		return ID;
