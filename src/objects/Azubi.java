@@ -20,6 +20,7 @@ public class Azubi {
 	private String email;
 	private String geburtsdatum;
 	private char geschlecht;
+	private int lehrjahr;
 
 	private Betrieb betrieb;
 	private Ausbilder ausbilder;
@@ -132,6 +133,14 @@ public class Azubi {
 	@Override
 	public String toString() {
 		return name+" , "+vorname;
+	}
+	
+	public int getLehrjahr() {
+		return lehrjahr;
+	}
+
+	public void setLehrjahr(int lehrjahr) {
+		this.lehrjahr = lehrjahr;
 	}
 
 }

@@ -21,7 +21,9 @@ public class MySQLConnector {
 	private static String dbName = "azubiverwaltung"; // Datenbankname
 	private static String dbUser = "user"; // Datenbankuser
 	private static String dbPass = "user"; // Datenbankpasswort
-
+	private static MySQLConnector connector;
+	
+	
 	private static void mySQLConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); // Datenbanktreiber für JDBC
@@ -41,10 +43,15 @@ public class MySQLConnector {
 		}
 	}
 
-	public static Connection getInstance() {
-		if (con == null)
-			mySQLConnection();
-		return con;
+	/**
+	 * Singleton.
+	 * @return {@link MySQLConnector}
+	 */
+	public static MySQLConnector getInstance() {
+		if (connector == null) {
+			connector = new MySQLConnector();
+		}
+		return connector;
 	}
 
 	public boolean statementExecute(String sql) {
@@ -64,6 +71,8 @@ public class MySQLConnector {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}else if(con == null){
+			mySQLConnection();
 		}
 		return false;
 	}
@@ -83,6 +92,8 @@ public class MySQLConnector {
 		      System.err.println("Got an exception! ");
 		      System.err.println(e.getMessage());
 		    }
+		}else if(con == null){
+			mySQLConnection();
 		}
 		return null;
 		

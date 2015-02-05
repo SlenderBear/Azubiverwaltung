@@ -13,7 +13,7 @@ public class Zeugnis {
 	private String ID;
 	private Azubi azubi;
 	private Fach fach;
-	private int zahl;
+	private int jahr;
 
 	public String getID() {
 		return ID;
@@ -39,12 +39,12 @@ public class Zeugnis {
 		this.fach = fach;
 	}
 
-	public int getZahl() {
-		return zahl;
+	public int getJahr() {
+		return jahr;
 	}
 
-	public void setZahl(int zahl) {
-		this.zahl = zahl;
+	public void setJahr(int jahr) {
+		this.jahr = jahr;
 	}
 
 }

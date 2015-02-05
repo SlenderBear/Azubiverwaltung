@@ -9,11 +9,10 @@ import datenbank.StandardMySqlDAO;
 import objects.Betrieb;
 
 public class MySqlBetriebDAO implements StandardMySqlDAO<Betrieb> {
-	private MySQLConnector connector = new MySQLConnector();
 
 	@Override
 	public Betrieb insert(Betrieb b) {
-		String guid = connector.getNewGUID();
+		String guid = MySQLConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO betrieb values(" 
 				+ guid 
 				+ ",'" + b.getFirmenbezeichnung() 
@@ -21,7 +20,7 @@ public class MySqlBetriebDAO implements StandardMySqlDAO<Betrieb> {
 				+ ",'" + b.getPlz() 
 				+ ",'" + b.getOrt() 
 				+ ")";
-		connector.statementExecute(sql);
+		MySQLConnector.getInstance().statementExecute(sql);
 		b.setID(guid);
 		return b;
 	}
@@ -31,21 +30,21 @@ public class MySqlBetriebDAO implements StandardMySqlDAO<Betrieb> {
 		String sql = "UPDATE betrieb"+
 				"SET firmenbezeichnung="+t.getFirmenbezeichnung()+",strasse="+t.getStrasse()+",plz="+t.getPlz()+",ort="+t.getOrt()+
 				" WHERE betriebid="+t.getID()+";";
-		return connector.statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public boolean delete(Betrieb t) {
 		String sql = "delete from betrieb"+
 				" WHERE betriebid="+t.getID()+";";
-		return connector.statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 
 	@Override
 	public ArrayList<Betrieb> getAll() {
 		String sql = "select * from betrieb";
-		ResultSet rs = connector.executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Betrieb> betriebsListe = new ArrayList<Betrieb>();
 		try{
 		 while (rs.next())
@@ -66,7 +65,7 @@ public class MySqlBetriebDAO implements StandardMySqlDAO<Betrieb> {
 	}
 	public Betrieb getByGuid(String guid){
 		String sql = "select * from betrieb where betriebid="+guid+"";
-		ResultSet rs = connector.executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Betrieb b = new Betrieb();
 		try {
 			rs.next();
