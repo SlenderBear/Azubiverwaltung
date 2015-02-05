@@ -11,11 +11,22 @@ package objects;
 public class Lehrer {
 
 	private String ID;
+
 	private String name;
 	private String vorname;
 	private String telefon;
-
 	private Login login;
+	
+	public Lehrer() {
+		// TODO Auto-generated constructor stub
+	}
+	public Lehrer(String iD, String name, String vorname, String telefon) {
+		super();
+		ID = iD;
+		this.name = name;
+		this.vorname = vorname;
+		this.telefon = telefon;
+	}
 
 	public String getID() {
 		return ID;
