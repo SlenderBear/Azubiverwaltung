@@ -61,4 +61,9 @@ public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
 		return b;
 	}
 
+	@Override
+	public boolean isVorhanden(Berechtigung t) {
+			return true;
+	}
+
 }

@@ -95,4 +95,24 @@ public class MySqlBetriebDAO implements StandardDAO<Betrieb> {
 
 	}
 
+	@Override
+	public boolean isVorhanden(Betrieb t) {
+		String sql = "select * from betrieb where "
+				+ "firmenbezeichnung='"+ t.getFirmenbezeichnung()
+				+ "',strasse='" + t.getStrasse()
+				+ "',plz='" + t.getPlz()
+				+ "',ort='" + t.getOrt()
+				+ "',email='"	+ t.geteMail()
+				+ "',telefonnummer='" + t.getTelefon()
+				+ "',Faxnummer='" + t.getFax()
+				+"';";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+			try {
+				return rs.first();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
+	}
+
 }

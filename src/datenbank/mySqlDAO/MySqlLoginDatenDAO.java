@@ -28,7 +28,8 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	@Override
 	public boolean update(Login t) {
 		String sql = "UPDATE login_daten"+
-				"SET benutzername='"+t.getLoginName()
+				"SET "
+				+ "benutzername='"+t.getLoginName()
 				+"',passwort='"+verschluesseln(t.getLoginPasswort())
 				+"',berechtigungid='"+t.getBerechtigung().getID()
 				+"' WHERE loginid='"+t.getID()+"';";
@@ -67,8 +68,8 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	}
 
 	@Override
-	public Login getByGuid(String guid) {
-		String sql = "select * from login_daten where loginid='"+guid+"';";
+	public Login getByGuid(String loginname) {
+		String sql = "select * from login_daten where benutzername='"+loginname+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Login l = new Login();
 		try {
@@ -91,5 +92,21 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	private String entschluesseln(String passwort){
 //	String unverschlüsseltesPasswort = "";
 	return passwort;
+	}
+
+	@Override
+	public boolean isVorhanden(Login t) {
+		String sql = "select * from login_daten where "
+				+ "benutzername='"+t.getLoginName()
+				+"',passwort='"+verschluesseln(t.getLoginPasswort())
+				+"',berechtigungid='"+t.getBerechtigung().getID()
+				+"';";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+			try {
+				return rs.first();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
 	}
 }

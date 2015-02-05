@@ -29,7 +29,8 @@ public class MySqlKlasseDAO implements StandardDAO<Klasse>{
 	@Override
 	public boolean update(Klasse t) {
 		String sql = "UPDATE klasse"+
-				"SET bezeichnung='"+t.getBezeichnung()
+				"SET "
+				+ "bezeichnung='"+t.getBezeichnung()
 				+"',jahr="+t.getJahr()
 				+",lehrerid='"+t.getLehrer().getID()
 				+"' WHERE klasseid='"+t.getID()+"';";
@@ -80,6 +81,22 @@ public class MySqlKlasseDAO implements StandardDAO<Klasse>{
 			e.printStackTrace();
 		}
 		return k;
+	}
+
+	@Override
+	public boolean isVorhanden(Klasse t) {
+		String sql = "select * from klasse where "
+				+ "bezeichnung='"+t.getBezeichnung()
+				+"',jahr="+t.getJahr()
+				+",lehrerid='"+t.getLehrer().getID()
+				+"';";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+			try {
+				return rs.first();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
 	}
 
 }

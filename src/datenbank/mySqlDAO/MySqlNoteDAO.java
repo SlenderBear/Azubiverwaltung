@@ -49,4 +49,9 @@ public class MySqlNoteDAO implements StandardDAO<Note>{
 		return b;
 	}
 
+	@Override
+	public boolean isVorhanden(Note t) {
+		return true;
+	}
+
 }

@@ -29,7 +29,11 @@ public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
 	@Override
 	public boolean update(Lehrer t) {
 		String sql = "UPDATE lehrer"+
-				"SET name='"+t.getName()+"',vorname='"+t.getVorname()+"',telefonnummer='"+t.getTelefon()+"',loginid='"+t.getLogin().getID()+
+				"SET "
+				+ "name='"+t.getName()
+				+"',vorname='"+t.getVorname()
+				+"',telefonnummer='"+t.getTelefon()
+				+"',loginid='"+t.getLogin().getID()+
 				"' WHERE lehrerid='"+t.getID()+"';";
 		return MySQLConnector.getInstance().statementExecute(sql);
 	}
@@ -80,6 +84,23 @@ public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
 			e.printStackTrace();
 		}
 		return l;
+	}
+
+	@Override
+	public boolean isVorhanden(Lehrer t) {
+		String sql = "select * from lehrer where "
+				+ "name='"+t.getName()
+				+"',vorname='"+t.getVorname()
+				+"',telefonnummer='"+t.getTelefon()
+				+"',loginid='"+t.getLogin().getID()
+				+"';";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+			try {
+				return rs.first();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
 	}
 
 }

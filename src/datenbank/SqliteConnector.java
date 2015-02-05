@@ -22,9 +22,10 @@ public class SqliteConnector {
 	
 	/**
 	 * Liefert die Instanz des {@link SqliteConnector}s.
+	 * 
 	 * @return
 	 */
-	public SqliteConnector getInstance() {
+	public static SqliteConnector getInstance() {
 		if(connector == null) {
 			connector = new SqliteConnector();
 		}
@@ -65,8 +66,7 @@ public class SqliteConnector {
 			stmt = c.createStatement();
 			rs = stmt.executeQuery(sql);
 		} catch (Exception e) {
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			System.exit(0);
+			throw new RuntimeException(this.getClass() + ":" + e.getMessage());
 		}
 		return rs;
 	}
@@ -92,8 +92,7 @@ public class SqliteConnector {
 	    	  return true;
 	      }
 	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	      System.exit(0);
+	    	throw new RuntimeException(this.getClass() + ":" + e.getMessage());
 	    }
 		return false;
 	}
