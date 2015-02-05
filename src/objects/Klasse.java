@@ -12,6 +12,7 @@ public class Klasse {
 
 	private String ID;
 	private String Bezeichnung;
+	private Lehrer lehrer;
 	private int jahr;
 	
 	public Klasse() {
@@ -24,8 +25,6 @@ public class Klasse {
 		this.jahr = jahr;
 	}
 
-	private Lehrer lehrer;
-	
 	public String getID() {
 		return ID;
 	}
