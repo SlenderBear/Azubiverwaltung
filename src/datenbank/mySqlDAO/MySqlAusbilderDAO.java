@@ -5,11 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import datenbank.MySQLConnector;
-import datenbank.StandardMySqlDAO;
+import datenbank.StandardDAO;
 import objects.Ausbilder;
 import objects.Betrieb;
 
-public class MySqlAusbilderDAO implements StandardMySqlDAO<Ausbilder> {
+public class MySqlAusbilderDAO implements StandardDAO<Ausbilder> {
 
 	private MySqlBetriebDAO dao = new MySqlBetriebDAO();
 

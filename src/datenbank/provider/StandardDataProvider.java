@@ -21,11 +21,12 @@ import objects.Lehrer;
  */
 public abstract class StandardDataProvider {
 
+	private static StandardDataProvider provider = null;
 	public static final String DB_MYSQL = "mysql";
 	public static final String DB_SQLITE = "sqlite";
 	public static final String DB_PROPERTY = "db";
-	private String akt_db;
-	PropertyHandling propertieHandler;
+	private static String akt_db;
+	private static PropertyHandling propertieHandler;
 
 	/**
 	 * Liefert alle Lehrer.
@@ -90,7 +91,7 @@ public abstract class StandardDataProvider {
 	 *            String
 	 * @return {@link StandardDataProvider}
 	 */
-	public StandardDataProvider getDataProvider(String db) {
+	private static StandardDataProvider getDataProvider(String db) {
 		if (db.compareTo(DB_MYSQL) == 0) {
 			akt_db = DB_MYSQL;
 			return new MySqlDataProvider();
@@ -102,23 +103,24 @@ public abstract class StandardDataProvider {
 	}
 	
 	/**
-	 * Konstruktor.
-	 * Initialisiert den DataProvider.
-	 * Wirft eine Exception wenn DB nicht gestartet werden konnte.
+	 * Liefert die Instanz vom {@link StandardDataProvider}.
+	 * @return {@link StandardDataProvider} vom Typ wie in verwaltung.properties
+	 * angegeben.
 	 */
-	public StandardDataProvider() {
-		if(initAndGetProvider() == null) {
-			throw new RuntimeException("DB konnte nicht gestartet werden.");
+	public static StandardDataProvider getInstance() {
+		if(provider == null) {
+			provider = initAndGetProvider();
 		}
+		return provider;
 	}
-
+	
 	/**
 	 * Initialisiert den DataProvider und liefert diesen zurück.
 	 * 
 	 * @return {@link StandardDataProvider} null wenn Property Empty oder keine
 	 *         entsprechende Datenbank gefunden werden konnte.
 	 */
-	private StandardDataProvider initAndGetProvider() {
+	public static StandardDataProvider initAndGetProvider() {
 		if (propertieHandler == null) {
 			propertieHandler = new PropertyHandling();
 		}
@@ -126,7 +128,6 @@ public abstract class StandardDataProvider {
 		if (db_property.compareTo(PropertyHandling.PROP_EMPTY) == 0) {
 			return null;
 		}
-
 		return getDataProvider(db_property);
 	}
 

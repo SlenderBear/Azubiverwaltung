@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import objects.Berechtigung;
 import datenbank.MySQLConnector;
-import datenbank.StandardMySqlDAO;
+import datenbank.StandardDAO;
 
-public class MySqlBerechtigungDAO implements StandardMySqlDAO<Berechtigung>{
+public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
 
 	@Override
 	public Berechtigung insert(Berechtigung t) {
