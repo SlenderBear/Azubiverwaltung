@@ -125,12 +125,12 @@ public abstract class StandardDataProvider {
 	 * @param db
 	 *            String
 	 * @return true: der DataProvider wurde geändert <br>
-	 *         false: wenn sich der Provider nicht geändert hat oder kein
-	 *         passender Provider gefunden wurde.
+	 *         false:  hat keinen passenden Provider gefunden wurde.
+	 *         null: Wurde nicht geändert, da bereits ausgewählt.
 	 */
-	public boolean changeDataProvider(String db) {
-		if (db.compareTo(akt_db) != 0) {
-			return false;
+	public Boolean changeDataProvider(String db) {
+		if (db.compareTo(akt_db) == 0) {
+			return null;
 		}
 		if (db.compareTo(DB_MYSQL) == 0) {
 			propertieHandler.schreibeProp(DB_PROPERTY, DB_MYSQL);
