@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import objects.Lehrer;
 import datenbank.MySQLConnector;
-import datenbank.StandardMySqlDAO;
+import datenbank.StandardDAO;
 
-public class MySqlLehrerDAO implements StandardMySqlDAO<Lehrer>{
+public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
 	private MySqlLoginDatenDAO dao = new MySqlLoginDatenDAO();
 
 	@Override

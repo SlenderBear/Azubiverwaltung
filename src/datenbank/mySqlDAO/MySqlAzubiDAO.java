@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import objects.Ausbilder;
 import objects.Azubi;
 import datenbank.MySQLConnector;
-import datenbank.StandardMySqlDAO;
+import datenbank.StandardDAO;
 
-public class MySqlAzubiDAO implements StandardMySqlDAO<Azubi>{
+public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	private MySqlKlasseDAO daoKlasse= new MySqlKlasseDAO();
 	private MySqlBetriebDAO daoBetrieb = new MySqlBetriebDAO();
 	private MySqlAusbilderDAO daoAusbilder = new MySqlAusbilderDAO();

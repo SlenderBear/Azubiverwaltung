@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import datenbank.MySQLConnector;
-import datenbank.StandardMySqlDAO;
+import datenbank.StandardDAO;
 import objects.Betrieb;
 
-public class MySqlBetriebDAO implements StandardMySqlDAO<Betrieb> {
+public class MySqlBetriebDAO implements StandardDAO<Betrieb> {
 
 	@Override
 	public Betrieb insert(Betrieb b) {
