@@ -12,9 +12,20 @@ public class Klasse {
 
 	private String ID;
 	private String Bezeichnung;
-	private Lehrer lehrer;
 	private int jahr;
+	
+	public Klasse() {
+		// TODO Auto-generated constructor stub
+	}
+	public Klasse(String id, String bezeichnung, Lehrer lehrer, int jahr) {
+		this.ID = id;
+		this.Bezeichnung = bezeichnung;
+		this.lehrer = lehrer;
+		this.jahr = jahr;
+	}
 
+	private Lehrer lehrer;
+	
 	public String getID() {
 		return ID;
 	}
