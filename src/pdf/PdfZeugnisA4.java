@@ -325,6 +325,8 @@ public class PdfZeugnisA4 {
 		table.completeRow();
 	}
 	
+	
+	
 	private void tableBox2(PdfPTable table, String inhalt) {
 		PdfPCell cellNote = new PdfPCell(new Paragraph(inhalt, fBold));
 		cellNote.setBackgroundColor(BaseColor.LIGHT_GRAY);
