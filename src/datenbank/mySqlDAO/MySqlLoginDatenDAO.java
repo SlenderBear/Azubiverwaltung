@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import objects.Ausbilder;
 import objects.Login;
 import datenbank.MySQLConnector;
-import datenbank.StandardMySqlDAO;
+import datenbank.StandardDAO;
 
-public class MySqlLoginDatenDAO implements StandardMySqlDAO<Login> {
+public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	private MySqlBerechtigungDAO dao = new MySqlBerechtigungDAO();
 	@Override
 	public Login insert(Login t) {

@@ -5,11 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import datenbank.MySQLConnector;
-import datenbank.StandardMySqlDAO;
+import datenbank.StandardDAO;
 import objects.Betrieb;
 import objects.Fach;
 
-public class MySqlFachDAO implements StandardMySqlDAO<Fach>{
+public class MySqlFachDAO implements StandardDAO<Fach>{
 
 	@Override
 	public Fach insert(Fach t) {

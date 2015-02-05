@@ -14,6 +14,7 @@ public class Zeugnis {
 	private Azubi azubi;
 	private Fach fach;
 	private int jahr;
+	private String zeugnisKonferenz;
 
 	public String getID() {
 		return ID;
@@ -45,6 +46,14 @@ public class Zeugnis {
 
 	public void setJahr(int jahr) {
 		this.jahr = jahr;
+	}
+
+	public String getZeugnisKonferenz() {
+		return zeugnisKonferenz;
+	}
+
+	public void setZeugnisKonferenz(String zeugnisKonferenz) {
+		this.zeugnisKonferenz = zeugnisKonferenz;
 	}
 
 }

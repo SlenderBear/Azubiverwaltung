@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import objects.Berechtigung;
 import objects.Note;
 import datenbank.MySQLConnector;
-import datenbank.StandardMySqlDAO;
+import datenbank.StandardDAO;
 
-public class MySqlNoteDAO implements StandardMySqlDAO<Note>{
+public class MySqlNoteDAO implements StandardDAO<Note>{
 
 	@Override
 	public Note insert(Note t) {
@@ -41,7 +41,7 @@ public class MySqlNoteDAO implements StandardMySqlDAO<Note>{
 		Note b = new Note();
 		try {
 			rs.next();
-	        b.setZahl(rs.getInt("zahl"));
+	        b.setNoteID(rs.getString("noteid"));
 	        b.setBeschreibung((rs.getString("beschreibung")));
 		} catch (SQLException e) {
 			e.printStackTrace();

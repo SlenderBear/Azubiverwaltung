@@ -15,6 +15,9 @@ public class Betrieb {
 	private String strasse;
 	private String plz;
 	private String ort;
+	private String eMail;
+	private String telefon;
+	private String fax;
 
 	public String getID() {
 		return ID;
@@ -59,6 +62,30 @@ public class Betrieb {
 	@Override
 	public String toString() {
 		return firmenbezeichnung;
+	}
+
+	public String geteMail() {
+		return eMail;
+	}
+
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
+	}
+
+	public String getTelefon() {
+		return telefon;
+	}
+
+	public void setTelefon(String telefon) {
+		this.telefon = telefon;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
 	}
 
 }
