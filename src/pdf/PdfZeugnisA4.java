@@ -46,6 +46,7 @@ public class PdfZeugnisA4 {
 
 			document.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(new JFrame(),
 					"Das Zeugnis konnte nicht ordentlich als PDF gespeichert werden.");
 		} finally {
@@ -114,12 +115,23 @@ public class PdfZeugnisA4 {
 		klasse.add(new Chunk("   " + getHalbjahr(konfDatum), fBold));
 		klasse.add(new Chunk(". Halbjahr"));
 		klasse.add(Chunk.NEWLINE);
+		
+		Phrase fehltage = new Phrase();
+		fehltage.add("Schulversäumnisse:");
+		fehltage.add(Chunk.TABBING);
+		fehltage.add(Chunk.TABBING);
+		fehltage.add(new Chunk(String.valueOf(azubi.getFehltage()), fBold));
+		fehltage.add(new Chunk(" Fehltage, davon "));
+		fehltage.add(new Chunk("0", fBold));
+		fehltage.add(new Chunk("unentschuldigt"));
+		
 
 		azubiDaten.add(name);
 		azubiDaten.add(gebi);
 		azubiDaten.add(beruf);
 		azubiDaten.add(richtung);
 		azubiDaten.add(klasse);
+		azubiDaten.add(fehltage);
 		document.add(azubiDaten);
 	}
 
@@ -177,10 +189,10 @@ public class PdfZeugnisA4 {
 		tableFach(tableB3, "------------------------");
 		tableNote(tableB3, "------------------------");
 
-		tableBemerkung(tableB3, "Bemerkung");
+		tableBemerkung(tableB3, "Bemerkungen:");
 		tableBox(tableB3, "- keine -");
-		tableBemerkung(tableB3, "Beschluss der Konferenz");
-		tableBox(tableB3, "------------------------");
+		tableBeschluss(tableB3, "Beschluss der Konferenz:");
+		tableBox2(tableB3, "------------------------");
 
 		leistung.add(konf);
 		leistung.add(titel);
@@ -285,12 +297,33 @@ public class PdfZeugnisA4 {
 		PdfPCell cellFach = new PdfPCell(new Paragraph(bemerkung));
 		cellFach.setBorder(Rectangle.NO_BORDER);
 		cellFach.setHorizontalAlignment(Element.ALIGN_LEFT);
+		cellFach.setVerticalAlignment(Element.ALIGN_TOP);
+		cellFach.setFixedHeight(40f);
+		table.addCell(cellFach);
+	}
+	
+	private void tableBeschluss(PdfPTable table, String bemerkung) {
+		PdfPCell cellFach = new PdfPCell(new Paragraph(bemerkung));
+		cellFach.setBorder(Rectangle.NO_BORDER);
+		cellFach.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cellFach.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cellFach.setFixedHeight(20f);
 		table.addCell(cellFach);
 	}
 
 	private void tableBox(PdfPTable table, String inhalt) {
+		PdfPCell cellNote = new PdfPCell(new Paragraph(inhalt, fBold));
+		cellNote.setBackgroundColor(BaseColor.LIGHT_GRAY);
+		cellNote.setBorder(Rectangle.NO_BORDER);
+		cellNote.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cellNote.setVerticalAlignment(Element.ALIGN_TOP);
+		cellNote.setFixedHeight(40f);
+		cellNote.setColspan(2);
+		table.addCell(cellNote);
+		table.completeRow();
+	}
+	
+	private void tableBox2(PdfPTable table, String inhalt) {
 		PdfPCell cellNote = new PdfPCell(new Paragraph(inhalt, fBold));
 		cellNote.setBackgroundColor(BaseColor.LIGHT_GRAY);
 		cellNote.setBorder(Rectangle.NO_BORDER);
