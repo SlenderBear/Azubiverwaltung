@@ -16,9 +16,9 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 	@Override
 	public Zeugnisposition insert(Zeugnisposition t) {
 		String guid = MySQLConnector.getInstance().getNewGUID();
-		String sql = "INSERT INTO zeugnisposition values(" + guid + ",'"
-				+ t.getZeugnis().getID() + ",'" + t.getNote().getNoteID()
-				+ ",'" + t.getFach().getID() + ")";
+		String sql = "INSERT INTO zeugnisposition values('" + guid + "','"
+				+ t.getZeugnis().getID() + "','" + t.getNote().getNoteID()
+				+ "','" + t.getFach().getID() + "');";
 		MySQLConnector.getInstance().statementExecute(sql);
 		t.setID(guid);
 		return t;
@@ -26,10 +26,10 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 
 	@Override
 	public boolean update(Zeugnisposition t) {
-		String sql = "UPDATE zeugnisposition" + "SET zeugnisid="
-				+ t.getZeugnis().getID() + ",zahl=" + t.getNote().getNoteID()
-				+ ",fachid=" + t.getFach().getID()
-				+ " WHERE zeugnispositionid=" + t.getID() + ";";
+		String sql = "UPDATE zeugnisposition" + "SET zeugnisid='"
+				+ t.getZeugnis().getID() + "',noteid='" + t.getNote().getNoteID()
+				+ "',fachid='" + t.getFach().getID()
+				+ "' WHERE zeugnispositionid='" + t.getID() + "';";
 		return MySQLConnector.getInstance().statementExecute(sql);
 
 	}
@@ -37,14 +37,14 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 	@Override
 	public boolean delete(Zeugnisposition t) {
 		String sql = "delete from zeugnisposition"
-				+ " WHERE zeugnispositionid=" + t.getID() + ";";
+				+ " WHERE zeugnispositionid='" + t.getID() + "';";
 		return MySQLConnector.getInstance().statementExecute(sql);
 
 	}
 
 	@Override
 	public ArrayList<Zeugnisposition> getAll() {
-		String sql = "select * from zeugnisposition";
+		String sql = "select * from zeugnisposition;";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Zeugnisposition> zeugnisPositionsListe = new ArrayList<Zeugnisposition>();
 		try {
@@ -58,15 +58,15 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 				zeugnisPositionsListe.add(z);
 			}
 		} catch (Exception e) {
-			System.out.println("Fehler in MySQLAzubiDAO");
+			System.out.println("Fehler in MySQLZeugnispositionDAO");
 		}
 		return zeugnisPositionsListe;
 	}
 
 	@Override
 	public Zeugnisposition getByGuid(String guid) {
-		String sql = "select * from zeugnisposition where zeugnispositionid="
-				+ guid + "";
+		String sql = "select * from zeugnisposition where zeugnispositionid='"
+				+ guid + "';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Zeugnisposition z = new Zeugnisposition();
 		try {

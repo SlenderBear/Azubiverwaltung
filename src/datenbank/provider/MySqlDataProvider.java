@@ -11,7 +11,17 @@ import objects.Klasse;
 import objects.Lehrer;
 
 public class MySqlDataProvider extends StandardDataProvider{
-
+//	MySqlAusbilderDAO ausbilderDAO = new MySqlAusbilderDAO();
+//	MySqlAzubiDAO DAO = new MySqlAusbilderDAO();
+//	MySqlBerechtigungDAO ausbilderDAO = new MySqlAusbilderDAO();
+//	MySqlBetriebDAO ausbilderDAO = new MySqlAusbilderDAO();
+//	MySqlFachDAO ausbilderDAO = new MySqlAusbilderDAO();
+//	MySqlKlasseDAO ausbilderDAO = new MySqlAusbilderDAO();
+//	MySqlLehrerDAO ausbilderDAO = new MySqlAusbilderDAO();
+//	MySqlLoginDatenDAO ausbilderDAO = new MySqlAusbilderDAO();
+//	MySqlNoteDAO ausbilderDAO = new MySqlAusbilderDAO();
+//	MySqlZeugnisDAO ausbilderDAO = new MySqlAusbilderDAO();
+//	MySqlZeugnisPositionDAO ausbilderDAO = new MySqlAusbilderDAO();
 	@Override
 	public ArrayList<Lehrer> gibAlleLehrer() {
 		// TODO Auto-generated method stub

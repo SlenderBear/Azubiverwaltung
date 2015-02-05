@@ -14,12 +14,12 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	@Override
 	public Login insert(Login t) {
 		String guid = MySQLConnector.getInstance().getNewGUID();
-		String sql = "INSERT INTO login_daten values(" 
+		String sql = "INSERT INTO login_daten values('" 
 				+ guid 
-				+ ",'" + t.getLoginName()
-				+ ",'" + verschluesseln(t.getLoginPasswort())
-				+ ",'" + t.getBerechtigung().getID() 
-				+ ")";
+				+ "','" + t.getLoginName()
+				+ "','" + verschluesseln(t.getLoginPasswort())
+				+ "','" + t.getBerechtigung().getID() 
+				+ "');";
 		MySQLConnector.getInstance().statementExecute(sql);
 		t.setID(guid);
 		return t;
@@ -28,10 +28,10 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	@Override
 	public boolean update(Login t) {
 		String sql = "UPDATE login_daten"+
-				"SET benutzername="+t.getLoginName()
-				+",passwort="+verschluesseln(t.getLoginPasswort())
-				+",berechtigungid="+t.getBerechtigung().getID()
-				+" WHERE loginid="+t.getID()+";";
+				"SET benutzername='"+t.getLoginName()
+				+"',passwort='"+verschluesseln(t.getLoginPasswort())
+				+"',berechtigungid='"+t.getBerechtigung().getID()
+				+"' WHERE loginid='"+t.getID()+"';";
 		return MySQLConnector.getInstance().statementExecute(sql);
 	
 	}
@@ -39,14 +39,14 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	@Override
 	public boolean delete(Login t) {
 		String sql = "delete from login_daten"+
-				" WHERE loginid="+t.getID()+";";
+				" WHERE loginid='"+t.getID()+"';";
 		return MySQLConnector.getInstance().statementExecute(sql);
 	
 	}
 
 	@Override
 	public ArrayList<Login> getAll() {
-		String sql = "select * from login_daten";
+		String sql = "select * from login_daten;";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Login> loginListe = new ArrayList<Login>();
 		try{
@@ -68,7 +68,7 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 
 	@Override
 	public Login getByGuid(String guid) {
-		String sql = "select * from login_daten where loginid="+guid+"";
+		String sql = "select * from login_daten where loginid='"+guid+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Login l = new Login();
 		try {
@@ -82,14 +82,14 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 		}
 		return l;
 	}
-	
+	//TODO verschlüsseln
 	private String verschluesseln(String passwort){
-	String verschlüsseltesPasswort = "";
-	return verschlüsseltesPasswort;
+//	String verschlüsseltesPasswort = "";
+	return passwort;
 	}
-	
+	//TODO entschlüsseln
 	private String entschluesseln(String passwort){
-	String unverschlüsseltesPasswort = "";
-	return unverschlüsseltesPasswort;
+//	String unverschlüsseltesPasswort = "";
+	return passwort;
 	}
 }
