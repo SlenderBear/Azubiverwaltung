@@ -30,7 +30,7 @@ public class Azubi {
 	private String konfession;
 	private String staatsangehoerigkeit_1;
 	private String staatsangehoerigkeit_2;
-	private String zuzugsjahr;
+	private int zuzugsjahr;
 	private String geburtsland_Vater;
 	private String geburtsland_Mutter;
 	private char Fachrichtung;
@@ -234,14 +234,6 @@ public class Azubi {
 		this.staatsangehoerigkeit_2 = staatsangehoerigkeit_2;
 	}
 
-	public String getZuzugsjahr() {
-		return zuzugsjahr;
-	}
-
-	public void setZuzugsjahr(String zuzugsjahr) {
-		this.zuzugsjahr = zuzugsjahr;
-	}
-
 	public String getGeburtsland_Vater() {
 		return geburtsland_Vater;
 	}
@@ -312,6 +304,14 @@ public class Azubi {
 
 	public void setFehltage(int fehltage) {
 		this.fehltage = fehltage;
+	}
+
+	public int getZuzugsjahr() {
+		return zuzugsjahr;
+	}
+
+	public void setZuzugsjahr(int zuzugsjahr) {
+		this.zuzugsjahr = zuzugsjahr;
 	}
 
 }
