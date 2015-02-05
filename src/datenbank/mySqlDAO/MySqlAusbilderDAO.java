@@ -16,14 +16,14 @@ public class MySqlAusbilderDAO implements StandardDAO<Ausbilder> {
 	@Override
 	public Ausbilder insert(Ausbilder b) {
 		String guid = MySQLConnector.getInstance().getNewGUID();
-		String sql = "INSERT INTO ausbilder values(" 
+		String sql = "INSERT INTO ausbilder values('" 
 				+ guid 
-				+ ",'" + b.getName()
-				+ ",'" + b.getVorname()
-				+ ",'" + b.getTelefon() 
-				+ ",'" + b.getEmail()
-				+ ",'" + b.getBetrieb().getID()
-				+ ")";
+				+ "','" + b.getName()
+				+ "','" + b.getVorname()
+				+ "','" + b.getTelefon() 
+				+ "','" + b.getEmail()
+				+ "','" + b.getBetrieb().getID()
+				+ "');";
 		MySQLConnector.getInstance().statementExecute(sql);
 		b.setID(guid);
 		return b;
@@ -32,26 +32,26 @@ public class MySqlAusbilderDAO implements StandardDAO<Ausbilder> {
 	@Override
 	public boolean update(Ausbilder t) {
 		String sql = "UPDATE ausbilder"+
-				"SET name="+t.getName()
-				+",vorname="+t.getVorname()
-				+",telefonnummer="+t.getTelefon()
-				+",email="+t.getEmail()
-				+",betriebid="+t.getBetrieb().getID()
-				+" WHERE ausbilderid="+t.getID()+";";
+				"SET name='"+t.getName()
+				+"',vorname='"+t.getVorname()
+				+"',telefonnummer='"+t.getTelefon()
+				+"',email='"+t.getEmail()
+				+"',betriebid='"+t.getBetrieb().getID()
+				+"' WHERE ausbilderid='"+t.getID()+"';";
 		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public boolean delete(Ausbilder t) {
 		String sql = "delete from ausbilder"+
-				" WHERE ausbilderid="+t.getID()+";";
+				" WHERE ausbilderid='"+t.getID()+"';";
 		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 
 	@Override
 	public ArrayList<Ausbilder> getAll() {
-		String sql = "select * from ausbilder";
+		String sql = "select * from ausbilder;";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Ausbilder> ausbilderListe = new ArrayList<Ausbilder>();
 		try{
@@ -75,7 +75,7 @@ public class MySqlAusbilderDAO implements StandardDAO<Ausbilder> {
 
 	@Override
 	public Ausbilder getByGuid(String guid) {
-		String sql = "select * from ausbilder where ausbilderid="+guid+"";
+		String sql = "select * from ausbilder where ausbilderid='"+guid+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Ausbilder a = new Ausbilder();
 		try {

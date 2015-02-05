@@ -28,7 +28,7 @@ public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
 
 	@Override
 	public ArrayList<Berechtigung> getAll() {
-		String sql = "select * from berechtigung";
+		String sql = "select * from berechtigung;";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Berechtigung> berechtigungListe = new ArrayList<Berechtigung>();
 		try{
@@ -48,7 +48,7 @@ public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
 
 	@Override
 	public Berechtigung getByGuid(String bezeichnung) {
-		String sql = "select * from berechtigung where bezeichnung="+bezeichnung+"";
+		String sql = "select * from berechtigung where bezeichnung='"+bezeichnung+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Berechtigung b = new Berechtigung();
 		try {
