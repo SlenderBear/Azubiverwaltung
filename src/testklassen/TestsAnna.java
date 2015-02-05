@@ -3,6 +3,7 @@ package testklassen;
 import objects.Azubi;
 import objects.Klasse;
 import objects.Lehrer;
+import objects.Zeugnis;
 import pdf.PdfZeugnisA4;
 
 public class TestsAnna {
@@ -24,7 +25,12 @@ public class TestsAnna {
 		a.setLehrjahr(2);
 		a.setKlasse(k);
 		a.setFachrichtung('s');
-		PdfZeugnisA4 zeug = new PdfZeugnisA4(a, "Test", "22.01.2015", "07.02.2015");
+		
+		Zeugnis z = new Zeugnis();
+		z.setZeugnisKonferenz("01.01.2015");
+		z.setAzubi(a);
+		
+		PdfZeugnisA4 zeug = new PdfZeugnisA4(a, "Test", z, "07.02.2015");
 
 	}
 

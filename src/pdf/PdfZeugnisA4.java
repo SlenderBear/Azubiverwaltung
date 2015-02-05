@@ -18,7 +18,9 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import datenbank.provider.StandardDataProvider;
 import objects.Azubi;
+import objects.Zeugnis;
 
 public class PdfZeugnisA4 {
 
@@ -29,7 +31,7 @@ public class PdfZeugnisA4 {
 
 	Document document = null;
 
-	public PdfZeugnisA4(Azubi azubi, String filepath, String konfDatum, String zeugDatum) {
+	public PdfZeugnisA4(Azubi azubi, String filepath, Zeugnis zeugnis, String zeugDatum) {
 		try {
 			document = new Document();
 			PdfWriter.getInstance(document, new FileOutputStream(filepath + "_"
@@ -40,8 +42,8 @@ public class PdfZeugnisA4 {
 			title.add(new Paragraph("Zeugnis der Berufsschule", fTitle));
 
 			document.add(title);
-			schreibeAzubi(azubi, konfDatum);
-			schreibeLeistungen(azubi, konfDatum);
+			schreibeAzubi(azubi, zeugnis.getZeugnisKonferenz());
+			schreibeLeistungen(azubi, zeugnis.getZeugnisKonferenz());
 			schreibeSignaturen(azubi, zeugDatum);
 
 			document.close();
@@ -123,7 +125,7 @@ public class PdfZeugnisA4 {
 		fehltage.add(new Chunk(String.valueOf(azubi.getFehltage()), fBold));
 		fehltage.add(new Chunk(" Fehltage, davon "));
 		fehltage.add(new Chunk("0", fBold));
-		fehltage.add(new Chunk("unentschuldigt"));
+		fehltage.add(new Chunk(" unentschuldigt"));
 		
 
 		azubiDaten.add(name);
@@ -342,6 +344,12 @@ public class PdfZeugnisA4 {
 		} else{
 			return "2";
 		}
+	}
+	
+	private void holeZeugnisnote(Zeugnis zeunigs){
+		StandardDataProvider dataGetter = StandardDataProvider.getInstance();
+		
+		//TO DO Zeugnisnoten holen
 	}
 
 }
