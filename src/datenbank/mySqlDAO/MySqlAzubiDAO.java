@@ -22,13 +22,32 @@ public class MySqlAzubiDAO implements StandardMySqlDAO<Azubi>{
 				+ ",'" + t.getName()
 				+ ",'" + t.getVorname()
 				+ ",'" + t.getTelefon() 
+				+ ",'" + t.getMobiltelefon() 
 				+ ",'" + t.getEmail()
-				+ ",'" + t.getGeburtsdatum()
 				+ ",'" + t.getStrasse()
 				+ ",'" + t.getPlz()
 				+ ",'" + t.getOrt()
+				+ ",'" + t.getGeburtsdatum()
+				+ ",'" + t.getVolljaehrigkeit()
+				+ ",'" + t.getInklusionsberatung()
+				+ ",'" + t.getGeburtsort()
+				+ ",'" + t.getGeburtsname()
+				+ ",'" + t.getGeburtsland()
+				+ ",'" + t.getStaatsangehoerigkeit_1()
+				+ ",'" + t.getStaatsangehoerigkeit_2()
+				+ ",'" + t.getZuzugsjahr()
+				+ ",'" + t.getGeburtsland_Vater()
+				+ ",'" + t.getGeburtsland_Mutter()
 				+ ",'" + t.getGeschlecht()
+				+ ",'" + t.getKonfession()
+				+ ",'" + t.getFachrichtung()
 				+ ",'" + t.getLehrjahr()
+				+ ",'" + t.getAusbildungsbeginn()
+				+ ",'" + t.getAusbildungsende()
+				+ ",'" + t.getLetzte_Schulform()
+				+ ",'" + t.getSchulabschluss()
+				+ ",'" + t.getAnmerkung_Schulabschluss()
+				+ ",'" + t.getFehltage()				
 				+ ",'" + t.getKlasse().getID()
 				+ ",'" + t.getBetrieb().getID()
 				+ ",'" + t.getAusbilder().getID()
@@ -44,69 +63,144 @@ public class MySqlAzubiDAO implements StandardMySqlDAO<Azubi>{
 				"SET name="+t.getName()
 				+",vorname="+t.getVorname()
 				+",telefonnummer="+t.getTelefon()
+				+",mobiltelefon="+t.getMobiltelefon()
 				+",email="+t.getEmail()
-				+",geburtsdatum="+t.getEmail()
 				+",strasse="+t.getEmail()
 				+",plz="+t.getEmail()
 				+",ort="+t.getEmail()
-				+",ort="+t.getEmail()
-				+",ort="+t.getEmail()
-				+",ort="+t.getEmail()
+				+",geburtsdatum="+t.getEmail()
+				+",volljaehrigkeit="+t.getVolljaehrigkeit()
+				+",inklusionsberatung="+t.getInklusionsberatung()
+				+",geburtsort="+t.getGeburtsort()
+				+",geburtsname="+t.getGeburtsname()				
+				+",geburtsland="+t.getGeburtsland()
+				+",staatangehoerigkeit_1="+t.getStaatsangehoerigkeit_1()
+				+",staatangehoerigkeit_2="+t.getStaatsangehoerigkeit_2()
+				+",zuzugsjahr="+t.getZuzugsjahr()
+				+",geburtsland_vater="+t.getGeburtsland_Vater() 
+				+",geburtsland_mutter="+t.getGeburtsland_Mutter() 
+				+",geschlecht="+t.getGeschlecht()
+				+",konfession="+t.getKonfession()
+				+",fachrichtung="+t.getFachrichtung()
+				+",lehrjahr="+t.getLehrjahr()
+				+",ausbildungsbeginn="+t.getAusbildungsbeginn()
+				+",ausbildungsende="+t.getAusbildungsende()
+				+",letzte_schulform="+t.getLetzte_Schulform()
+				+",schulabschluss="+t.getSchulabschluss()
+				+",anmerkung_schulabschluss="+t.getAnmerkung_Schulabschluss()
+				+",fehltage="+t.getFehltage()
+				+",klasseid="+t.getKlasse().getID()
 				+",betriebid="+t.getBetrieb().getID()
-				+" WHERE ausbilderid="+t.getID()+";";
+				+",ausbilderid="+t.getAusbilder().getID()
+				+" WHERE azubiid="+t.getID()+";";
 		return MySQLConnector.getInstance().statementExecute(sql);
 	
 	}
 
 	@Override
 	public boolean delete(Azubi t) {
-		String sql = "delete from ausbilder"+
-				" WHERE ausbilderid="+t.getID()+";";
+		String sql = "delete from azubi"+
+				" WHERE azubiid="+t.getID()+";";
 		return MySQLConnector.getInstance().statementExecute(sql);
 	
 	}
 
 	@Override
 	public ArrayList<Azubi> getAll() {
-//		String sql = "select * from ausbilder";
-//		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
-		ArrayList<Azubi> ausbilderListe = new ArrayList<Azubi>();
-//		try{
-//		 while (rs.next())
-//	      {
-//			 Ausbilder b = new Ausbilder();
-//	        b.setID(rs.getString("ausbilderid"));
-//	        b.setName(rs.getString("name"));
-//	        b.setVorname(rs.getString("vorname"));
-//	        b.setTelefon(rs.getString("telefonnummer"));
-//	        b.setEmail(rs.getString("email"));  
-//	        b.setBetrieb(dao.getByGuid(rs.getString("betriebid")));  
-//	        
-//	        ausbilderListe.add(b);
-//	      }
-//		}catch(Exception e){
-//			System.out.println("Fehler in MySQLBetriebDAO");
-//		}
-		return ausbilderListe;
+		String sql = "select * from azubi";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ArrayList<Azubi> azubiListe = new ArrayList<Azubi>();
+		try{
+		 while (rs.next())
+	      {
+			 Azubi a = new Azubi();
+	        a.setID(rs.getString("azubiid"));
+	        a.setName(rs.getString("name"));
+	        a.setVorname(rs.getString("vorname"));
+	        a.setTelefon(rs.getString("telefonnummer"));
+	        a.setEmail(rs.getString("email"));  
+	        a.setStrasse(rs.getString("strasse"));  
+	        a.setPlz(rs.getString("plz"));  
+	        a.setMobiltelefon(rs.getString("mobiltelefon"));  
+	        a.setOrt(rs.getString("ort"));  
+	        a.setGeburtsdatum(rs.getString("geburtsdatum"));  
+	        a.setVolljaehrigkeit(rs.getString("volljaehrigkeit").toCharArray()[0]);  
+	        a.setInklusionsberatung(rs.getString("inklusionsberatung").toCharArray()[0]);  
+	        a.setGeburtsort(rs.getString("geburtsort"));  
+	        a.setGeburtsname(rs.getString("geburtsname"));  
+	        a.setGeburtsland(rs.getString("geburtsland"));  
+	        a.setStaatsangehoerigkeit_1(rs.getString("Staatsangehoerigkeit_1"));  
+	        a.setStaatsangehoerigkeit_2(rs.getString("Staatsangehoerigkeit_2"));  
+	        a.setZuzugsjahr(rs.getInt("Zuzugsjahr"));  
+	        a.setGeburtsland_Vater(rs.getString("Geburtsland_Vater"));  
+	        a.setGeburtsland_Mutter(rs.getString("Geburtsland_Mutter"));  
+	        a.setGeschlecht(rs.getString("Geschlecht").toCharArray()[0]);  
+	        a.setKonfession(rs.getString("Konfession"));  
+	        a.setFachrichtung(rs.getString("Fachrichtung").toCharArray()[0]);  
+	        a.setLehrjahr(rs.getInt("Lehrjahr"));  
+	        a.setAusbildungsbeginn(rs.getString("Ausbildungsbeginn"));  
+	        a.setAusbildungsende(rs.getString("Ausbildungsende"));  
+	        a.setLetzte_Schulform(rs.getString("Letzte_Schulform"));  
+	        a.setSchulabschluss(rs.getString("Schulabschluss"));  
+	        a.setAnmerkung_Schulabschluss(rs.getString("Anmerkung_Schulabschluss"));  
+	        a.setFehltage(rs.getInt("Fehltage"));  
+	        a.setKlasse(daoKlasse.getByGuid(rs.getString("KlassenID")));  
+	        a.setBetrieb(daoBetrieb.getByGuid(rs.getString("BetriebID")));  
+	        a.setAusbilder(daoAusbilder.getByGuid(rs.getString("AusbilderID")));  
+	        
+	        azubiListe.add(a);
+	      }
+		}catch(Exception e){
+			System.out.println("Fehler in MySQLAzubiDAO");
+		}
+		return azubiListe;
 	}
 
 	@Override
 	public Azubi getByGuid(String guid) {
-		String sql = "select * from ausbilder where ausbilderid="+guid+"";
+		String sql = "select * from azubi where azubiid="+guid+"";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
-		Azubi a = new Azubi();
+		Azubi b = new Azubi();
 		try {
 			rs.next();
-	        a.setID(rs.getString("ausbilderid"));
-	        a.setName(rs.getString("name"));
-	        a.setVorname(rs.getString("vorname"));
-	        a.setTelefon(rs.getString("telefonnummer"));
-	        a.setEmail(rs.getString("email")); 
-//	        a.setBetrieb(dao.getByGuid(rs.getString("betriebid"))); 
+		        b.setID(rs.getString("azubiid"));
+		        b.setName(rs.getString("name"));
+		        b.setVorname(rs.getString("vorname"));
+		        b.setTelefon(rs.getString("telefonnummer"));
+		        b.setEmail(rs.getString("email"));  
+		        b.setStrasse(rs.getString("strasse"));  
+		        b.setPlz(rs.getString("plz"));  
+		        b.setMobiltelefon(rs.getString("mobiltelefon"));  
+		        b.setOrt(rs.getString("ort"));  
+		        b.setGeburtsdatum(rs.getString("geburtsdatum"));  
+		        b.setVolljaehrigkeit(rs.getString("volljaehrigkeit").toCharArray()[0]);  
+		        b.setInklusionsberatung(rs.getString("inklusionsberatung").toCharArray()[0]);  
+		        b.setGeburtsort(rs.getString("geburtsort"));  
+		        b.setGeburtsname(rs.getString("geburtsname"));  
+		        b.setGeburtsland(rs.getString("geburtsland"));  
+		        b.setStaatsangehoerigkeit_1(rs.getString("Staatsangehoerigkeit_1"));  
+		        b.setStaatsangehoerigkeit_2(rs.getString("Staatsangehoerigkeit_2"));  
+		        b.setZuzugsjahr(rs.getInt("Zuzugsjahr"));  
+		        b.setGeburtsland_Vater(rs.getString("Geburtsland_Vater"));  
+		        b.setGeburtsland_Mutter(rs.getString("Geburtsland_Mutter"));  
+		        b.setGeschlecht(rs.getString("Geschlecht").toCharArray()[0]);  
+		        b.setKonfession(rs.getString("Konfession"));  
+		        b.setFachrichtung(rs.getString("Fachrichtung").toCharArray()[0]);  
+		        b.setLehrjahr(rs.getInt("Lehrjahr"));  
+		        b.setAusbildungsbeginn(rs.getString("Ausbildungsbeginn"));  
+		        b.setAusbildungsende(rs.getString("Ausbildungsende"));  
+		        b.setLetzte_Schulform(rs.getString("Letzte_Schulform"));  
+		        b.setSchulabschluss(rs.getString("Schulabschluss"));  
+		        b.setAnmerkung_Schulabschluss(rs.getString("Anmerkung_Schulabschluss"));  
+		        b.setFehltage(rs.getInt("Fehltage"));  
+		        b.setKlasse(daoKlasse.getByGuid(rs.getString("KlassenID")));  
+		        b.setBetrieb(daoBetrieb.getByGuid(rs.getString("BetriebID")));  
+		        b.setAusbilder(daoAusbilder.getByGuid(rs.getString("AusbilderID")));  
+		        
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return a;
+		return b;
 	}
 
 }
