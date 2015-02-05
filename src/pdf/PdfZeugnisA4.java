@@ -1,6 +1,5 @@
 package pdf;
 
-import java.awt.Color;
 import java.io.FileOutputStream;
 
 import javax.swing.JFrame;
@@ -12,8 +11,8 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.TabSettings;
-import com.itextpdf.text.html.WebColors;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -123,7 +122,7 @@ public class PdfZeugnisA4 {
 		konf.add(new Chunk(" folgende Leistungen fest:"));
 		konf.add(Chunk.NEWLINE);
 		
-		Phrase titel = new Phrase("LEISTUNENG", fBold);
+		Phrase titel = new Phrase("LEISTUNGEN", fBold);
 		titel.add(Chunk.NEWLINE);
 		
 		Phrase bereich1 = new Phrase("I. Berufsübergreifender Bereich", fBold);
@@ -133,8 +132,10 @@ public class PdfZeugnisA4 {
 		fach1.add("Deutsch / Kommunikation");
 		Chunk note1 = new Chunk("- gut -");
 		PdfPTable table = new PdfPTable(1);
+		table.setWidthPercentage(30);
         PdfPCell cell1 = new PdfPCell(new Paragraph("- gut - ", fBold));
         cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        cell1.setBorder(Rectangle.NO_BORDER);
 
 
         table.addCell(cell1);
