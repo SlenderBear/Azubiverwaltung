@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
@@ -126,43 +127,75 @@ public class PdfZeugnisA4 {
 		titel.add(Chunk.NEWLINE);
 		
 		Phrase bereich1 = new Phrase("I. Berufsübergreifender Bereich", fBold);
-		bereich1.add(Chunk.NEWLINE);
 		
-		Phrase fach1 = new Phrase();
-		fach1.add("Deutsch / Kommunikation");
-		Chunk note1 = new Chunk("- gut -");
-		PdfPTable table = new PdfPTable(1);
-		table.setWidthPercentage(30);
-        PdfPCell cell1 = new PdfPCell(new Paragraph("- gut - ", fBold));
-        cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
-        cell1.setBorder(Rectangle.NO_BORDER);
-
-
-        table.addCell(cell1);
-
-        fach1.add(table);
-        
-//		Phrase fach1 = new Phrase();
-//		fach1.add("Deutsch / Kommunikation");
-//		Chunk note1 = new Chunk("- gut -", fBold);
-//		note1.setBackground(BaseColor.LIGHT_GRAY);
-//
-//        fach1.add(note1);
-        fach1.add(Chunk.NEWLINE);
+		PdfPTable tableB1 = new PdfPTable(2);
+		tableB1.setWidthPercentage(100);
+		tableB1.setHorizontalAlignment(Element.ALIGN_TOP);
+		tableB1.setWidths(new int[]{2, 1});
+		
+		tableFach(tableB1, "Deutsch / Kommunikation");
+		tableNote(tableB1, "- gut -");
+		tableFach(tableB1, "Politik / Gesellschaftslehre");
+		tableNote(tableB1, "- gut -");
+		tableFach(tableB1, "Religionslehre");
+		tableNote(tableB1, "- gut -");
+		tableFach(tableB1, "Sport / Gesundheitsförderung");
+		tableNote(tableB1, "- gut -");
+		
+		PdfPTable tableB2 = new PdfPTable(2);
+		tableB2.setWidthPercentage(100);
+		tableB2.setHorizontalAlignment(Element.ALIGN_TOP);
+		tableB2.setWidths(new int[]{2, 1});
 		
 		Phrase bereich2 = new Phrase("II. Berufsbezogener Bereich", fBold);
-		bereich2.add(Chunk.NEWLINE);
+		tableFach(tableB2, "Informations- und Telekommunikationssysteme");
+		tableNote(tableB2, "- gut -");
+		tableFach(tableB2, "Anwendungsentwicklung");
+		tableNote(tableB2, "- gut -");
+		tableFach(tableB2, "Wirtschafts- und Geschäftsprozesse");
+		tableNote(tableB2, "- gut -");
+		tableFach(tableB2, "Englisch");
+		tableNote(tableB2, "- gut -");
 		
 		Phrase bereich3 = new Phrase("I. Differenzierungsbereich", fBold);
-		bereich3.add(Chunk.NEWLINE);
 		
+		PdfPTable tableB3 = new PdfPTable(2);
+		tableB3.setWidthPercentage(100);
+		tableB3.setHorizontalAlignment(Element.ALIGN_TOP);
+		tableB3.setWidths(new int[]{2, 1});
+		
+		tableFach(tableB3, "------------------------");
+		tableNote(tableB3, "------------------------");
+
 		leistung.add(konf);
 		leistung.add(titel);
 		leistung.add(bereich1);
-		leistung.add(fach1);
+		leistung.add(tableB1);
 		leistung.add(bereich2);
+		leistung.add(tableB2);
 		leistung.add(bereich3);
+		leistung.add(tableB3);
 		document.add(leistung);
+	}
+	
+	private void tableFach(PdfPTable table, String fach){
+		PdfPCell cellFach = new PdfPCell(new Paragraph(fach));
+		cellFach.setBorder(Rectangle.NO_BORDER);
+		cellFach.setHorizontalAlignment(Element.ALIGN_LEFT);
+		cellFach.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		cellFach.setFixedHeight(20f);
+		
+        table.addCell(cellFach);
+	}
+	
+	private void tableNote(PdfPTable table, String note){
+		PdfPCell cellNote = new PdfPCell(new Paragraph(note, fBold));
+		cellNote.setBackgroundColor(BaseColor.LIGHT_GRAY);
+		cellNote.setBorder(Rectangle.NO_BORDER);
+		cellNote.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cellNote.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		cellNote.setFixedHeight(20f);
+        table.addCell(cellNote);
 	}
 
 }

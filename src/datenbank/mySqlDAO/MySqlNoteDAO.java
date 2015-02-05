@@ -41,7 +41,7 @@ public class MySqlNoteDAO implements StandardDAO<Note>{
 		Note b = new Note();
 		try {
 			rs.next();
-	        b.setZahl(rs.getInt("zahl"));
+	        b.setNoteID(rs.getString("noteid"));
 	        b.setBeschreibung((rs.getString("beschreibung")));
 		} catch (SQLException e) {
 			e.printStackTrace();
