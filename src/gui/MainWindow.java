@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Properties;
@@ -17,6 +18,7 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -35,6 +37,8 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
+
+import objects.Klasse;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -66,7 +70,7 @@ public class MainWindow {
 	public void initialize() {
 		mainFrame = new JFrame("HHBK Azubiverwaltung");
 		mainFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		mainFrame.setSize(800, 600);
+		mainFrame.setSize(800, 670);
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -181,7 +185,7 @@ public class MainWindow {
 		//
 		label = new JLabel("Jahr");
 		c.gridx = 1;
-		c.gridy = 1;
+		c.gridy = 0;
 		c.gridheight = 1;
 		innerZeugnisPanel.add(label, c);
 		
@@ -203,7 +207,7 @@ public class MainWindow {
 		JTable notenTable = new JTable(dtmNoten);
 		JScrollPane tableScrollPane = new JScrollPane(notenTable);
 		tableScrollPane.setPreferredSize(new Dimension(250, 148));
-		c.gridy = 4;
+		c.gridy = 3;
 		c.gridheight = 4;
 		innerZeugnisPanel.add(tableScrollPane, c);
 		//
@@ -212,7 +216,7 @@ public class MainWindow {
 		label = new JLabel("Zeugniskonferenz am:");
 		c.gridx = 2;
 		c.gridheight = 1;
-		c.gridy = 1;
+		c.gridy = 0;
 		innerZeugnisPanel.add(label, c);
 		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel,dlf);
 		c.gridy++;
@@ -228,10 +232,12 @@ public class MainWindow {
 //		druckPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		druckPanel.add(btZeugDruck);
 		druckPanel.add(btZeugKlasseDruck);
+		c.gridy++;
+		innerZeugnisPanel.add(druckPanel, c);
 
 		zeugnisPanel.add(createTitlePanel("Zeugnisverwaltung"),BorderLayout.NORTH);
 		zeugnisPanel.add(innerZeugnisPanel,BorderLayout.CENTER);
-		zeugnisPanel.add(druckPanel,BorderLayout.SOUTH);
+		
 		
 	}
 	
@@ -552,7 +558,11 @@ public class MainWindow {
 		c.gridx = 0;
 		c.gridy = 1;
 		innerAzubiPanel.add(label, c);
-		JComboBox cmbKlasse = new JComboBox();
+		//
+		ArrayList<Klasse> klasseList = new ArrayList();
+		DefaultComboBoxModel dcbmKlasse = new DefaultComboBoxModel(klasseList.toArray());
+		JComboBox cmbKlasse = new JComboBox(dcbmKlasse);
+		//
 		cmbKlasse.setPreferredSize(new Dimension(200, 25));
 		c.gridy = 2;
 		innerAzubiPanel.add(cmbKlasse, c);
@@ -560,9 +570,9 @@ public class MainWindow {
 		c.gridy = 3;
 		innerAzubiPanel.add(label, c);
 		JList azubiList = new JList();
-		azubiList.setPreferredSize(new Dimension(200, 200));
+		azubiList.setPreferredSize(new Dimension(200, 300));
 		c.gridy = 4;
-		c.gridheight = 8;
+		c.gridheight = 10;
 		innerAzubiPanel.add(azubiList, c);
 		label = new JLabel("Vorname");
 		c.gridy = 4;
@@ -590,6 +600,12 @@ public class MainWindow {
 		label = new JLabel("E-Mail");
 		c.gridy++;
 		innerAzubiPanel.add(label, c);
+		label = new JLabel("Betrieb");
+		c.gridy++;
+		innerAzubiPanel.add(label, c);
+		label = new JLabel("Ausbilder");
+		c.gridy++;
+		innerAzubiPanel.add(label, c);
 
 		JTextField vorField = new JTextField(20);
 		c.gridx = 2;
@@ -597,11 +613,11 @@ public class MainWindow {
 		c.gridwidth = 2;
 		innerAzubiPanel.add(vorField, c);
 		JTextField nachField = new JTextField(20);
-		c.gridy = 5;
+		c.gridy++;
 		innerAzubiPanel.add(nachField, c);
 		//
 	    JDatePickerImpl datePicker = new JDatePickerImpl(datePanel,dlf);
-		c.gridy = 6;
+		c.gridy++;
 		innerAzubiPanel.add(datePicker, c);
 		//
 		ButtonGroup btgr = new ButtonGroup();
@@ -612,7 +628,7 @@ public class MainWindow {
 		JPanel rbPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		rbPanel.add(rbFrau);
 		rbPanel.add(rbMann);
-		c.gridy = 7;
+		c.gridy++;
 		c.gridwidth = 2;
 		innerAzubiPanel.add(rbPanel, c);
 		JPanel ortPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -621,22 +637,39 @@ public class MainWindow {
 		ortPanel.add(plzField);
 		ortPanel.add(new JLabel(" / "));
 		ortPanel.add(ortField);
-		c.gridx = 2;
-		c.gridy = 8;
+		c.gridy++;
 		innerAzubiPanel.add(ortPanel, c);
 
 		JTextField strField = new JTextField(20);
-		c.gridx = 2;
-		c.gridy = 9;
+		c.gridy++;
 		c.gridwidth = 2;
 		innerAzubiPanel.add(strField, c);
 		JTextField tNummerField = new JTextField(20);
-		c.gridy = 10;
+		c.gridy++;
 		innerAzubiPanel.add(tNummerField, c);
 		JTextField eMailField = new JTextField(20);
-		c.gridy = 11;
+		c.gridy++;
 		innerAzubiPanel.add(eMailField, c);
+		//
+		JComboBox cmbBetrieb = new JComboBox();
+		cmbBetrieb.setPreferredSize(new Dimension(200, 25));
+		c.gridy++;
+		innerAzubiPanel.add(cmbBetrieb, c);
+		//
+		JComboBox cmbAusbilder = new JComboBox();
+		cmbAusbilder.setPreferredSize(new Dimension(200, 25));
+		c.gridy++;
+		innerAzubiPanel.add(cmbAusbilder,c);
+		//
 		JButton	addButton = createButton("Erstellen", 150, 25);
+		addButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
 		
