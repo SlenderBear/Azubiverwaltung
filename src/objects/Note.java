@@ -2,16 +2,9 @@ package objects;
 
 public class Note {
 	
-	private int zahl;
+	private String noteID;
 	private String Beschreibung;
 
-	public int getZahl() {
-		return zahl;
-	}
-
-	public void setZahl(int zahl) {
-		this.zahl = zahl;
-	}
 
 	public String getBeschreibung() {
 		return Beschreibung;
@@ -19,6 +12,14 @@ public class Note {
 
 	public void setBeschreibung(String beschreibung) {
 		Beschreibung = beschreibung;
+	}
+
+	public String getNoteID() {
+		return noteID;
+	}
+
+	public void setNoteID(String noteID) {
+		this.noteID = noteID;
 	}
 
 }
