@@ -12,7 +12,7 @@ public class TestsAnna {
 		k.setJahr(2015);
 		
 		Azubi a = new Azubi();
-		a.setName("Minion2");
+		a.setName("Minion3");
 		a.setVorname("Banana");
 		a.setGeburtsdatum("11.11.1111");
 		a.setLehrjahr(2);
