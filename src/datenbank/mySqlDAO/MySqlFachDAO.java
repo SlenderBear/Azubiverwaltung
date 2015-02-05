@@ -74,4 +74,18 @@ public class MySqlFachDAO implements StandardDAO<Fach>{
 		
 	}
 
+	@Override
+	public boolean isVorhanden(Fach t) {
+		String sql = "select * from fach where "+
+				"bezeichnung='"+t.getBezeichnung()
+				+"';";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+			try {
+				return rs.first();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
+	}
+
 }

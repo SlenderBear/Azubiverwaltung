@@ -8,4 +8,5 @@ public interface StandardDAO<T> {
 	boolean delete(T t);
 	ArrayList<T> getAll();
 	T getByGuid(String guid);
+	boolean isVorhanden(T t);
 }

@@ -92,5 +92,23 @@ public class MySqlAusbilderDAO implements StandardDAO<Ausbilder> {
 		return a;
 		
 	}
+
+	@Override
+	public boolean isVorhanden(Ausbilder t) {
+		String sql = "select * from ausbilder where name='"+t.getName()
+				+"',vorname='"+t.getVorname()
+				+"',telefonnummer='"+t.getTelefon()
+				+"',email='"+t.getEmail()
+				+"',betriebid='"+t.getBetrieb().getID()
+				+"';";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+			try {
+				return rs.first();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
+			
+	}
 	
 }

@@ -26,8 +26,9 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 
 	@Override
 	public boolean update(Zeugnisposition t) {
-		String sql = "UPDATE zeugnisposition" + "SET zeugnisid='"
-				+ t.getZeugnis().getID() + "',noteid='" + t.getNote().getNoteID()
+		String sql = "UPDATE zeugnisposition" + "SET "
+				+ "zeugnisid='"	+ t.getZeugnis().getID()
+				+ "',noteid='" + t.getNote().getNoteID()
 				+ "',fachid='" + t.getFach().getID()
 				+ "' WHERE zeugnispositionid='" + t.getID() + "';";
 		return MySQLConnector.getInstance().statementExecute(sql);
@@ -80,6 +81,22 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 			e.printStackTrace();
 		}
 		return z;
+	}
+
+	@Override
+	public boolean isVorhanden(Zeugnisposition t) {
+		String sql = "select * from zeugnisposition where "
+				+ "zeugnisid='"	+ t.getZeugnis().getID()
+				+ "',noteid='" + t.getNote().getNoteID()
+				+ "',fachid='" + t.getFach().getID()
+				+"';";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+			try {
+				return rs.first();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
 	}
 
 }
