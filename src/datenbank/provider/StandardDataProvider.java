@@ -100,6 +100,17 @@ public abstract class StandardDataProvider {
 		}
 		return null;
 	}
+	
+	/**
+	 * Konstruktor.
+	 * Initialisiert den DataProvider.
+	 * Wirft eine Exception wenn DB nicht gestartet werden konnte.
+	 */
+	public StandardDataProvider() {
+		if(initAndGetProvider() == null) {
+			throw new RuntimeException("DB konnte nicht gestartet werden.");
+		}
+	}
 
 	/**
 	 * Initialisiert den DataProvider und liefert diesen zurück.
@@ -107,7 +118,7 @@ public abstract class StandardDataProvider {
 	 * @return {@link StandardDataProvider} null wenn Property Empty oder keine
 	 *         entsprechende Datenbank gefunden werden konnte.
 	 */
-	public StandardDataProvider initAndGetProvider() {
+	private StandardDataProvider initAndGetProvider() {
 		if (propertieHandler == null) {
 			propertieHandler = new PropertyHandling();
 		}
