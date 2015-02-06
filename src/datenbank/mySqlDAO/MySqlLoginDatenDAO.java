@@ -7,12 +7,17 @@ import java.util.ArrayList;
 import objects.Login;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Login_Datenobjektes
+ */
 public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	
 	private static final String DAO_NAME= Login.class.getName();
 	
 	private MySqlBerechtigungDAO dao = new MySqlBerechtigungDAO();
+	private final int verschlüsselungsverschiebung = 26;
 	
 	@Override
 	public String getClassName() {
@@ -91,16 +96,12 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 		}
 		return l;
 	}
-	//TODO verschlüsseln
 	private String verschluesseln(String passwort){
-//	String verschlüsseltesPasswort = "";
-	return passwort;
+	    return encode(passwort, verschlüsselungsverschiebung);
 	}
-	//TODO entschlüsseln
 	private String entschluesseln(String passwort){
-//	String unverschlüsseltesPasswort = "";
-	return passwort;
-	}
+		    return encode(passwort, 26-verschlüsselungsverschiebung);
+		}
 
 	@Override
 	public boolean isVorhanden(Login t) {
@@ -114,5 +115,31 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 				e.printStackTrace();
 			}
 			return false;
+	}
+	
+	/**
+	 * 
+	 * @param Übergabe einer Zeichenkette die Verschlüsselt werden soll
+	 * @param verschiebung die durch die Caesar Verschlüsselung angewendet wird
+	 * @return Gibt die verschlüsselte Zeichenkette zurück
+	 */
+	private String encode(String s, int verschiebung){
+	    s = s.toUpperCase();
+	    char[] chars = s.toCharArray();
+	    for(int i = 0; i < s.length(); i++)
+	        chars[i] = encode(chars[i], verschiebung);
+	    return String.valueOf(chars);
+	}
+	/**
+	 * 
+	 * @param Übergabe eines Characters zur Verschlüsselung
+	 * @param verschiebung die mit der Caesarverschlüsselung angewendet wird
+	 * @return Gibt den Character verschlüsselt zurück
+	 */
+	private char encode(char c, int verschiebung){
+	    if(c >= 'A' && c <= 'Z')
+	        return (char)((c-'A'+verschiebung)%26 + 'A');
+	    else
+	        return c;
 	}
 }

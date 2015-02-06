@@ -8,7 +8,11 @@ import objects.Zeugnis;
 import objects.Zeugnisposition;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des ZeugnisPositionsobjektes
+ */
 public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 	
 	private static final String DAO_NAME= Zeugnisposition.class.getName();

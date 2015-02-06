@@ -8,7 +8,11 @@ import objects.Azubi;
 import objects.Klasse;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Azubiobjektes
+ */
 public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	private MySqlKlasseDAO daoKlasse= new MySqlKlasseDAO();
 	private MySqlBetriebDAO daoBetrieb = new MySqlBetriebDAO();
@@ -255,7 +259,11 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	public String getClassName() {
 		return DAO_NAME;
 	}
-	
+	/**
+	 * 
+	 * @param Übergabe eines Klassenobjektes
+	 * @return Rückgabe aller Azubis, die sich in dieser Klasse befinden
+	 */
 	public ArrayList<Azubi> gibAzubisZuKlasse(Klasse k){
 		String sql = "select * from azubi where klasseid='"
 				+ k.getID() + "';";

@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import objects.Betrieb;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Betriebsobjektes
+ */
 public class MySqlBetriebDAO implements StandardDAO<Betrieb> {
 	
 	private static final String DAO_NAME= Betrieb.class.getName();
@@ -83,7 +87,7 @@ public class MySqlBetriebDAO implements StandardDAO<Betrieb> {
 		}
 		return betriebsListe;
 	}
-
+	@Override
 	public Betrieb getByGuid(String guid) {
 		String sql = "select * from betrieb where betriebid='" + guid + "';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);

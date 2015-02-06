@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import objects.Berechtigung;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+  *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Berechtigungsobjektes
+ */
 public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
 	
 	private static final String DAO_NAME= Berechtigung.class.getName();

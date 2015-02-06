@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import objects.Zeugnis;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Zeugnisobjektes
+ */
 public class MySqlZeugnisDAO implements StandardDAO<Zeugnis>{
 	
 	private static final String DAO_NAME= Zeugnis.class.getName();

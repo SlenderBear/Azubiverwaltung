@@ -7,13 +7,17 @@ import java.util.ArrayList;
 import objects.Ausbilder;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Ausbilderobjektes
+ */
 public class MySqlAusbilderDAO implements StandardDAO<Ausbilder> {
 
 	private static final String DAO_NAME= Ausbilder.class.getName();
 	
 	private MySqlBetriebDAO dao = new MySqlBetriebDAO();
-	
+
 	@Override
 	public Ausbilder insert(Ausbilder b) {
 		String guid = MySQLConnector.getInstance().getNewGUID();

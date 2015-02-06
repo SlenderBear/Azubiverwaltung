@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import objects.Note;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Notenobjektes
+ */
 public class MySqlNoteDAO implements StandardDAO<Note>{
 	
 	private static final String DAO_NAME= Note.class.getName();
