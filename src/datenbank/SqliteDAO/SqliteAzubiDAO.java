@@ -51,7 +51,6 @@ public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 				+ "','" + t.getAnmerkung_Schulabschluss()
 				+ "'," + t.getFehltage()				
 				+ ",'" + t.getKlasse().getID()
-				+ "','" + t.getBetrieb().getID()
 				+ "','" + t.getAusbilder().getID()
 				+ "');";
 		SqliteConnector.getInstance().statementExecute(sql);
@@ -93,7 +92,6 @@ public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 				+"',anmerkung_schulabschluss='"+t.getAnmerkung_Schulabschluss()
 				+"',fehltage="+t.getFehltage()
 				+",klasseid='"+t.getKlasse().getID()
-				+"',betriebid='"+t.getBetrieb().getID()
 				+"',ausbilderid='"+t.getAusbilder().getID()
 				+"' WHERE azubiid='"+t.getID()+"';";
 		return SqliteConnector.getInstance().statementExecute(sql);
@@ -148,7 +146,6 @@ public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 	        a.setAnmerkung_Schulabschluss(rs.getString("Anmerkung_Schulabschluss"));  
 	        a.setFehltage(rs.getInt("Fehltage"));  
 	        a.setKlasse(daoKlasse.getByGuid(rs.getString("KlassenID")));  
-	        a.setBetrieb(daoBetrieb.getByGuid(rs.getString("BetriebID")));  
 	        a.setAusbilder(daoAusbilder.getByGuid(rs.getString("AusbilderID")));  
 	        
 	        azubiListe.add(a);
@@ -197,7 +194,6 @@ public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 		        b.setAnmerkung_Schulabschluss(rs.getString("Anmerkung_Schulabschluss"));  
 		        b.setFehltage(rs.getInt("Fehltage"));  
 		        b.setKlasse(daoKlasse.getByGuid(rs.getString("KlassenID")));  
-		        b.setBetrieb(daoBetrieb.getByGuid(rs.getString("BetriebID")));  
 		        b.setAusbilder(daoAusbilder.getByGuid(rs.getString("AusbilderID")));  
 		        
 		} catch (SQLException e) {
@@ -239,7 +235,6 @@ public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 				+"',anmerkung_schulabschluss='"+t.getAnmerkung_Schulabschluss()
 				+"',fehltage="+t.getFehltage()
 				+",klasseid='"+t.getKlasse().getID()
-				+"',betriebid='"+t.getBetrieb().getID()
 				+"',ausbilderid='"+t.getAusbilder().getID()
 				+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
@@ -296,7 +291,6 @@ public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 		        a.setAnmerkung_Schulabschluss(rs.getString("Anmerkung_Schulabschluss"));  
 		        a.setFehltage(rs.getInt("Fehltage"));  
 		        a.setKlasse(daoKlasse.getByGuid(rs.getString("KlassenID")));  
-		        a.setBetrieb(daoBetrieb.getByGuid(rs.getString("BetriebID")));  
 		        a.setAusbilder(daoAusbilder.getByGuid(rs.getString("AusbilderID")));  
 		        
 		        azubiListe.add(a);
