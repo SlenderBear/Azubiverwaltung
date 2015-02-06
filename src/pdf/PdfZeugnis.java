@@ -16,6 +16,12 @@ import com.itextpdf.text.pdf.PdfWriter;
 import objects.Azubi;
 import objects.Zeugnis;
 
+
+/**
+ * @author backs.kristin-anna
+ *
+ */
+
 public class PdfZeugnis {
 
 	private Font fTitle = new Font(Font.FontFamily.TIMES_ROMAN, 18,

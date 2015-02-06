@@ -9,6 +9,11 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
+/**
+ * @author backs.kristin-anna
+ *
+ */
+
 public class NotenTabelle {
 	
 	private Font fSmall = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL);

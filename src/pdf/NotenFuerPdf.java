@@ -1,11 +1,17 @@
 package pdf;
 
+
 import java.util.ArrayList;
 
 import datenbank.provider.StandardDataProvider;
 import objects.Azubi;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
+
+/**
+ * @author backs.kristin-anna
+ *
+ */
 
 public class NotenFuerPdf {
 	
