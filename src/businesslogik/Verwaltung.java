@@ -44,4 +44,30 @@ public class Verwaltung {
 
 	}
 	
+	/**
+	 * Delegiert den Insert an den {@link StandardDataProvider}.
+	 * @param o {@link Object}
+	 * @return {@link Object} das erstellt wurde.
+	 */
+	public Object insert(Object o) {
+		return dbRef.insert(o);
+	}
+	
+	/**
+	 * Delegiert das Update an den {@link StandardDataProvider}.
+	 * @param o {@link Object}
+	 * @return true wenn erfolgreich.
+	 */
+	public boolean update(Object o)  {
+		return dbRef.update(o);
+	}
+	
+	/**
+	 * Delegiert den Delete an den {@link StandardDataProvider}.
+	 * @param o {@link Object}
+	 * @return true wenn erfolgreich.
+	 */
+	public boolean delete(Object o) {
+		return dbRef.delete(o);
+	}
 }
