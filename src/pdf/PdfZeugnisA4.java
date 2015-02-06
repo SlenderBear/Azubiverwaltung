@@ -283,7 +283,7 @@ public class PdfZeugnisA4 {
 		document.add(leistung);
 	}
 
-	private void schreibeZweiteSeite(Azubi azubi, Zeugnis zeugnis) {
+	private void schreibeZweiteSeite(Azubi azubi, Zeugnis zeugnis) throws Exception{
 		Paragraph zweiteSeite = new Paragraph();
 		zweiteSeite.setLeading(22.0f);
 		zweiteSeite.setTabSettings(new TabSettings(56f));
@@ -321,10 +321,12 @@ public class PdfZeugnisA4 {
 		datum.add(Chunk.NEWLINE);
 		zweiteSeite.add(datum);
 		
-		Phrase lineSig = new Phrase("___________________________________");
+		Phrase lineSig = new Phrase("_______________________________");
 		lineSig.add(Chunk.TABBING);
 		lineSig.add(Chunk.TABBING);
-		lineSig.add(new Chunk("___________________________________"));
+		lineSig.add(Chunk.TABBING);
+		lineSig.add(Chunk.TABBING);
+		lineSig.add(new Chunk("_______________________________"));
 		lineSig.add(Chunk.NEWLINE);
 		zweiteSeite.add(lineSig);
 
@@ -334,7 +336,7 @@ public class PdfZeugnisA4 {
 		stuffSig.add(Chunk.TABBING);
 		stuffSig.add(Chunk.TABBING);
 		stuffSig.add(Chunk.TABBING);
-		stuffSig.add(Chunk.TABBING);
+		stuffSig.add(new Chunk("(Siegel)", fTiny));
 		stuffSig.add(Chunk.TABBING);
 		stuffSig.add(new Chunk("Klassenleitung ("
 				+ azubi.getKlasse().getLehrer().getName() + ")", fTiny));
@@ -342,6 +344,41 @@ public class PdfZeugnisA4 {
 		stuffSig.add(Chunk.NEWLINE);
 		zweiteSeite.add(stuffSig);
 		
+		schreibeFooter();
+		
+		document.add(zweiteSeite);
+		
+	}
+	
+	private void schreibeFooter(){
+		Paragraph footer = new Paragraph();
+		footer.setAlignment(Element.ALIGN_BOTTOM);
+		footer.add(new Chunk("______________________________________________________________________________"));
+		footer.add(Chunk.NEWLINE);
+		
+		Phrase eins = new Phrase("1)", fTiny);
+		eins.add(Chunk.TABBING);
+		eins.add(new Chunk(
+				"Dieses Fach wurde vorher abgeschlossen. Die Note entspricht der zuletzt erstellen Zeugnisnote in diesem Fach.",
+				fTiny));
+		
+		Phrase zwei = new Phrase("2)", fTiny);
+		zwei.add(Chunk.TABBING);
+		zwei.add(new Chunk(
+				"Die Note des Faches erbigt sich aus den in den letzten beiden vorangegangenen Schulhalbjahren erbrachten Leistungen.",
+				fTiny));
+		
+		Phrase drei = new Phrase("3)", fTiny);
+		drei.add(Chunk.TABBING);
+		drei.add(new Chunk(
+				"Die Fächer im berufsbezogenen Bereich umfassen die in der Anlage aufgeführten Lernfelder.",
+				fTiny));
+		
+		Phrase vier = new Phrase("4)", fTiny);
+		vier.add(Chunk.TABBING);
+		vier.add(new Chunk(
+				"Fächer des Differzierungsbereiches sind in die Durchschnittsnote nicht einbezogen.",
+				fTiny));
 	}
 
 	private void schreibeSignaturen(Azubi azubi, String zeugDatum, Short Format)
