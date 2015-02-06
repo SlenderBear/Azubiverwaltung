@@ -126,18 +126,18 @@ public class MySqlDataProvider extends StandardDataProvider{
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public boolean insert(Object o) {
+	public Object insert(Object o) {
 		try {
 			for (StandardDAO dao : daoListe) {
 				if (dao.getClassName().compareTo(o.getClass().getName()) == 0) {
-					dao.insert(o);
-					return true;
+					o = dao.insert(o);
+					return o;
 				}
 			}
-			return false;
+			return null;
 		} catch (Exception e) {
 			// Datenbankfehler -> Fehlermeldung zurückgeben.
-			return false;
+			return null;
 		}
 	}
 	

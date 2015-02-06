@@ -69,7 +69,7 @@ public abstract class StandardDataProvider {
 	
 	public abstract ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z);
 	
-	public abstract boolean insert(Object o);
+	public abstract Object insert(Object o);
 
 	public abstract boolean update(Object o);
 	
