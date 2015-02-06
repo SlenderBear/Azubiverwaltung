@@ -67,8 +67,18 @@ public abstract class StandardDataProvider {
 	 */
 	public abstract ArrayList<Fach> gibAlleFaecher();
 	
+	/**
+	 * Liefert die Zeugnispositionenzum übergebenen Zeugnis.
+	 * @param z {@link Zeugnis}
+	 * @return Arraylist mit Zeugnispositionen
+	 */
 	public abstract ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z);
 	
+	/**
+	 * Führt den Insert durch.
+	 * @param o {@link Object}
+	 * @return
+	 */
 	public abstract Object insert(Object o);
 
 	public abstract boolean update(Object o);

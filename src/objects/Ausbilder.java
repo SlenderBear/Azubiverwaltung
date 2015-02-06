@@ -8,7 +8,7 @@ package objects;
  *         zuzugreifen.
  */
 
-public class Ausbilder {
+public class Ausbilder implements StandardValueObject {
 
 	private String ID;
 	private String name;

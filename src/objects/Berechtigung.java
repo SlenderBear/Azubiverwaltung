@@ -8,7 +8,7 @@ package objects;
  *         zuzugreifen.
  */
 
-public class Berechtigung {
+public class Berechtigung implements StandardValueObject{
 
 	private int ID;
 	private String Bezeichnung;

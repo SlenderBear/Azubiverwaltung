@@ -8,7 +8,7 @@ package objects;
  *         zuzugreifen.
  */
 
-public class Lehrer {
+public class Lehrer implements StandardValueObject{
 
 	private String ID;
 

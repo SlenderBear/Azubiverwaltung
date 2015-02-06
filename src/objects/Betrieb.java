@@ -8,7 +8,7 @@ package objects;
  *         zuzugreifen.
  */
 
-public class Betrieb {
+public class Betrieb implements StandardValueObject{
 
 	private String ID;
 	private String firmenbezeichnung;
