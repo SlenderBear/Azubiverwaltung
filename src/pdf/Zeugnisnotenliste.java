@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import objects.Azubi;
 import objects.Klasse;
 
 import com.itextpdf.text.Chunk;
@@ -24,14 +25,14 @@ public class Zeugnisnotenliste {
 
 	private Document document = null;
 
-	public void doTabelle(String filepath, Klasse klasse) {
+	public void doTabelle(String filepath, Azubi azubi) {
 		try {
 			document = new Document();
 			PdfWriter.getInstance(document, new FileOutputStream(filepath + "_"
-					+ klasse.getBezeichnung() + ".pdf"));
+					+ azubi.getKlasse().getBezeichnung() + ".pdf"));
 
 			document.open();
-			document.add(createTabelle());
+			document.add(createTabelle(azubi));
 			document.close();
 
 		} catch (Exception e) {
@@ -47,17 +48,17 @@ public class Zeugnisnotenliste {
 
 	}
 
-	private PdfPTable createTabelle() {
+	private PdfPTable createTabelle(Azubi azubi) {
 		PdfPTable table = new PdfPTable(24);
 		table.setWidthPercentage(100);
 		table.setHorizontalAlignment(Element.ALIGN_TOP);
 
-		createHeader(table);
+		createHeader(table, azubi);
 
 		return table;
 	}
 
-	private void createHeader(PdfPTable table) {
+	private void createHeader(PdfPTable table, Azubi azubi) {
 		Paragraph datum = new Paragraph();
 		datum.add(new Chunk("Datum Zeugniskonferenz:", fNorm));
 		datum.add(Chunk.NEWLINE);
@@ -67,6 +68,34 @@ public class Zeugnisnotenliste {
 				12, false, 40f);
 		
 		createCell(table, new Paragraph("Fachrichtung", fNorm), 7, false, 30);
+		createCell(table, new Paragraph("Klasse", fNorm), 7, false, 30);
+		createCell(table, new Paragraph("Zeugnisnoten (Gewichtungsfaktor für Abschlusszeugnis", fNorm), 8, false, 30);
+		createCell(table, new Paragraph("JZ", fNorm), 1, false, 30);
+		createCell(table, new Paragraph("AZ", fNorm), 1, false, 30);
+		
+		if(azubi.getFachrichtung() == 'a'){			
+			createCell(table, new Paragraph("AE", fNorm), 7, false, 30);
+		} else if(azubi.getFachrichtung() == 's'){
+			createCell(table, new Paragraph("SI", fNorm), 7, false, 30);
+		}
+		createCell(table, new Paragraph(azubi.getKlasse().getBezeichnung(), fNorm), 7, false, 30);
+		createCell(table, new Paragraph(""), 1, false, 30);
+		createCell(table, new Paragraph("1"), 1, false, 30);
+		createCell(table, new Paragraph(""), 1, false, 30);
+		createCell(table, new Paragraph(""), 1, false, 30);
+		if(azubi.getFachrichtung() == 'a'){
+			createCell(table, new Paragraph("1"), 1, false, 30);
+			createCell(table, new Paragraph("2"), 1, false, 30);
+		} else if(azubi.getFachrichtung() == 's'){
+			createCell(table, new Paragraph("2"), 1, false, 30);
+			createCell(table, new Paragraph("1"), 1, false, 30);
+		}
+		createCell(table, new Paragraph("1"), 1, false, 30);
+		createCell(table, new Paragraph(""), 1, false, 30);
+		createCell(table, new Paragraph(""), 1, false, 30);
+		createCell(table, new Paragraph(""), 1, false, 30);
+		
+		
 	}
 
 	private void createNestedPart(PdfPTable table) {
