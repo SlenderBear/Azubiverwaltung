@@ -10,6 +10,8 @@ public class TestJustin {
 		StandardDataProvider.changeDataProvider(StandardDataProvider.db_optionen.SQLITE.toString());
 		StandardDataProvider provider = StandardDataProvider.getInstance();
 		 
+		provider.gibAlleAusbilder();
+		
 		Betrieb b = new Betrieb();
 		b.setFirmenbezeichnung("LAchsnackenFirm");
 		b.seteMail("adj@aol.de");
@@ -19,19 +21,19 @@ public class TestJustin {
 		b.setStrasse("lembecker Straöe 43");
 		b.setTelefon("02360642");
 		provider.insert(b);
-		
-		Ausbilder a = new Ausbilder();
-		a.setEmail("shjdfh@aol.de");
-		a.setName("hford");
-		a.setVorname("henry");
-		a.setTelefon("02360643");
-		a.setBetrieb(b);
-		provider.insert(new String(""));
-		
-		provider.delete(a);
-		
-		b.seteMail("Beispielemail");
-		provider.update(b);
+//		
+//		Ausbilder a = new Ausbilder();
+//		a.setEmail("shjdfh@aol.de");
+//		a.setName("hford");
+//		a.setVorname("henry");
+//		a.setTelefon("02360643");
+//		a.setBetrieb(b);
+//		provider.insert(new String(""));
+//		
+//		provider.delete(a);
+//		
+//		b.seteMail("Beispielemail");
+//		provider.update(b);
 	}
 
 }

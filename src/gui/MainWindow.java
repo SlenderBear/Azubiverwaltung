@@ -1007,7 +1007,8 @@ public class MainWindow {
 
 							}
 							if(cmbBetrieb.getSelectedIndex() > -1){
-								newAzubi.setBetrieb((Betrieb)dcbBetrieb.getElementAt(cmbBetrieb.getSelectedIndex()));
+								//TODO
+//								newAzubi.setBetrieb((Betrieb)dcbBetrieb.getElementAt(cmbBetrieb.getSelectedIndex()));
 							}
 							if(cmbAusbilder.getSelectedIndex() > -1){
 								newAzubi.setAusbilder((Ausbilder)dcbAusbilder.getElementAt(cmbAusbilder.getSelectedIndex()));

@@ -62,7 +62,7 @@ public class MySQLConnector implements StandardSqlConnector {
 	 */
 	private void executeInitSkript() {
 		try {
-			File f = new File("W:\\git\\Azubiverwaltung\\src\\Erstellung_DB.sql");
+			File f = new File("W:\\git\\Azubiverwaltung\\src\\Erstellung_DB_mySQL.sql");
 			List<String> sqlList = FileUtils.readLines(f);
 
 			Class.forName("com.mysql.jdbc.Driver"); // Datenbanktreiber für JDBC

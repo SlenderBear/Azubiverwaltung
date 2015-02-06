@@ -39,11 +39,14 @@ public class SqliteConnector implements StandardSqlConnector {
 	}
 	
 	private void initDB(){
-		try{
+		File f = new File("azubiverwaltung.db");
+		if(f.exists()) {
+			// Gibts die db schon? -> Connection aufbauen.
 			getConnection();
-		}catch(Exception e){
-			executeInitSkript();
+			return;
 		}
+		// Db nicht vorhanden -> Initialisieren.
+		executeInitSkript();
 	}
 	
 	/**
@@ -124,7 +127,6 @@ public class SqliteConnector implements StandardSqlConnector {
 	      if(stmt.executeUpdate(sql) > 0) {
 	    	  con.commit();
 		      stmt.close();
-		      con.close();
 	    	  return true;
 	      }
 	    } catch ( Exception e ) {
