@@ -1,17 +1,22 @@
-package datenbank.SqliteDAO;
+package datenbank.dao.mySQL;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Klasse;
-import datenbank.StandardDAO;
-import datenbank.connector.SqliteConnector;
-
-public class SqliteKlasseDAO implements StandardDAO<Klasse> {
-private static final String DAO_NAME= Klasse.class.getName();
+import datenbank.connector.MySQLConnector;
+import datenbank.dao.StandardDAO;
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Fachobjektes
+ */
+public class MySqlKlasseDAO implements StandardDAO<Klasse>{
 	
-	private SqliteLehrerDAO dao = new SqliteLehrerDAO();
+	private static final String DAO_NAME= Klasse.class.getName();
+	
+	private MySqlLehrerDAO dao = new MySqlLehrerDAO();
 	
 	@Override
 	public String getClassName() {
@@ -20,14 +25,14 @@ private static final String DAO_NAME= Klasse.class.getName();
 
 	@Override
 	public Klasse insert(Klasse t) {
-		String guid = SqliteConnector.getInstance().getNewGUID();
+		String guid = MySQLConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO klasse values('" 
 				+ guid 
 				+ "','" + t.getBezeichnung()
 				+ "'," + t.getJahr()
 				+ ",'" + t.getLehrer().getID() 
 				+ "');";
-		SqliteConnector.getInstance().statementExecute(sql);
+		MySQLConnector.getInstance().statementExecute(sql);
 		t.setID(guid);
 		return t;
 	}
@@ -40,20 +45,20 @@ private static final String DAO_NAME= Klasse.class.getName();
 				+"',jahr="+t.getJahr()
 				+",lehrerid='"+t.getLehrer().getID()
 				+"' WHERE klasseid='"+t.getID()+"';";
-		return SqliteConnector.getInstance().statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public boolean delete(Klasse t) {
 		String sql = "delete from klasse"+
 				" WHERE klasseid='"+t.getID()+"';";
-		return SqliteConnector.getInstance().statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public ArrayList<Klasse> getAll() {
 		String sql = "select * from klasse;";
-		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Klasse> klassenListe = new ArrayList<Klasse>();
 		try{
 		 while (rs.next())
@@ -75,7 +80,7 @@ private static final String DAO_NAME= Klasse.class.getName();
 	@Override
 	public Klasse getByGuid(String guid) {
 		String sql = "select * from klasse where klasseid='"+guid+"';";
-		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Klasse k = new Klasse();
 		try {
 			rs.next();
@@ -96,7 +101,7 @@ private static final String DAO_NAME= Klasse.class.getName();
 				+"',jahr="+t.getJahr()
 				+",lehrerid='"+t.getLehrer().getID()
 				+"';";
-		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 			try {
 				return rs.first();
 			} catch (SQLException e) {
@@ -104,4 +109,5 @@ private static final String DAO_NAME= Klasse.class.getName();
 			}
 			return false;
 	}
+
 }

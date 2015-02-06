@@ -1,22 +1,17 @@
-package datenbank.mySqlDAO;
+package datenbank.dao.sqlite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Lehrer;
-import datenbank.StandardDAO;
-import datenbank.connector.MySQLConnector;
-/**
- * 
- * @author mertmann.justin
- *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Lehrerobjektes
- */
-public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
+import datenbank.connector.SqliteConnector;
+import datenbank.dao.StandardDAO;
+
+public class SqliteLehrerDAO implements StandardDAO<Lehrer>{
+private static final String DAO_NAME= Lehrer.class.getName();
 	
-	private static final String DAO_NAME= Lehrer.class.getName();
-	
-	private MySqlLoginDatenDAO dao = new MySqlLoginDatenDAO();
+	private SqliteLoginDatenDAO dao = new SqliteLoginDatenDAO();
 
 	@Override
 	public String getClassName() {
@@ -25,7 +20,7 @@ public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
 	
 	@Override
 	public Lehrer insert(Lehrer t) {
-		String guid = MySQLConnector.getInstance().getNewGUID();
+		String guid = SqliteConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO lehrer values('" 
 				+ guid 
 				+ "','" + t.getName()
@@ -33,7 +28,7 @@ public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
 				+ "','" + t.getTelefon() 
 				+ "','" + t.getLogin().getID() 
 				+ "');";
-		MySQLConnector.getInstance().statementExecute(sql);
+		SqliteConnector.getInstance().statementExecute(sql);
 		t.setID(guid);
 		return t;
 	}
@@ -47,20 +42,20 @@ public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
 				+"',telefonnummer='"+t.getTelefon()
 				+"',loginid='"+t.getLogin().getID()+
 				"' WHERE lehrerid='"+t.getID()+"';";
-		return MySQLConnector.getInstance().statementExecute(sql);
+		return SqliteConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public boolean delete(Lehrer t) {
 		String sql = "delete from lehrer"+
 				" WHERE lehrerid='"+t.getID()+"';";
-		return MySQLConnector.getInstance().statementExecute(sql);
+		return SqliteConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public ArrayList<Lehrer> getAll() {
 		String sql = "select * from lehrer;";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		ArrayList<Lehrer> lehrerListe = new ArrayList<Lehrer>();
 		try{
 		 while (rs.next())
@@ -83,7 +78,7 @@ public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
 	@Override
 	public Lehrer getByGuid(String guid) {
 		String sql = "select * from lehrer where lehrerid='"+guid+"';";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		Lehrer l = new Lehrer();
 		try {
 			rs.next();
@@ -106,7 +101,7 @@ public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
 				+"',telefonnummer='"+t.getTelefon()
 				+"',loginid='"+t.getLogin().getID()
 				+"';";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 			try {
 				return rs.first();
 			} catch (SQLException e) {
@@ -114,5 +109,4 @@ public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
 			}
 			return false;
 	}
-
 }

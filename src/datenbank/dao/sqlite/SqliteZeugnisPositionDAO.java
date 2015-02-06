@@ -1,4 +1,4 @@
-package datenbank.SqliteDAO;
+package datenbank.dao.sqlite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 import objects.Zeugnis;
 import objects.Zeugnisposition;
-import datenbank.StandardDAO;
-import datenbank.SqliteDAO.SqliteFachDAO;
-import datenbank.SqliteDAO.SqliteNoteDAO;
-import datenbank.SqliteDAO.SqliteZeugnisDAO;
 import datenbank.connector.SqliteConnector;
+import datenbank.dao.StandardDAO;
+import datenbank.dao.sqlite.SqliteFachDAO;
+import datenbank.dao.sqlite.SqliteNoteDAO;
+import datenbank.dao.sqlite.SqliteZeugnisDAO;
 
 public class SqliteZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 private static final String DAO_NAME= Zeugnisposition.class.getName();

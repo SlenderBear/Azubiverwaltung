@@ -13,18 +13,18 @@ import objects.Login;
 import objects.StandardValueObject;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
-import datenbank.StandardDAO;
-import datenbank.mySqlDAO.MySqlAusbilderDAO;
-import datenbank.mySqlDAO.MySqlAzubiDAO;
-import datenbank.mySqlDAO.MySqlBerechtigungDAO;
-import datenbank.mySqlDAO.MySqlBetriebDAO;
-import datenbank.mySqlDAO.MySqlFachDAO;
-import datenbank.mySqlDAO.MySqlKlasseDAO;
-import datenbank.mySqlDAO.MySqlLehrerDAO;
-import datenbank.mySqlDAO.MySqlLoginDatenDAO;
-import datenbank.mySqlDAO.MySqlNoteDAO;
-import datenbank.mySqlDAO.MySqlZeugnisDAO;
-import datenbank.mySqlDAO.MySqlZeugnisPositionDAO;
+import datenbank.dao.StandardDAO;
+import datenbank.dao.mySQL.MySqlAusbilderDAO;
+import datenbank.dao.mySQL.MySqlAzubiDAO;
+import datenbank.dao.mySQL.MySqlBerechtigungDAO;
+import datenbank.dao.mySQL.MySqlBetriebDAO;
+import datenbank.dao.mySQL.MySqlFachDAO;
+import datenbank.dao.mySQL.MySqlKlasseDAO;
+import datenbank.dao.mySQL.MySqlLehrerDAO;
+import datenbank.dao.mySQL.MySqlLoginDatenDAO;
+import datenbank.dao.mySQL.MySqlNoteDAO;
+import datenbank.dao.mySQL.MySqlZeugnisDAO;
+import datenbank.dao.mySQL.MySqlZeugnisPositionDAO;
 /**
  * 
  * @author mertmann.justin

@@ -1,22 +1,26 @@
-package datenbank.SqliteDAO;
+package datenbank.dao.mySQL;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Ausbilder;
-import datenbank.StandardDAO;
-import datenbank.connector.SqliteConnector;
-
-public class SqliteAusbilderDAO implements StandardDAO<Ausbilder>{
+import datenbank.connector.MySQLConnector;
+import datenbank.dao.StandardDAO;
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Ausbilderobjektes
+ */
+public class MySqlAusbilderDAO implements StandardDAO<Ausbilder> {
 
 	private static final String DAO_NAME= Ausbilder.class.getName();
 	
-	private SqliteBetriebDAO dao = new SqliteBetriebDAO();
-	
+	private MySqlBetriebDAO dao = new MySqlBetriebDAO();
+
 	@Override
 	public Ausbilder insert(Ausbilder b) {
-		String guid = SqliteConnector.getInstance().getNewGUID();
+		String guid = MySQLConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO ausbilder values('" 
 				+ guid 
 				+ "','" + b.getName()
@@ -25,7 +29,7 @@ public class SqliteAusbilderDAO implements StandardDAO<Ausbilder>{
 				+ "','" + b.getEmail()
 				+ "','" + b.getBetrieb().getID()
 				+ "');";
-		SqliteConnector.getInstance().statementExecute(sql);
+		MySQLConnector.getInstance().statementExecute(sql);
 		b.setID(guid);
 		return b;
 	}
@@ -39,21 +43,21 @@ public class SqliteAusbilderDAO implements StandardDAO<Ausbilder>{
 				+"',email='"+t.getEmail()
 				+"',betriebid='"+t.getBetrieb().getID()
 				+"' WHERE ausbilderid='"+t.getID()+"';";
-		return SqliteConnector.getInstance().statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public boolean delete(Ausbilder t) {
 		String sql = "delete from ausbilder"+
 				" WHERE ausbilderid='"+t.getID()+"';";
-		return SqliteConnector.getInstance().statementExecute(sql);
+		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 
 	@Override
 	public ArrayList<Ausbilder> getAll() {
 		String sql = "select * from ausbilder;";
-		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Ausbilder> ausbilderListe = new ArrayList<Ausbilder>();
 		try{
 		 while (rs.next())
@@ -77,7 +81,7 @@ public class SqliteAusbilderDAO implements StandardDAO<Ausbilder>{
 	@Override
 	public Ausbilder getByGuid(String guid) {
 		String sql = "select * from ausbilder where ausbilderid='"+guid+"';";
-		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Ausbilder a = new Ausbilder();
 		try {
 			rs.next();
@@ -102,7 +106,7 @@ public class SqliteAusbilderDAO implements StandardDAO<Ausbilder>{
 				+"',email='"+t.getEmail()
 				+"',betriebid='"+t.getBetrieb().getID()
 				+"';";
-		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 			try {
 				return rs.first();
 			} catch (SQLException e) {

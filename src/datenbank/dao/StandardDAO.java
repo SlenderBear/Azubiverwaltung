@@ -1,4 +1,4 @@
-package datenbank;
+package datenbank.dao;
 
 import java.util.ArrayList;
 

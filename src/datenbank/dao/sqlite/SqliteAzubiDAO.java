@@ -1,4 +1,4 @@
-package datenbank.mySqlDAO;
+package datenbank.dao.sqlite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,22 +6,19 @@ import java.util.ArrayList;
 
 import objects.Azubi;
 import objects.Klasse;
-import datenbank.StandardDAO;
-import datenbank.connector.MySQLConnector;
-/**
- * 
- * @author mertmann.justin
- *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Azubiobjektes
- */
-public class MySqlAzubiDAO implements StandardDAO<Azubi>{
-	private MySqlKlasseDAO daoKlasse= new MySqlKlasseDAO();
-	private MySqlAusbilderDAO daoAusbilder = new MySqlAusbilderDAO();
+import datenbank.connector.SqliteConnector;
+import datenbank.dao.StandardDAO;
+
+public class SqliteAzubiDAO implements StandardDAO<Azubi>{
+	private SqliteKlasseDAO daoKlasse= new SqliteKlasseDAO();
+	private SqliteBetriebDAO daoBetrieb = new SqliteBetriebDAO();
+	private SqliteAusbilderDAO daoAusbilder = new SqliteAusbilderDAO();
 	
 	private static final String DAO_NAME= Azubi.class.getName();
 
 	@Override
 	public Azubi insert(Azubi t) {
-		String guid = MySQLConnector.getInstance().getNewGUID();
+		String guid = SqliteConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO azubi values('" 
 				+ guid 
 				+ "','" + t.getName()
@@ -56,7 +53,7 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 				+ ",'" + t.getKlasse().getID()
 				+ "','" + t.getAusbilder().getID()
 				+ "');";
-		MySQLConnector.getInstance().statementExecute(sql);
+		SqliteConnector.getInstance().statementExecute(sql);
 		t.setID(guid);
 		return t;
 	}
@@ -97,7 +94,7 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 				+",klasseid='"+t.getKlasse().getID()
 				+"',ausbilderid='"+t.getAusbilder().getID()
 				+"' WHERE azubiid='"+t.getID()+"';";
-		return MySQLConnector.getInstance().statementExecute(sql);
+		return SqliteConnector.getInstance().statementExecute(sql);
 	
 	}
 
@@ -105,14 +102,14 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	public boolean delete(Azubi t) {
 		String sql = "delete from azubi"+
 				" WHERE azubiid='"+t.getID()+"';";
-		return MySQLConnector.getInstance().statementExecute(sql);
+		return SqliteConnector.getInstance().statementExecute(sql);
 	
 	}
 
 	@Override
 	public ArrayList<Azubi> getAll() {
 		String sql = "select * from azubi;";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		ArrayList<Azubi> azubiListe = new ArrayList<Azubi>();
 		try{
 		 while (rs.next())
@@ -162,7 +159,7 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	@Override
 	public Azubi getByGuid(String guid) {
 		String sql = "select * from azubi where azubiid='"+guid+"';";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		Azubi b = new Azubi();
 		try {
 			rs.next();
@@ -240,7 +237,7 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 				+",klasseid='"+t.getKlasse().getID()
 				+"',ausbilderid='"+t.getAusbilder().getID()
 				+"';";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 			try {
 				return rs.first();
 			} catch (SQLException e) {
@@ -253,15 +250,11 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	public String getClassName() {
 		return DAO_NAME;
 	}
-	/**
-	 * 
-	 * @param Übergabe eines Klassenobjektes
-	 * @return Rückgabe aller Azubis, die sich in dieser Klasse befinden
-	 */
+	
 	public ArrayList<Azubi> gibAzubisZuKlasse(Klasse k){
 		String sql = "select * from azubi where klasseid='"
 				+ k.getID() + "';";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		ArrayList<Azubi> azubiListe = new ArrayList<Azubi>(); 
 		try{
 			 while (rs.next())
@@ -307,6 +300,4 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 			}
 		return azubiListe;
 	}
-
-
 }

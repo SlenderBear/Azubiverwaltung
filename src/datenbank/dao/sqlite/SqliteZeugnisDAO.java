@@ -1,13 +1,13 @@
-package datenbank.SqliteDAO;
+package datenbank.dao.sqlite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Zeugnis;
-import datenbank.StandardDAO;
-import datenbank.SqliteDAO.SqliteAzubiDAO;
 import datenbank.connector.SqliteConnector;
+import datenbank.dao.StandardDAO;
+import datenbank.dao.sqlite.SqliteAzubiDAO;
 
 public class SqliteZeugnisDAO implements StandardDAO<Zeugnis>{
 private static final String DAO_NAME= Zeugnis.class.getName();

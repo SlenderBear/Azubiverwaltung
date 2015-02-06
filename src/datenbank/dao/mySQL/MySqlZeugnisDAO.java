@@ -1,12 +1,12 @@
-package datenbank.mySqlDAO;
+package datenbank.dao.mySQL;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Zeugnis;
-import datenbank.StandardDAO;
 import datenbank.connector.MySQLConnector;
+import datenbank.dao.StandardDAO;
 /**
  * 
  * @author mertmann.justin

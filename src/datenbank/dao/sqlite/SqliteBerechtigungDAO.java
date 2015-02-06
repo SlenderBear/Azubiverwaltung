@@ -1,12 +1,12 @@
-package datenbank.SqliteDAO;
+package datenbank.dao.sqlite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Berechtigung;
-import datenbank.StandardDAO;
 import datenbank.connector.SqliteConnector;
+import datenbank.dao.StandardDAO;
 
 public class SqliteBerechtigungDAO implements StandardDAO<Berechtigung>{
 

@@ -1,23 +1,17 @@
-package datenbank.mySqlDAO;
+package datenbank.dao.sqlite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Login;
-import datenbank.StandardDAO;
-import datenbank.connector.MySQLConnector;
-/**
- * 
- * @author mertmann.justin
- *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Login_Datenobjektes
- */
-public class MySqlLoginDatenDAO implements StandardDAO<Login> {
-	
+import datenbank.connector.SqliteConnector;
+import datenbank.dao.StandardDAO;
+
+public class SqliteLoginDatenDAO implements StandardDAO<Login> {
 	private static final String DAO_NAME= Login.class.getName();
 	
-	private MySqlBerechtigungDAO dao = new MySqlBerechtigungDAO();
-	private final int verschlüsselungsverschiebung = 26;
+	private SqliteBerechtigungDAO dao = new SqliteBerechtigungDAO();
 	
 	@Override
 	public String getClassName() {
@@ -26,14 +20,14 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	
 	@Override
 	public Login insert(Login t) {
-		String guid = MySQLConnector.getInstance().getNewGUID();
+		String guid = SqliteConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO login_daten values('" 
 				+ guid 
 				+ "','" + t.getLoginName()
 				+ "','" + verschluesseln(t.getLoginPasswort())
 				+ "','" + t.getBerechtigung().getID() 
 				+ "');";
-		MySQLConnector.getInstance().statementExecute(sql);
+		SqliteConnector.getInstance().statementExecute(sql);
 		t.setID(guid);
 		return t;
 	}
@@ -46,7 +40,7 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 				+"',passwort='"+verschluesseln(t.getLoginPasswort())
 				+"',berechtigungid='"+t.getBerechtigung().getID()
 				+"' WHERE loginid='"+t.getID()+"';";
-		return MySQLConnector.getInstance().statementExecute(sql);
+		return SqliteConnector.getInstance().statementExecute(sql);
 	
 	}
 
@@ -54,14 +48,14 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	public boolean delete(Login t) {
 		String sql = "delete from login_daten"+
 				" WHERE loginid='"+t.getID()+"';";
-		return MySQLConnector.getInstance().statementExecute(sql);
+		return SqliteConnector.getInstance().statementExecute(sql);
 	
 	}
 
 	@Override
 	public ArrayList<Login> getAll() {
 		String sql = "select * from login_daten;";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		ArrayList<Login> loginListe = new ArrayList<Login>();
 		try{
 		 while (rs.next())
@@ -83,7 +77,7 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	@Override
 	public Login getByGuid(String loginname) {
 		String sql = "select * from login_daten where benutzername='"+loginname+"';";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		Login l = new Login();
 		try {
 			rs.next();
@@ -96,50 +90,28 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 		}
 		return l;
 	}
+	//TODO verschlüsseln
 	private String verschluesseln(String passwort){
-	    return encode(passwort, verschlüsselungsverschiebung);
+//	String verschlüsseltesPasswort = "";
+	return passwort;
 	}
+	//TODO entschlüsseln
 	private String entschluesseln(String passwort){
-		    return encode(passwort, 26-verschlüsselungsverschiebung);
-		}
+//	String unverschlüsseltesPasswort = "";
+	return passwort;
+	}
 
 	@Override
 	public boolean isVorhanden(Login t) {
 		String sql = "select * from login_daten where "
 				+ "benutzername='"+t.getLoginName()
 				+"';";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 			try {
 				return rs.first();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			return false;
-	}
-	
-	/**
-	 * 
-	 * @param Übergabe einer Zeichenkette die Verschlüsselt werden soll
-	 * @param verschiebung die durch die Caesar Verschlüsselung angewendet wird
-	 * @return Gibt die verschlüsselte Zeichenkette zurück
-	 */
-	private String encode(String s, int verschiebung){
-	    s = s.toUpperCase();
-	    char[] chars = s.toCharArray();
-	    for(int i = 0; i < s.length(); i++)
-	        chars[i] = encode(chars[i], verschiebung);
-	    return String.valueOf(chars);
-	}
-	/**
-	 * 
-	 * @param Übergabe eines Characters zur Verschlüsselung
-	 * @param verschiebung die mit der Caesarverschlüsselung angewendet wird
-	 * @return Gibt den Character verschlüsselt zurück
-	 */
-	private char encode(char c, int verschiebung){
-	    if(c >= 'A' && c <= 'Z')
-	        return (char)((c-'A'+verschiebung)%26 + 'A');
-	    else
-	        return c;
 	}
 }

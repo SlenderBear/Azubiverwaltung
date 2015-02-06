@@ -1,20 +1,15 @@
-package datenbank.mySqlDAO;
+package datenbank.dao.sqlite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Note;
-import datenbank.StandardDAO;
-import datenbank.connector.MySQLConnector;
-/**
- * 
- * @author mertmann.justin
- *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Notenobjektes
- */
-public class MySqlNoteDAO implements StandardDAO<Note>{
-	
-	private static final String DAO_NAME= Note.class.getName();
+import datenbank.connector.SqliteConnector;
+import datenbank.dao.StandardDAO;
+
+public class SqliteNoteDAO implements StandardDAO<Note>{
+private static final String DAO_NAME= Note.class.getName();
 	
 	
 	@Override
@@ -49,7 +44,7 @@ public class MySqlNoteDAO implements StandardDAO<Note>{
 	@Override
 	public Note getByGuid(String beschreibung) {
 		String sql = "select * from note where beschreibung='"+beschreibung+"';";
-		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		Note b = new Note();
 		try {
 			rs.next();
@@ -65,5 +60,4 @@ public class MySqlNoteDAO implements StandardDAO<Note>{
 	public boolean isVorhanden(Note t) {
 		return true;
 	}
-
 }

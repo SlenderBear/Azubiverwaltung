@@ -1,12 +1,12 @@
-package datenbank.SqliteDAO;
+package datenbank.dao.sqlite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Fach;
-import datenbank.StandardDAO;
 import datenbank.connector.SqliteConnector;
+import datenbank.dao.StandardDAO;
 
 public class SqliteFachDAO implements StandardDAO<Fach>{
 private static final String DAO_NAME= Fach.class.getName();
