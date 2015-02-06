@@ -39,6 +39,7 @@ public class MySqlDataProvider extends StandardDataProvider{
 	MySqlNoteDAO noteDAO = new MySqlNoteDAO();
 	MySqlZeugnisDAO zeugnisDAO = new MySqlZeugnisDAO();
 	MySqlZeugnisPositionDAO zeugnisPositionDAO = new MySqlZeugnisPositionDAO();
+	@SuppressWarnings("rawtypes")
 	ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
 	
 	protected MySqlDataProvider(){
@@ -77,10 +78,7 @@ public class MySqlDataProvider extends StandardDataProvider{
 
 	@Override
 	public ArrayList<Azubi> gibAzubiVon(Klasse k) {
-		
-		//TODO SELECT BEI AZUBI
-		
-		return null;
+		return azubiDAO.gibAzubisZuKlasse(k);
 	}
 
 	@Override
@@ -126,7 +124,7 @@ public class MySqlDataProvider extends StandardDataProvider{
 		return liste;
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public boolean insert(Object o) {
 		try {
@@ -143,7 +141,7 @@ public class MySqlDataProvider extends StandardDataProvider{
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public boolean update(Object o) {
 		try {
@@ -164,6 +162,7 @@ public class MySqlDataProvider extends StandardDataProvider{
 		StandardDataProvider.getInstance().update(new Azubi());
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public boolean delete(Object o) {
 		try {

@@ -2,9 +2,6 @@ package datenbank.provider;
 
 import java.util.ArrayList;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
-import datenbank.PropertyHandling;
 import objects.Ausbilder;
 import objects.Azubi;
 import objects.Betrieb;
@@ -13,6 +10,7 @@ import objects.Klasse;
 import objects.Lehrer;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
+import datenbank.PropertyHandling;
 
 /**
  * Stellt den {@link StandardDataProvider} dar. Er fasst alle Methoden, die den

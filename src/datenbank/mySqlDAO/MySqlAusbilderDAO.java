@@ -4,11 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import objects.Ausbilder;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-import objects.Ausbilder;
-import objects.Azubi;
-import objects.Betrieb;
 
 public class MySqlAusbilderDAO implements StandardDAO<Ausbilder> {
 

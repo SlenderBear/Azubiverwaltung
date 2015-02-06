@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import objects.Lehrer;
 import datenbank.SqliteConnector;
 import datenbank.StandardDAO;
-import datenbank.mySqlDAO.MySqlLoginDatenDAO;
 
 public class SqliteLehrerDAO implements StandardDAO<Lehrer>{
 private static final String DAO_NAME= Lehrer.class.getName();

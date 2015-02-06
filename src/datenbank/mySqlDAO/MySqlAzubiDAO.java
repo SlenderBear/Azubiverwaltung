@@ -4,10 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import objects.Ausbilder;
 import objects.Azubi;
 import objects.Klasse;
-import objects.Zeugnisposition;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
 

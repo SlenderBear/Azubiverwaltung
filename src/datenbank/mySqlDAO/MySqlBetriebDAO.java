@@ -4,10 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import objects.Betrieb;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-import objects.Ausbilder;
-import objects.Betrieb;
 
 public class MySqlBetriebDAO implements StandardDAO<Betrieb> {
 	
@@ -48,13 +47,16 @@ public class MySqlBetriebDAO implements StandardDAO<Betrieb> {
 				+ "' WHERE betriebid='" + t.getID()
 				+ "';";
 		return MySQLConnector.getInstance().statementExecute(sql);
+
 	}
 
 	@Override
 	public boolean delete(Betrieb t) {
 		String sql = "delete from betrieb" + " WHERE betriebid='" + t.getID()
 				+ "';";
-		return MySQLConnector.getInstance().statementExecute(sql);
+		
+		return	MySQLConnector.getInstance().statementExecute(sql);
+
 	}
 
 	@Override

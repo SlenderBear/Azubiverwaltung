@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import objects.Ausbilder;
 import datenbank.SqliteConnector;
 import datenbank.StandardDAO;
-import datenbank.mySqlDAO.MySqlBetriebDAO;
 
 public class SqliteAusbilderDAO implements StandardDAO<Ausbilder>{
 

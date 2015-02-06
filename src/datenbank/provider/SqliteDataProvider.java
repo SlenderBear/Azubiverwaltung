@@ -2,111 +2,179 @@ package datenbank.provider;
 
 import java.util.ArrayList;
 
+import datenbank.StandardDAO;
+import datenbank.SqliteDAO.SqliteAusbilderDAO;
+import datenbank.SqliteDAO.SqliteAzubiDAO;
+import datenbank.SqliteDAO.SqliteBerechtigungDAO;
+import datenbank.SqliteDAO.SqliteBetriebDAO;
+import datenbank.SqliteDAO.SqliteFachDAO;
+import datenbank.SqliteDAO.SqliteKlasseDAO;
+import datenbank.SqliteDAO.SqliteLehrerDAO;
+import datenbank.SqliteDAO.SqliteLoginDatenDAO;
+import datenbank.SqliteDAO.SqliteNoteDAO;
+import datenbank.SqliteDAO.SqliteZeugnisDAO;
+import datenbank.SqliteDAO.SqliteZeugnisPositionDAO;
 import objects.Ausbilder;
 import objects.Azubi;
 import objects.Betrieb;
 import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
+import objects.Login;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
 
 public class SqliteDataProvider extends StandardDataProvider{
+	//Erstellung der DAO-Objekte zur Verwendung der Sqlite-Methoden
+		SqliteAusbilderDAO ausbilderDAO = new SqliteAusbilderDAO();
+		SqliteAzubiDAO azubiDAO = new SqliteAzubiDAO();
+		SqliteBerechtigungDAO berechtigungDAO = new SqliteBerechtigungDAO();
+		SqliteBetriebDAO betriebDAO = new SqliteBetriebDAO();
+		SqliteFachDAO fachDAO = new SqliteFachDAO();
+		SqliteKlasseDAO klasseDAO = new SqliteKlasseDAO();
+		SqliteLehrerDAO lehrerDAO = new SqliteLehrerDAO();
+		SqliteLoginDatenDAO loginDatenDAO = new SqliteLoginDatenDAO();
+		SqliteNoteDAO noteDAO = new SqliteNoteDAO();
+		SqliteZeugnisDAO zeugnisDAO = new SqliteZeugnisDAO();
+		SqliteZeugnisPositionDAO zeugnisPositionDAO = new SqliteZeugnisPositionDAO();
+		@SuppressWarnings("rawtypes")
+		ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
+		
+		protected SqliteDataProvider(){
+			daoListe.add(ausbilderDAO);
+			daoListe.add(azubiDAO);
+			daoListe.add(berechtigungDAO);
+			daoListe.add(betriebDAO);
+			daoListe.add(fachDAO);
+			daoListe.add(klasseDAO);
+			daoListe.add(lehrerDAO);
+			daoListe.add(loginDatenDAO);
+			daoListe.add(noteDAO);
+			daoListe.add(zeugnisDAO);
+			daoListe.add(zeugnisPositionDAO);
+		}
+		
+		@Override
+		public ArrayList<Lehrer> gibAlleLehrer() {
+			return lehrerDAO.getAll();
+		}
 
-	@Override
-	public ArrayList<Lehrer> gibAlleLehrer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		@Override
+		public ArrayList<Klasse> gibAlleKlassen() {
+			return klasseDAO.getAll();
+		}
 
-	@Override
-	public ArrayList<Klasse> gibAlleKlassen() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		@Override
+		public ArrayList<Betrieb> gibAlleBetriebe() {
+			return betriebDAO.getAll();
+		}
 
-	@Override
-	public ArrayList<Betrieb> gibAlleBetriebe() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		@Override
+		public ArrayList<Ausbilder> gibAlleAusbilder() {
+			return ausbilderDAO.getAll();
+		}
 
-	@Override
-	public ArrayList<Ausbilder> gibAlleAusbilder() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		@Override
+		public ArrayList<Azubi> gibAzubiVon(Klasse k) {
+			return azubiDAO.gibAzubisZuKlasse(k);
 
-	@Override
-	public ArrayList<Azubi> gibAzubiVon(Klasse k) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		}
 
-	@Override
-	public ArrayList<Fach> gibAlleFaecher() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		@Override
+		public ArrayList<Fach> gibAlleFaecher() {
+			return fachDAO.getAll();
+		}
 
-	@Override
-	public boolean gibtLogin(String login) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		@Override
+		public boolean gibtLogin(String login) {
+			Login loginObject = new Login();
+			loginObject.setLoginName(login);
+		return loginDatenDAO.isVorhanden(loginObject);
+		}
 
-	@Override
-	public boolean gibtAzubi(Azubi azubi) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		@Override
+		public boolean gibtAzubi(Azubi azubi) {
+			return azubiDAO.isVorhanden(azubi);
+		}
 
-	@Override
-	public boolean gibtLehrer(Lehrer lehrer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		@Override
+		public boolean gibtLehrer(Lehrer lehrer) {
+			return lehrerDAO.isVorhanden(lehrer);
+		}
 
-	@Override
-	public boolean gibtAusbilder(Ausbilder ausbilder) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		@Override
+		public boolean gibtAusbilder(Ausbilder ausbilder) {
+			return ausbilderDAO.isVorhanden(ausbilder);
+		}
 
-	@Override
-	public boolean gibtBetrieb(Betrieb betrieb) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		@Override
+		public boolean gibtBetrieb(Betrieb betrieb) {
+			return betriebDAO.isVorhanden(betrieb);
+		}
 
-	@Override
-	public boolean gibtKlasse(Klasse klasse) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		@Override
+		public boolean gibtKlasse(Klasse klasse) {
+			return klasseDAO.isVorhanden(klasse);
+		}
 
-	@Override
-	public ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		@Override
+		public ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z) {
+			ArrayList<Zeugnisposition> liste = zeugnisPositionDAO.gibPositionenZuZeugnis(z);
+			return liste;
+		}
 
-	@Override
-	public boolean insert(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		@Override
+		public boolean insert(Object o) {
+			try {
+				for (StandardDAO dao : daoListe) {
+					if (dao.getClassName().compareTo(o.getClass().getName()) == 0) {
+						dao.insert(o);
+						return true;
+					}
+				}
+				return false;
+			} catch (Exception e) {
+				// Datenbankfehler -> Fehlermeldung zurückgeben.
+				return false;
+			}
+		}
+		
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		@Override
+		public boolean update(Object o) {
+			try {
+				for (StandardDAO dao : daoListe) {
+					if (dao.getClassName().compareTo(o.getClass().getName()) == 0) {
+						dao.update(o);
+						return true;
+					}
+				}
+				return false;
+			} catch (Exception e) {
+				// Datenbankfehler -> Fehlermeldung zurückgeben.
+				return false;
+			}
+		}
+		
+		public static void main(String[] args) {
+			StandardDataProvider.getInstance().update(new Azubi());
+		}
 
-	@Override
-	public boolean update(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean delete(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+		@SuppressWarnings("unchecked")
+		@Override
+		public boolean delete(Object o) {
+			try {
+				for (@SuppressWarnings("rawtypes") StandardDAO dao : daoListe) {
+					if (dao.getClassName().compareTo(o.getClass().getName()) == 0) {
+						dao.delete(o);
+						return true;
+					}
+				}
+				return false;
+			} catch (Exception e) {
+				// Datenbankfehler -> Fehlermeldung zurückgeben.
+				return false;
+			}
+		}
 }

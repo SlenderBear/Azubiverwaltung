@@ -4,11 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import objects.Fach;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
-import objects.Ausbilder;
-import objects.Betrieb;
-import objects.Fach;
 
 public class MySqlFachDAO implements StandardDAO<Fach>{
 	

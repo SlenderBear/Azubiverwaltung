@@ -1,20 +1,15 @@
 package datenbank;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
-
-import com.sun.xml.internal.fastinfoset.algorithm.UUIDEncodingAlgorithm;
 
 public class MySQLConnector {
 	String sql = "";
@@ -50,7 +45,7 @@ public class MySQLConnector {
 		}
 	}
 	
-	public static void initDB(){
+	public void initDB(){
 		try{
 			mySQLConnection();
 		}catch(Exception e){
@@ -62,7 +57,7 @@ public class MySQLConnector {
 	/**
 	 * Führt das Skript aus, das die Datenbank initialisiert.
 	 */
-	private static void executeInitSkript() {
+	private void executeInitSkript() {
 		try {
 			File f = new File("W:\\git\\Azubiverwaltung\\src\\Erstellung_DB.sql");
 			List<String> sqlList = FileUtils.readLines(f);
@@ -92,15 +87,15 @@ public class MySQLConnector {
 	 */
 	public static MySQLConnector getInstance() {
 		if (connector == null) {
-			initDB();
 			connector = new MySQLConnector();
+			connector.initDB();
 		}
 		return connector;
 	}
 	/**
 	 * SQL ausführen
 	 */
-	public static boolean statementExecute(String sql) {
+	public boolean statementExecute(String sql) {
 		if (con == null) {
 			mySQLConnection();
 		}
