@@ -21,6 +21,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import datenbank.provider.StandardDataProvider;
 import objects.Azubi;
+import objects.Fach;
+import objects.Note;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
 
@@ -87,14 +89,12 @@ public class PdfZeugnisA4 {
 		Phrase name = new Phrase();
 		name.add(new Chunk("Vor- und Zuname:", fNorm));
 		name.add(Chunk.TABBING);
-		name.add(Chunk.TABBING);
 		name.add(new Chunk(azubi.getVorname() + " " + azubi.getName(), fBold));
 		name.add(Chunk.NEWLINE);
 		azubiDaten.add(name);
 
 		Phrase gebi = new Phrase();
 		gebi.add(new Chunk("geboren am:", fSmall));
-		gebi.add(Chunk.TABBING);
 		gebi.add(Chunk.TABBING);
 		gebi.add(Chunk.TABBING);
 		gebi.add(new Chunk(azubi.getGeburtsdatum(), fSmaBo));
@@ -121,7 +121,7 @@ public class PdfZeugnisA4 {
 			}
 			zeitraum.add(new Chunk(" der Berufsschule", fSmall));
 			zeitraum.add(Chunk.NEWLINE);
-			zeitraum.add(new Chunk("Fachkklasse: ", fSmall));
+			zeitraum.add(new Chunk("Fachklasse: ", fSmall));
 			zeitraum.add(Chunk.TABBING);
 			zeitraum.add(Chunk.TABBING);
 			zeitraum.add(new Chunk(azubi.getKlasse().getBezeichnung(), fSmaBo));
@@ -149,7 +149,6 @@ public class PdfZeugnisA4 {
 		Phrase beruf = new Phrase();
 		beruf.add(new Chunk("Ausbildungsberuf:", fSmall));
 		beruf.add(Chunk.TABBING);
-		beruf.add(Chunk.TABBING);
 		if (azubi.getGeschlecht() == 'f') {
 			beruf.add(new Chunk("Fachinformatikerin", fSmaBo));
 		} else {
@@ -172,7 +171,6 @@ public class PdfZeugnisA4 {
 
 		Phrase fehltage = new Phrase();
 		fehltage.add(new Chunk("Schulversäumnisse:", fSmall));
-		fehltage.add(Chunk.TABBING);
 		fehltage.add(Chunk.TABBING);
 		if (format == 4) {
 			fehltage.add(new Chunk(String.valueOf(azubi.getFehltage()), fSmaBo));
@@ -203,6 +201,7 @@ public class PdfZeugnisA4 {
 		konf.add(new Chunk("Die Zeugniskonferenz stellte am ", fSmall));
 		konf.add(new Chunk(konfDatum, fSmaBo));
 		konf.add(new Chunk(" folgende Leistungen fest:", fSmall));
+		konf.add(Chunk.NEWLINE);
 		konf.add(Chunk.NEWLINE);
 		leistung.add(konf);
 
@@ -247,13 +246,13 @@ public class PdfZeugnisA4 {
 		}
 		tableFach(tableB2, new Chunk(faecher[0][4], fSmall));
 		tableNote(tableB2, new Chunk(faecher[1][4], fSmaBo));
-		emptyTableLine(tableB1, 2f);
+		emptyTableLine(tableB2, 2f);
 		tableFach(tableB2, new Chunk(faecher[0][5], fSmall));
 		tableNote(tableB2, new Chunk(faecher[1][5], fSmaBo));
-		emptyTableLine(tableB1, 2f);
+		emptyTableLine(tableB2, 2f);
 		tableFach(tableB2, new Chunk(faecher[0][6], fSmall));
 		tableNote(tableB2, new Chunk(faecher[1][6], fSmaBo));
-		emptyTableLine(tableB1, 2f);
+		emptyTableLine(tableB2, 2f);
 		tableFach(tableB2, new Chunk(faecher[0][7], fSmall));
 		tableNote(tableB2, new Chunk(faecher[1][7], fSmaBo));
 		leistung.add(tableB2);
@@ -267,23 +266,28 @@ public class PdfZeugnisA4 {
 
 		tableFach(tableB3, new Chunk("------------------------", fSmall));
 		tableNote(tableB3, new Chunk("------------------------", fSmaBo));
+		emptyTableLine(tableB3, 2f);
 
 		if (format == 3) {
 			tableFach(tableB3, new Chunk("------------------------", fSmall));
 			tableNote(tableB3, new Chunk("------------------------", fSmaBo));
-
+			emptyTableLine(tableB3, 2f);
 		}
 		emptyTableLine(tableB3, 40);
 
-		tableBemerkung(tableB3, "Bemerkungen:");
-		tableBox(tableB3, "- keine -");
-		tableBeschluss(tableB3, "Beschluss der Konferenz:");
-		tableBox2(tableB3, "------------------------");
+		tableBemerkung(tableB3, new Chunk("Bemerkungen:", fSmall));
+		tableBox(tableB3, new Chunk("- keine -", fSmaBo));
+		if(format == 4){
+			tableBeschluss(tableB3, new Chunk("Beschluss der Konferenz:", fSmaBo));
+			tableBox2(tableB3, new Chunk("------------------------", fSmaBo));
+		}
+		leistung.add(tableB3);
 
 		document.add(leistung);
 	}
 
 	private void schreibeZweiteSeite(Azubi azubi, Zeugnis zeugnis) throws Exception{
+		document.add(Chunk.NEXTPAGE);
 		Paragraph zweiteSeite = new Paragraph();
 		zweiteSeite.setLeading(22.0f);
 		zweiteSeite.setTabSettings(new TabSettings(56f));
@@ -296,12 +300,15 @@ public class PdfZeugnisA4 {
 		name.add(Chunk.NEWLINE);
 		zweiteSeite.add(name);
 		
+		String[] durchschnitt = getDurchschnitt(azubi);
+		
 		Phrase note = new Phrase();
 		note.add(new Chunk("hat mit der Note   ", fSmall));
-		note.add(new Chunk("- " + getDurchschnittString() + " -", fSmaBo));
+		note.add(new Chunk("- " + durchschnitt[0] + " -", fSmaBo));
 		note.add(new Chunk("   (Durchschnittsnote\u2074\u207E   "));
-		note.add(new Chunk(getDurchschnittZahl(), fSmaBo));
+		note.add(new Chunk(durchschnitt [1], fSmaBo));
 		note.add(new Chunk(")", fSmall));
+		note.add(Chunk.NEWLINE);
 		note.add(Chunk.NEWLINE);
 		note.add(Chunk.NEWLINE);
 		note.add(new Chunk("den", fSmall));
@@ -311,7 +318,8 @@ public class PdfZeugnisA4 {
 		note.add(new Chunk("erborben.", fSmall));
 		note.add(Chunk.NEWLINE);
 		note.add(Chunk.NEWLINE);
-		zweiteSeite.add(name);
+		note.add(Chunk.NEWLINE);
+		zweiteSeite.add(note);
 		
 		Phrase datum = new Phrase();
 		datum.add(new Chunk("Düsseldorf, den ", fSmall));
@@ -324,14 +332,11 @@ public class PdfZeugnisA4 {
 		Phrase lineSig = new Phrase("_______________________________");
 		lineSig.add(Chunk.TABBING);
 		lineSig.add(Chunk.TABBING);
-		lineSig.add(Chunk.TABBING);
-		lineSig.add(Chunk.TABBING);
 		lineSig.add(new Chunk("_______________________________"));
 		lineSig.add(Chunk.NEWLINE);
 		zweiteSeite.add(lineSig);
 
 		Phrase stuffSig = new Phrase("Schulleiter", fSmall);
-		stuffSig.add(Chunk.TABBING);
 		stuffSig.add(Chunk.TABBING);
 		stuffSig.add(Chunk.TABBING);
 		stuffSig.add(Chunk.TABBING);
@@ -344,13 +349,14 @@ public class PdfZeugnisA4 {
 		stuffSig.add(Chunk.NEWLINE);
 		zweiteSeite.add(stuffSig);
 		
+		document.add(zweiteSeite);
+		document.bottom();
 		schreibeFooter();
 		
-		document.add(zweiteSeite);
 		
 	}
 	
-	private void schreibeFooter(){
+	private void schreibeFooter() throws Exception{
 		Paragraph footer = new Paragraph();
 		footer.setAlignment(Element.ALIGN_BOTTOM);
 		footer.add(new Chunk("______________________________________________________________________________"));
@@ -361,24 +367,35 @@ public class PdfZeugnisA4 {
 		eins.add(new Chunk(
 				"Dieses Fach wurde vorher abgeschlossen. Die Note entspricht der zuletzt erstellen Zeugnisnote in diesem Fach.",
 				fTiny));
+		eins.add(Chunk.NEWLINE);
 		
 		Phrase zwei = new Phrase("2)", fTiny);
 		zwei.add(Chunk.TABBING);
 		zwei.add(new Chunk(
 				"Die Note des Faches erbigt sich aus den in den letzten beiden vorangegangenen Schulhalbjahren erbrachten Leistungen.",
 				fTiny));
+		zwei.add(Chunk.NEWLINE);
 		
 		Phrase drei = new Phrase("3)", fTiny);
 		drei.add(Chunk.TABBING);
 		drei.add(new Chunk(
 				"Die Fächer im berufsbezogenen Bereich umfassen die in der Anlage aufgeführten Lernfelder.",
 				fTiny));
+		drei.add(Chunk.NEWLINE);
 		
 		Phrase vier = new Phrase("4)", fTiny);
 		vier.add(Chunk.TABBING);
 		vier.add(new Chunk(
 				"Fächer des Differzierungsbereiches sind in die Durchschnittsnote nicht einbezogen.",
 				fTiny));
+		vier.add(Chunk.NEWLINE);
+		
+		footer.add(eins);
+		footer.add(zwei);
+		footer.add(drei);
+		footer.add(vier);
+		
+		document.add(footer);
 	}
 
 	private void schreibeSignaturen(Azubi azubi, String zeugDatum, Short Format)
@@ -473,7 +490,7 @@ public class PdfZeugnisA4 {
 		table.completeRow();
 	}
 
-	private void tableBemerkung(PdfPTable table, String bemerkung) {
+	private void tableBemerkung(PdfPTable table, Chunk bemerkung) {
 		PdfPCell cellFach = new PdfPCell(new Paragraph(bemerkung));
 		cellFach.setBorder(Rectangle.NO_BORDER);
 		cellFach.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -482,7 +499,7 @@ public class PdfZeugnisA4 {
 		table.addCell(cellFach);
 	}
 
-	private void tableBeschluss(PdfPTable table, String bemerkung) {
+	private void tableBeschluss(PdfPTable table, Chunk bemerkung) {
 		PdfPCell cellFach = new PdfPCell(new Paragraph(bemerkung));
 		cellFach.setBorder(Rectangle.NO_BORDER);
 		cellFach.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -491,8 +508,8 @@ public class PdfZeugnisA4 {
 		table.addCell(cellFach);
 	}
 
-	private void tableBox(PdfPTable table, String inhalt) {
-		PdfPCell cellNote = new PdfPCell(new Paragraph(inhalt, fBold));
+	private void tableBox(PdfPTable table, Chunk inhalt) {
+		PdfPCell cellNote = new PdfPCell(new Paragraph(inhalt));
 		cellNote.setBackgroundColor(BaseColor.LIGHT_GRAY);
 		cellNote.setBorder(Rectangle.NO_BORDER);
 		cellNote.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -503,8 +520,8 @@ public class PdfZeugnisA4 {
 		table.completeRow();
 	}
 
-	private void tableBox2(PdfPTable table, String inhalt) {
-		PdfPCell cellNote = new PdfPCell(new Paragraph(inhalt, fBold));
+	private void tableBox2(PdfPTable table, Chunk inhalt) {
+		PdfPCell cellNote = new PdfPCell(new Paragraph(inhalt));
 		cellNote.setBackgroundColor(BaseColor.LIGHT_GRAY);
 		cellNote.setBorder(Rectangle.NO_BORDER);
 		cellNote.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -588,19 +605,133 @@ public class PdfZeugnisA4 {
 	}
 
 	private void holeZeugnisnote(Zeugnis zeugnis) throws Exception {
-		StandardDataProvider dataGetter = StandardDataProvider.getInstance();
-		noten = dataGetter.gibPositionenZuZeugnis(zeugnis);
-		if (noten.isEmpty()) {
-			throw new Exception("Keine Noten vorhanden.");
+//		StandardDataProvider dataGetter = StandardDataProvider.getInstance();
+//		noten = dataGetter.gibPositionenZuZeugnis(zeugnis);
+//		if (noten.isEmpty()) {
+//			throw new Exception("Keine Noten vorhanden.");
+//		}
+		noten = new ArrayList<Zeugnisposition>();
+		
+		Note n1 = new Note();
+		n1.setBeschreibung("sehr gut");
+		n1.setNoteID("1");
+		
+		Note n2 = new Note();
+		n2.setBeschreibung("gut");
+		n2.setNoteID("2");
+		
+		Fach f1 = new Fach();
+		f1.setBezeichnung("Deutsch");
+		Fach f2 = new Fach();
+		f2.setBezeichnung("Politk");
+		Fach f3 = new Fach();
+		f3.setBezeichnung("Info");
+		Fach f4 = new Fach();
+		f4.setBezeichnung("Anwendung");
+		Fach f5 = new Fach();
+		f5.setBezeichnung("Wirtschaft");
+		Fach f6 = new Fach();
+		f6.setBezeichnung("Englisch");
+		Fach f7 = new Fach();
+		f7.setBezeichnung("Reli");
+		Fach f8 = new Fach();
+		f8.setBezeichnung("Sport");
+	
+		Zeugnisposition z1 = new Zeugnisposition();
+		z1.setFach(f1);
+		z1.setNote(n1);
+		
+		Zeugnisposition z2 = new Zeugnisposition();
+		z2.setFach(f2);
+		z2.setNote(n2);
+		
+		Zeugnisposition z3 = new Zeugnisposition();
+		z3.setFach(f3);
+		z3.setNote(n1);
+		
+		Zeugnisposition z4 = new Zeugnisposition();
+		z4.setFach(f4);
+		z4.setNote(n1);
+		
+		Zeugnisposition z5 = new Zeugnisposition();
+		z5.setFach(f5);
+		z5.setNote(n1);
+		
+		Zeugnisposition z6 = new Zeugnisposition();
+		z6.setFach(f6);
+		z6.setNote(n2);
+		
+		Zeugnisposition z7 = new Zeugnisposition();
+		z7.setFach(f7);
+		z7.setNote(n2);
+		
+		Zeugnisposition z8 = new Zeugnisposition();
+		z8.setFach(f8);
+		z8.setNote(n1);
+		
+		noten.add(z1);
+		noten.add(z2);
+		noten.add(z3);
+		noten.add(z4);
+		noten.add(z5);
+		noten.add(z6);
+		noten.add(z7);
+		noten.add(z8);
+		
+	}
+	
+	private String[] getDurchschnitt(Azubi azubi){
+		String[] durchschnitt = new String[2];
+		double summe = 0;
+		
+		for (int i = 0; i < 8; i++) {
+			if (noten.get(i).getFach().getBezeichnung().startsWith("D")) {
+				summe = summe + Double.parseDouble(noten.get(i).getNote().getNoteID());
+			} else if (noten.get(i).getFach().getBezeichnung().startsWith("P")) {
+				summe = summe + Double.parseDouble(noten.get(i).getNote().getNoteID());
+			} else if (noten.get(i).getFach().getBezeichnung().startsWith("R")) {
+				summe = summe + Double.parseDouble(noten.get(i).getNote().getNoteID());
+			} else if (noten.get(i).getFach().getBezeichnung().startsWith("S")) {
+				summe = summe + Double.parseDouble(noten.get(i).getNote().getNoteID());
+			} else if (noten.get(i).getFach().getBezeichnung().startsWith("I")) {
+				if(azubi.getFachrichtung() == 's'){
+					summe = summe + 2*Double.parseDouble(noten.get(i).getNote().getNoteID());
+				} else{
+					summe = summe + Double.parseDouble(noten.get(i).getNote().getNoteID());
+				}
+			} else if (noten.get(i).getFach().getBezeichnung().startsWith("A")) {
+				if(azubi.getFachrichtung() == 'a'){
+					summe = summe + 2*Double.parseDouble(noten.get(i).getNote().getNoteID());
+				} else{
+					summe = summe + Double.parseDouble(noten.get(i).getNote().getNoteID());
+				}
+			} else if (noten.get(i).getFach().getBezeichnung().startsWith("W")) {
+				summe = summe + Double.parseDouble(noten.get(i).getNote().getNoteID());
+			} else if (noten.get(i).getFach().getBezeichnung().startsWith("E")) {
+				summe = summe + Double.parseDouble(noten.get(i).getNote().getNoteID());
+			}
 		}
+		
+		summe = summe/9;
+		
+		durchschnitt[1] = String.valueOf(summe).substring(0, 3);
+		
+		if(summe <= 1.5){
+			durchschnitt[0] = "sehr gut";
+		} else if(summe > 1.5 && summe <= 2.5){
+			durchschnitt[0] = "gut";
+		} else if(summe > 2.5 && summe <= 3.5){
+			durchschnitt[0] = "befriedigend";
+		} else if(summe > 3.5 && summe <= 4.5){
+			durchschnitt[0] = "ausreichend";
+		} else if(summe > 4.5 && summe <= 5.5){
+			durchschnitt[0] = "mangelhaft";
+		} else if(summe > 5.5){
+			durchschnitt[0] = "ungenügend";
+		}
+				
+		return durchschnitt;
 	}
-	
-	private String getDurchschnittString(){
-		return "";
-	}
-	
-	private String getDurchschnittZahl(){
-		return "";
-	}
+
 
 }

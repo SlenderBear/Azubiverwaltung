@@ -37,7 +37,7 @@ public class Verwaltung {
 							"Das Programm wurde nicht ordnungsgem‰ﬂ konfiguriert."
 									+ "\nBitte sprechen Sie mit dem zust‰ndigen Administrator.");
 			System.exit(0);
-		}
+		} 
 		
 		@SuppressWarnings("unused")
 		MainWindow window = new MainWindow(dbRef);

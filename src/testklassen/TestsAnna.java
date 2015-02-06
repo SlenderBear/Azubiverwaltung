@@ -46,12 +46,15 @@ public class TestsAnna {
 		k.setLehrer(l);
 		
 		Azubi a = new Azubi();
-		a.setName("Minion4");
+		a.setName("Minion5");
 		a.setVorname("Banana");
 		a.setGeburtsdatum("11.11.1111");
 		a.setLehrjahr(2);
 		a.setKlasse(k);
 		a.setFachrichtung('s');
+		a.setGeschlecht('f');
+		a.setAusbildungsbeginn("01.08.2012");
+		a.setAusbildungsende("15.01.2015");
 		
 		Zeugnis z = new Zeugnis();
 		z.setZeugnisKonferenz("01.01.2015");
