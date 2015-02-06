@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Betrieb;
-import datenbank.SqliteConnector;
 import datenbank.StandardDAO;
+import datenbank.connector.SqliteConnector;
 
 public class SqliteBetriebDAO implements StandardDAO<Betrieb>{
 

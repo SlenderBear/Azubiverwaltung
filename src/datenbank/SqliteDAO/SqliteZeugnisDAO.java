@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Zeugnis;
-import datenbank.SqliteConnector;
 import datenbank.StandardDAO;
 import datenbank.SqliteDAO.SqliteAzubiDAO;
+import datenbank.connector.SqliteConnector;
 
 public class SqliteZeugnisDAO implements StandardDAO<Zeugnis>{
 private static final String DAO_NAME= Zeugnis.class.getName();

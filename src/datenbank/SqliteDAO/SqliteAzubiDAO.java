@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import objects.Azubi;
 import objects.Klasse;
-import datenbank.SqliteConnector;
 import datenbank.StandardDAO;
+import datenbank.connector.SqliteConnector;
 
 public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 	private SqliteKlasseDAO daoKlasse= new SqliteKlasseDAO();
