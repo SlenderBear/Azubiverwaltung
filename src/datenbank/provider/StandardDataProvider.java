@@ -11,6 +11,7 @@ import objects.Betrieb;
 import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
+import objects.Zeugnisposition;
 
 /**
  * Stellt den {@link StandardDataProvider} dar. Er fasst alle Methoden, die den
@@ -65,6 +66,9 @@ public abstract class StandardDataProvider {
 	 */
 	public abstract ArrayList<Fach> gibAlleFaecher();
 	
+	public abstract ArrayList<Zeugnisposition> gibPositionenZuZeugnis();
+	
+	public abstract boolean insert(Object o);
 	
 	/**
 	 * Prüft ob Loginname bereits vorhanden.

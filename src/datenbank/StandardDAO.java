@@ -9,4 +9,5 @@ public interface StandardDAO<T> {
 	ArrayList<T> getAll();
 	T getByGuid(String guid);
 	boolean isVorhanden(T t);
+	String getClassName();
 }

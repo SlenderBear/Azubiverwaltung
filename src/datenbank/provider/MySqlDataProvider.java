@@ -1,5 +1,7 @@
 package datenbank.provider;
 
+import gui.main;
+
 import java.util.ArrayList;
 
 import objects.Ausbilder;
@@ -8,6 +10,9 @@ import objects.Betrieb;
 import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
+import objects.Login;
+import objects.Zeugnisposition;
+import datenbank.StandardDAO;
 import datenbank.mySqlDAO.MySqlAusbilderDAO;
 import datenbank.mySqlDAO.MySqlAzubiDAO;
 import datenbank.mySqlDAO.MySqlBerechtigungDAO;
@@ -34,6 +39,22 @@ public class MySqlDataProvider extends StandardDataProvider{
 	MySqlNoteDAO noteDAO = new MySqlNoteDAO();
 	MySqlZeugnisDAO zeugnisDAO = new MySqlZeugnisDAO();
 	MySqlZeugnisPositionDAO zeugnisPositionDAO = new MySqlZeugnisPositionDAO();
+	ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
+	
+	protected MySqlDataProvider(){
+		daoListe.add(ausbilderDAO);
+		daoListe.add(azubiDAO);
+		daoListe.add(berechtigungDAO);
+		daoListe.add(betriebDAO);
+		daoListe.add(fachDAO);
+		daoListe.add(klasseDAO);
+		daoListe.add(lehrerDAO);
+		daoListe.add(loginDatenDAO);
+		daoListe.add(noteDAO);
+		daoListe.add(zeugnisDAO);
+		daoListe.add(zeugnisPositionDAO);
+	}
+	
 	@Override
 	public ArrayList<Lehrer> gibAlleLehrer() {
 		return lehrerDAO.getAll();
@@ -69,40 +90,50 @@ public class MySqlDataProvider extends StandardDataProvider{
 
 	@Override
 	public boolean gibtLogin(String login) {
-		return false;
-//				loginDatenDAO.getByGuid(guid)
+		Login loginObject = new Login();
+		loginObject.setLoginName(login);
+	return loginDatenDAO.isVorhanden(loginObject);
 	}
 
 	@Override
 	public boolean gibtAzubi(Azubi azubi) {
-		// TODO Auto-generated method stub
-		return false;
+		return azubiDAO.isVorhanden(azubi);
 	}
 
 	@Override
 	public boolean gibtLehrer(Lehrer lehrer) {
-		// TODO Auto-generated method stub
-		return false;
+		return lehrerDAO.isVorhanden(lehrer);
 	}
 
 	@Override
 	public boolean gibtAusbilder(Ausbilder ausbilder) {
-		// TODO Auto-generated method stub
-		return false;
+		return ausbilderDAO.isVorhanden(ausbilder);
 	}
 
 	@Override
 	public boolean gibtBetrieb(Betrieb betrieb) {
-		// TODO Auto-generated method stub
-		return false;
+		return betriebDAO.isVorhanden(betrieb);
 	}
 
 	@Override
 	public boolean gibtKlasse(Klasse klasse) {
-		// TODO Auto-generated method stub
-		return false;
+		return klasseDAO.isVorhanden(klasse);
 	}
 
-	
+	@Override
+	public ArrayList<Zeugnisposition> gibPositionenZuZeugnis() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean insert(Object o) {
+		for (StandardDAO dao : daoListe) {
+			if(dao.getClassName().compareTo(o.getClass().getName()) == 0) {
+				System.out.println("Azubi gefunden");
+			}
+		}
+		return false;
+	}
 
 }

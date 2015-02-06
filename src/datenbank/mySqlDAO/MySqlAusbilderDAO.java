@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
 import objects.Ausbilder;
+import objects.Azubi;
 import objects.Betrieb;
 
 public class MySqlAusbilderDAO implements StandardDAO<Ausbilder> {
 
+	private static final String DAO_NAME= Ausbilder.class.getName();
+	
 	private MySqlBetriebDAO dao = new MySqlBetriebDAO();
-
+	
 	@Override
 	public Ausbilder insert(Ausbilder b) {
 		String guid = MySQLConnector.getInstance().getNewGUID();
@@ -110,5 +113,9 @@ public class MySqlAusbilderDAO implements StandardDAO<Ausbilder> {
 			return false;
 			
 	}
-	
+
+	@Override
+	public String getClassName() {
+		return DAO_NAME;
+	}
 }

@@ -10,7 +10,16 @@ import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
 
 public class MySqlLoginDatenDAO implements StandardDAO<Login> {
+	
+	private static final String DAO_NAME= Login.class.getName();
+	
 	private MySqlBerechtigungDAO dao = new MySqlBerechtigungDAO();
+	
+	@Override
+	public String getClassName() {
+		return DAO_NAME;
+	}
+	
 	@Override
 	public Login insert(Login t) {
 		String guid = MySQLConnector.getInstance().getNewGUID();
@@ -98,8 +107,6 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	public boolean isVorhanden(Login t) {
 		String sql = "select * from login_daten where "
 				+ "benutzername='"+t.getLoginName()
-				+"',passwort='"+verschluesseln(t.getLoginPasswort())
-				+"',berechtigungid='"+t.getBerechtigung().getID()
 				+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 			try {

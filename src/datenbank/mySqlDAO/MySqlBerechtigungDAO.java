@@ -4,11 +4,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import objects.Ausbilder;
 import objects.Berechtigung;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
 
 public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
+	
+	private static final String DAO_NAME= Berechtigung.class.getName();
+	
+	@Override
+	public String getClassName() {
+		return DAO_NAME;
+	}
 
 	@Override
 	public Berechtigung insert(Berechtigung t) {

@@ -13,6 +13,8 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	private MySqlKlasseDAO daoKlasse= new MySqlKlasseDAO();
 	private MySqlBetriebDAO daoBetrieb = new MySqlBetriebDAO();
 	private MySqlAusbilderDAO daoAusbilder = new MySqlAusbilderDAO();
+	
+	private static final String DAO_NAME= Azubi.class.getName();
 
 	@Override
 	public Azubi insert(Azubi t) {
@@ -248,5 +250,11 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 			}
 			return false;
 	}
+
+	@Override
+	public String getClassName() {
+		return DAO_NAME;
+	}
+
 
 }

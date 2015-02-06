@@ -6,10 +6,18 @@ import java.util.ArrayList;
 
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
+import objects.Ausbilder;
 import objects.Betrieb;
 import objects.Fach;
 
 public class MySqlFachDAO implements StandardDAO<Fach>{
+	
+	private static final String DAO_NAME= Fach.class.getName();
+	
+	@Override
+	public String getClassName() {
+		return DAO_NAME;
+	}
 
 	@Override
 	public Fach insert(Fach t) {

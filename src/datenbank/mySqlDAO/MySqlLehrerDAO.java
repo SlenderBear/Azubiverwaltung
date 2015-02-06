@@ -4,13 +4,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import objects.Ausbilder;
 import objects.Lehrer;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
 
 public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
+	
+	private static final String DAO_NAME= Lehrer.class.getName();
+	
 	private MySqlLoginDatenDAO dao = new MySqlLoginDatenDAO();
 
+	@Override
+	public String getClassName() {
+		return DAO_NAME;
+	}
+	
 	@Override
 	public Lehrer insert(Lehrer t) {
 		String guid = MySQLConnector.getInstance().getNewGUID();

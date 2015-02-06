@@ -10,7 +10,15 @@ import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
 
 public class MySqlKlasseDAO implements StandardDAO<Klasse>{
+	
+	private static final String DAO_NAME= Klasse.class.getName();
+	
 	private MySqlLehrerDAO dao = new MySqlLehrerDAO();
+	
+	@Override
+	public String getClassName() {
+		return DAO_NAME;
+	}
 
 	@Override
 	public Klasse insert(Klasse t) {

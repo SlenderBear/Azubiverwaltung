@@ -6,9 +6,17 @@ import java.util.ArrayList;
 
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
+import objects.Ausbilder;
 import objects.Betrieb;
 
 public class MySqlBetriebDAO implements StandardDAO<Betrieb> {
+	
+	private static final String DAO_NAME= Betrieb.class.getName();
+	
+	@Override
+	public String getClassName() {
+		return DAO_NAME;
+	}
 
 	@Override
 	public Betrieb insert(Betrieb b) {
