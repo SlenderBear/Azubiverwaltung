@@ -50,27 +50,19 @@ public class MySQLConnector {
 		}
 	}
 	
-	public void initDB(){
+	public static void initDB(){
 		try{
 			mySQLConnection();
 		}catch(Exception e){
 			executeInitSkript();
 		}
 	}
-	
-	public static void main(String[] args) {
-		MySQLConnector connector = new MySQLConnector();
-		try{
-		connector.initDB();
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
+
 
 	/**
 	 * Führt das Skript aus, das die Datenbank initialisiert.
 	 */
-	private void executeInitSkript() {
+	private static void executeInitSkript() {
 		try {
 			File f = new File("W:\\git\\Azubiverwaltung\\src\\Erstellung_DB.sql");
 			List<String> sqlList = FileUtils.readLines(f);
@@ -100,12 +92,13 @@ public class MySQLConnector {
 	 */
 	public static MySQLConnector getInstance() {
 		if (connector == null) {
+			initDB();
 			connector = new MySQLConnector();
 		}
 		return connector;
 	}
 
-	public boolean statementExecute(String sql) {
+	public static boolean statementExecute(String sql) {
 		if (con == null) {
 			mySQLConnection();
 		}

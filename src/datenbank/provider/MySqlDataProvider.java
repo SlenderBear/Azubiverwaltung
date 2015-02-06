@@ -10,6 +10,7 @@ import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
 import objects.Login;
+import objects.Zeugnis;
 import objects.Zeugnisposition;
 import datenbank.StandardDAO;
 import datenbank.mySqlDAO.MySqlAusbilderDAO;
@@ -120,9 +121,9 @@ public class MySqlDataProvider extends StandardDataProvider{
 	}
 
 	@Override
-	public ArrayList<Zeugnisposition> gibPositionenZuZeugnis() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z) {
+		ArrayList<Zeugnisposition> liste = zeugnisPositionDAO.gibPositionenZuZeugnis(z);
+		return liste;
 	}
 
 	@SuppressWarnings("rawtypes")

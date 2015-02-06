@@ -11,6 +11,7 @@ import objects.Betrieb;
 import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
+import objects.Zeugnis;
 import objects.Zeugnisposition;
 
 /**
@@ -66,7 +67,7 @@ public abstract class StandardDataProvider {
 	 */
 	public abstract ArrayList<Fach> gibAlleFaecher();
 	
-	public abstract ArrayList<Zeugnisposition> gibPositionenZuZeugnis();
+	public abstract ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z);
 	
 	public abstract boolean insert(Object o);
 

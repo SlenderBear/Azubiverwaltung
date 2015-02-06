@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Ausbilder;
+import objects.Zeugnis;
 import objects.Zeugnisposition;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
@@ -106,6 +107,27 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 				e.printStackTrace();
 			}
 			return false;
+	}
+	
+	public ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z){
+		String sql = "select * from zeugnisposition where zeugnisid='"
+				+ z.getID() + "';";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		ArrayList<Zeugnisposition> positionenListe = new ArrayList<Zeugnisposition>(); 
+		try {
+			while (rs.next()) {
+				Zeugnisposition zp = new Zeugnisposition();
+				zp.setID(rs.getString("zeugnispositionid"));
+				zp.setZeugnis(zeugnisDao.getByGuid(rs.getString("zeugnisID")));
+				zp.setNote(noteDao.getByGuid(rs.getString("noteid")));
+				zp.setFach(fachDao.getByGuid(rs.getString("fachID")));
+
+				positionenListe.add(zp);
+			}
+		} catch (Exception e) {
+			System.out.println("Fehler in MySQLZeugnispositionDAO");
+		}
+		return positionenListe;
 	}
 
 }

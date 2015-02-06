@@ -8,6 +8,7 @@ import objects.Betrieb;
 import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
+import objects.Zeugnis;
 import objects.Zeugnisposition;
 
 public class SqliteDataProvider extends StandardDataProvider{
@@ -85,7 +86,7 @@ public class SqliteDataProvider extends StandardDataProvider{
 	}
 
 	@Override
-	public ArrayList<Zeugnisposition> gibPositionenZuZeugnis() {
+	public ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z) {
 		// TODO Auto-generated method stub
 		return null;
 	}
