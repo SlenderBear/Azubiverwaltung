@@ -56,6 +56,7 @@ public class Verwaltung {
 	/**
 	 * Delegiert das Update an den {@link StandardDataProvider}.
 	 * @param o {@link Object}
+	 * 
 	 * @return true wenn erfolgreich.
 	 */
 	public boolean update(Object o)  {
