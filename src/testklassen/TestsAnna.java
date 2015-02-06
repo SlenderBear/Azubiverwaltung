@@ -7,7 +7,7 @@ import objects.Lehrer;
 import objects.Note;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
-import pdf.PdfZeugnisA4;
+import pdf.PdfZeugnis;
 
 public class TestsAnna {
 	
@@ -46,7 +46,7 @@ public class TestsAnna {
 		k.setLehrer(l);
 		
 		Azubi a = new Azubi();
-		a.setName("Minion5");
+		a.setName("Minion6");
 		a.setVorname("Banana");
 		a.setGeburtsdatum("11.11.1111");
 		a.setLehrjahr(2);
@@ -93,7 +93,7 @@ public class TestsAnna {
 		z1.setNote(n1);
 		
 		
-		PdfZeugnisA4 zeug = new PdfZeugnisA4(a, "Test", z, "07.02.2015", (short)3);
+		PdfZeugnis zeug = new PdfZeugnis(a, "Test", z, "07.02.2015", (short)3);
 
 	}
 
