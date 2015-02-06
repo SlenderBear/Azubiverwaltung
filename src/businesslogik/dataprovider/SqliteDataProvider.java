@@ -44,8 +44,9 @@ public class SqliteDataProvider extends StandardDataProvider{
 		SqliteZeugnisPositionDAO zeugnisPositionDAO = new SqliteZeugnisPositionDAO();
 		@SuppressWarnings("rawtypes")
 		ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
+		
 		/**
-		 * Konstruktor
+		 * Konstruktor fügt alle Sqlite Daos in eine Liste ein.
 		 */
 		protected SqliteDataProvider(){
 			daoListe.add(ausbilderDAO);
