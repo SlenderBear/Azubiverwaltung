@@ -48,6 +48,8 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import datenbank.provider.StandardDataProvider;
+
 
 public class MainWindow {
 	private JFrame mainFrame;
@@ -62,13 +64,15 @@ public class MainWindow {
 	private String[] lAbsStrings = {"HS9","H10A","FOR","FOR Q","FHR","AHR","sonstiger"};
 	private Properties p;
     private GridBagConstraints c;
+    private StandardDataProvider sdp;
     
-    public MainWindow() {
+    public MainWindow(StandardDataProvider sdp) {
     	c = new GridBagConstraints();
     	p = new Properties();
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
+		this.sdp = sdp;
 	}
 
 	public void initialize() {
@@ -548,7 +552,9 @@ public class MainWindow {
 
 	private void createAzubiVerwaltung() {
 		azubiPanel = new JPanel(new BorderLayout());
-		JPanel innerAzubiPanel = new JPanel(new GridBagLayout());
+		JTabbedPane innerAzubiPanel = new JTabbedPane();
+		JPanel innerAzubiPanelStamm = new JPanel(new GridBagLayout());
+		JPanel innerAzubiPanelZusatz = new JPanel(new GridBagLayout());
 		JPanel rbGeschlechtPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		JPanel rbVolljahrPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		JPanel rbInklusionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -575,8 +581,6 @@ public class MainWindow {
 		JTextField staatAng1Field = new JTextField(20);
 		JTextField staatAng2Field = new JTextField(20);
 		JTextField fehlTageField = new JTextField(20);
-		JTextField letzteSFField = new JTextField(20);
-		JTextField letzteSAField = new JTextField(20);
 		JTextField konfessField = new JTextField(20);
 		
 		JDatePickerImpl dpGebTag = createNewDatePicker();
@@ -652,6 +656,72 @@ public class MainWindow {
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
+		////////////////////////////
+		buttonPanel.add(addButton);
+		buttonPanel.add(editButton);
+		buttonPanel.add(eraseButton);
+		
+		innerAzubiPanel.addTab("Stammdaten", innerAzubiPanelStamm);
+		innerAzubiPanel.addTab("Ergänzung", innerAzubiPanelZusatz);
+		azubiPanel.add(createTitlePanel("Ausbilderverwaltung"), BorderLayout.NORTH);
+		azubiPanel.add(innerAzubiPanel,BorderLayout.CENTER);
+		azubiPanel.add(buttonPanel, BorderLayout.SOUTH);
+		//////************/////////
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		innerAzubiPanelStamm.add(createTiteledPanel("Fachrichtung", cmbFachrichtung), c);
+//		innerAzubiPanel.add(createTiteledPanel("Klassenwahl", cmbKlasse), c);
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Klassenwahl", cmbKlasse));
+		c.gridheight = 5;
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Azubis", azubiScrollPane));
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 1;
+		c.gridheight = 1;
+		innerAzubiPanelStamm.add(createTiteledPanel("Name", nachField), c);
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Telefon", tNummerField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Geburtsdatum", dpGebTag));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Straße / HausNr",strField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("1.Staatsangehörigkeit",staatAng1Field));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Geburtsland Vater",gebLandVaterField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("FehlTage",fehlTageField));
+		
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 2;
+		innerAzubiPanelStamm.add(createTiteledPanel("Vorname",vorField), c);
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Mobil",hNummerField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Geburtsort",gebOrtField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("PLZ / Ort",ortPanel));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("2.Staatsangehörigkeit",staatAng2Field));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Geburtsland Mutter",gebLandMutterField));
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 3;
+		innerAzubiPanelStamm.add(createTiteledPanel("Geburtsname",gebNameField), c);
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("E-Mail",eMailField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Geburtsland",gebLandField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Letzte Schulform",cmbletzteSchule));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Zuzugsdatum",dpZuzug));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Ausbildungsbegin",dpAusBeg));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Betrieb",cmbBetrieb));
+		
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 4;
+		innerAzubiPanelStamm.add(createTiteledPanel("Geschlecht",rbGeschlechtPanel), c);
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Volljährig",rbVolljahrPanel));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Inklusionsberatung",rbInklusionPanel));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Schulabschluss",cmbletzterAbschluss));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Konfession",konfessField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Ausbildungsende",dpAusEnde));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Ausbilder",cmbAusbilder));
+		
+		//////************/////////
+		//////************/////////
+		//////************/////////
+		//////************/////////
 		addButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -660,70 +730,7 @@ public class MainWindow {
 				
 			}
 		});
-		//////************/////////
-		
-		c.gridx = 0;
-		c.gridy = 0;
-		innerAzubiPanel.add(createTiteledPanel("Fachrichtung", cmbFachrichtung), c);
-//		innerAzubiPanel.add(createTiteledPanel("Klassenwahl", cmbKlasse), c);
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Klassenwahl", cmbKlasse));
-		c.gridheight = 5;
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Azubis", azubiScrollPane));
-		//////************/////////
-		c.gridy = 0;
-		c.gridx = 1;
-		c.gridheight = 1;
-		innerAzubiPanel.add(createTiteledPanel("Name", nachField), c);
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Telefon", tNummerField));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Geburtsdatum", dpGebTag));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Straße / HausNr",strField));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("1.Staatsangehörigkeit",staatAng1Field));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Geburtsland Vater",gebLandVaterField));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("FehlTage",fehlTageField));
-		
-		//////************/////////
-		c.gridy = 0;
-		c.gridx = 2;
-		innerAzubiPanel.add(createTiteledPanel("Vorname",vorField), c);
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Mobil",hNummerField));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Geburtsort",gebOrtField));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("PLZ / Ort",ortPanel));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("2.Staatsangehörigkeit",staatAng2Field));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Geburtsland Mutter",gebLandMutterField));
-		//////************/////////
-		c.gridy = 0;
-		c.gridx = 3;
-		innerAzubiPanel.add(createTiteledPanel("Geburtsname",gebNameField), c);
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("E-Mail",eMailField));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Geburtsland",gebLandField));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Letzte Schulform",cmbletzteSchule));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Zuzugsdatum",dpZuzug));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Ausbildungsbegin",dpAusBeg));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Betrieb",cmbBetrieb));
-		
-		//////************/////////
-		c.gridy = 0;
-		c.gridx = 4;
-		innerAzubiPanel.add(createTiteledPanel("Geschlecht",rbGeschlechtPanel), c);
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Volljährig",rbVolljahrPanel));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Inklusionsberatung",rbInklusionPanel));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Schulabschluss",cmbletzterAbschluss));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Konfession",konfessField));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Ausbildungsende",dpAusEnde));
-		addComponentNextLine(innerAzubiPanel, createTiteledPanel("Ausbilder",cmbAusbilder));
-		
-		//////************/////////
-		//////************/////////
-		//////************/////////
-		//////************/////////
 		//
-		buttonPanel.add(addButton);
-		buttonPanel.add(editButton);
-		buttonPanel.add(eraseButton);
-		
-		azubiPanel.add(createTitlePanel("Ausbilderverwaltung"), BorderLayout.NORTH);
-		azubiPanel.add(innerAzubiPanel,BorderLayout.CENTER);
-		azubiPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 	}
 	
