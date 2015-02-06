@@ -329,14 +329,16 @@ public class PdfZeugnisA4 {
 		datum.add(Chunk.NEWLINE);
 		zweiteSeite.add(datum);
 		
-		Phrase lineSig = new Phrase("_______________________________");
+		Phrase lineSig = new Phrase("____________________________");
 		lineSig.add(Chunk.TABBING);
 		lineSig.add(Chunk.TABBING);
-		lineSig.add(new Chunk("_______________________________"));
+		lineSig.add(Chunk.TABBING);
+		lineSig.add(new Chunk("____________________________"));
 		lineSig.add(Chunk.NEWLINE);
 		zweiteSeite.add(lineSig);
 
-		Phrase stuffSig = new Phrase("Schulleiter", fSmall);
+		Phrase stuffSig = new Phrase("Schulleiter", fTiny);
+		stuffSig.add(Chunk.TABBING);
 		stuffSig.add(Chunk.TABBING);
 		stuffSig.add(Chunk.TABBING);
 		stuffSig.add(Chunk.TABBING);
@@ -346,6 +348,7 @@ public class PdfZeugnisA4 {
 		stuffSig.add(new Chunk("Klassenleitung ("
 				+ azubi.getKlasse().getLehrer().getName() + ")", fTiny));
 		stuffSig.add(Chunk.TABBING);
+		stuffSig.add(Chunk.NEWLINE);
 		stuffSig.add(Chunk.NEWLINE);
 		zweiteSeite.add(stuffSig);
 		
@@ -358,7 +361,30 @@ public class PdfZeugnisA4 {
 	
 	private void schreibeFooter() throws Exception{
 		Paragraph footer = new Paragraph();
-		footer.setAlignment(Element.ALIGN_BOTTOM);
+		
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
+		footer.add(Chunk.NEWLINE);
 		footer.add(new Chunk("______________________________________________________________________________"));
 		footer.add(Chunk.NEWLINE);
 		
@@ -394,7 +420,7 @@ public class PdfZeugnisA4 {
 		footer.add(zwei);
 		footer.add(drei);
 		footer.add(vier);
-		
+
 		document.add(footer);
 	}
 
