@@ -97,7 +97,9 @@ public class MySQLConnector {
 		}
 		return connector;
 	}
-
+	/**
+	 * SQL ausführen
+	 */
 	public static boolean statementExecute(String sql) {
 		if (con == null) {
 			mySQLConnection();
