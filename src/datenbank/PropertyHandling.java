@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class PropertyHandling {
 	
-	private final String filenameProp = "verwaltung.properties";
+	private final String filenameProp = "W:\\git\\Azubiverwaltung\\src\\verwaltung.properties";
 	public static final String PROP_EMPTY = "empty";
 	
 	public String liesPropAus(String prop) {

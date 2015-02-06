@@ -126,14 +126,58 @@ public class MySqlDataProvider extends StandardDataProvider{
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean insert(Object o) {
-		for (StandardDAO dao : daoListe) {
-			if(dao.getClassName().compareTo(o.getClass().getName()) == 0) {
-				System.out.println("Azubi gefunden");
+		try {
+			for (StandardDAO dao : daoListe) {
+				if (dao.getClassName().compareTo(o.getClass().getName()) == 0) {
+					dao.insert(o);
+					return true;
+				}
 			}
+			return false;
+		} catch (Exception e) {
+			// Datenbankfehler -> Fehlermeldung zurückgeben.
+			return false;
 		}
-		return false;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public boolean update(Object o) {
+		try {
+			for (StandardDAO dao : daoListe) {
+				if (dao.getClassName().compareTo(o.getClass().getName()) == 0) {
+					dao.update(o);
+					return true;
+				}
+			}
+			return false;
+		} catch (Exception e) {
+			// Datenbankfehler -> Fehlermeldung zurückgeben.
+			return false;
+		}
+	}
+	
+	public static void main(String[] args) {
+		StandardDataProvider.getInstance().update(new Azubi());
+	}
+
+	@Override
+	public boolean delete(Object o) {
+		try {
+			for (StandardDAO dao : daoListe) {
+				if (dao.getClassName().compareTo(o.getClass().getName()) == 0) {
+					dao.delete(o);
+					return true;
+				}
+			}
+			return false;
+		} catch (Exception e) {
+			// Datenbankfehler -> Fehlermeldung zurückgeben.
+			return false;
+		}
 	}
 
 }

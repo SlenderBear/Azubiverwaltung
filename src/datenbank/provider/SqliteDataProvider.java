@@ -96,4 +96,16 @@ public class SqliteDataProvider extends StandardDataProvider{
 		return false;
 	}
 
+	@Override
+	public boolean update(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

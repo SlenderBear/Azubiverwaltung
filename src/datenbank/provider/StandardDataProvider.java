@@ -23,8 +23,8 @@ import objects.Zeugnisposition;
 public abstract class StandardDataProvider {
 
 	private static StandardDataProvider provider = null;
-	public static final String DB_MYSQL = "mysql";
-	public static final String DB_SQLITE = "sqlite";
+	public static final String DB_MYSQL = "MYSQL";
+	public static final String DB_SQLITE = "SQLITE";
 	public static final String DB_PROPERTY = "db";
 	private static String akt_db;
 	private static PropertyHandling propertieHandler;
@@ -69,6 +69,10 @@ public abstract class StandardDataProvider {
 	public abstract ArrayList<Zeugnisposition> gibPositionenZuZeugnis();
 	
 	public abstract boolean insert(Object o);
+
+	public abstract boolean update(Object o);
+	
+	public abstract boolean delete(Object o);
 	
 	/**
 	 * Prüft ob Loginname bereits vorhanden.
@@ -96,10 +100,10 @@ public abstract class StandardDataProvider {
 	 * @return {@link StandardDataProvider}
 	 */
 	private static StandardDataProvider getDataProvider(String db) {
-		if (db.compareTo(DB_MYSQL) == 0) {
+		if (db.compareToIgnoreCase(DB_MYSQL) == 0) {
 			akt_db = DB_MYSQL;
 			return new MySqlDataProvider();
-		} else if (db.compareTo(DB_SQLITE) == 0) {
+		} else if (db.compareToIgnoreCase(DB_SQLITE) == 0) {
 			akt_db = DB_SQLITE;
 			return new SqliteDataProvider();
 		}
@@ -129,7 +133,8 @@ public abstract class StandardDataProvider {
 			propertieHandler = new PropertyHandling();
 		}
 		String db_property = propertieHandler.liesPropAus(DB_PROPERTY);
-		if (db_property.compareTo(PropertyHandling.PROP_EMPTY) == 0) {
+		if (db_property.compareToIgnoreCase(PropertyHandling.PROP_EMPTY) == 0) {
+			//TODO Fehlerbehandlung
 			return null;
 		}
 		return getDataProvider(db_property);
@@ -148,10 +153,10 @@ public abstract class StandardDataProvider {
 		if (db.compareTo(akt_db) == 0) {
 			return null;
 		}
-		if (db.compareTo(DB_MYSQL) == 0) {
+		if (db.compareToIgnoreCase(DB_MYSQL) == 0) {
 			propertieHandler.schreibeProp(DB_PROPERTY, DB_MYSQL);
 			return true;
-		} else if (db.compareTo(DB_SQLITE) == 0) {
+		} else if (db.compareToIgnoreCase(DB_SQLITE) == 0) {
 			propertieHandler.schreibeProp(DB_PROPERTY, DB_SQLITE);
 			return true;
 		}
