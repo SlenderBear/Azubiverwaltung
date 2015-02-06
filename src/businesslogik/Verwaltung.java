@@ -1,5 +1,7 @@
 package businesslogik;
 
+import gui.MainWindow;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -36,12 +38,10 @@ public class Verwaltung {
 									+ "\nBitte sprechen Sie mit dem zuständigen Administrator.");
 			System.exit(0);
 		}
-
-		// TO DO RUFE GUI AUF
-//		Delete delete = new Delete(dbRef);
-//		Insert insert = new Insert(dbRef);
-//		Update update = new Update(dbRef);
-//		LeseAus lese = new LeseAus(dbRef);
+		
+		@SuppressWarnings("unused")
+		MainWindow window = new MainWindow(dbRef);
 
 	}
+	
 }
