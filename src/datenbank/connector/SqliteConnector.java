@@ -40,6 +40,10 @@ public class SqliteConnector implements StandardSqlConnector {
 		return connector;
 	}
 	
+	/**
+	 * Prüft ob die DB bereits vorhanden ist. Ansonsten wird dies neu erstellt.
+	 * Öffnet anschließend eine Verbindung.
+	 */
 	private void initDB(){
 		File f = new File("azubiverwaltung.db");
 		if(f.exists()) {
@@ -136,6 +140,7 @@ public class SqliteConnector implements StandardSqlConnector {
 	    }
 		return false;
 	}
+	
 	public String getNewGUID() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
