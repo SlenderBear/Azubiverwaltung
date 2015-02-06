@@ -99,7 +99,7 @@ public class MySQLConnector implements StandardSqlConnector {
 		return connector;
 	}
 	
-
+	@Override
 	public boolean statementExecute(String sql) {
 		if (con == null) {
 			getConnection();
@@ -123,6 +123,7 @@ public class MySQLConnector implements StandardSqlConnector {
 
 	}
 
+	@Override
 	public ResultSet executeQuery(String sql){
 		if (con == null) {
 			getConnection();
@@ -143,6 +144,7 @@ public class MySQLConnector implements StandardSqlConnector {
 
 	}
 
+	@Override
 	public String getNewGUID() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
