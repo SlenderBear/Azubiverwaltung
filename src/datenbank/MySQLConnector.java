@@ -1,12 +1,18 @@
 package datenbank;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import org.apache.commons.io.FileUtils;
 
 import com.sun.xml.internal.fastinfoset.algorithm.UUIDEncodingAlgorithm;
 
@@ -40,6 +46,51 @@ public class MySQLConnector {
 			System.out.println("SQLException: " + e.getMessage());
 			System.out.println("SQLState: " + e.getSQLState());
 			System.out.println("VendorError: " + e.getErrorCode());
+			throw new RuntimeException();
+		}
+	}
+	
+	public void initDB(){
+		try{
+			mySQLConnection();
+		}catch(Exception e){
+			executeInitSkript();
+		}
+	}
+	
+	public static void main(String[] args) {
+		MySQLConnector connector = new MySQLConnector();
+		try{
+		connector.initDB();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	/**
+	 * Führt das Skript aus, das die Datenbank initialisiert.
+	 */
+	private void executeInitSkript() {
+		try {
+			File f = new File("W:\\git\\Azubiverwaltung\\src\\Erstellung_DB.sql");
+			List<String> sqlList = FileUtils.readLines(f);
+
+			Class.forName("com.mysql.jdbc.Driver"); // Datenbanktreiber für JDBC
+													// Schnittstellen laden.
+
+			// Verbindung zur JDBC-Datenbank herstellen.
+			con = DriverManager.getConnection("jdbc:mysql://" + dbHost + ":"
+					+ dbPort + "/" + "?" + "user=root");
+			System.out.println(con.getClientInfo());
+			
+			for (int i = 0; i < sqlList.size(); i++) {
+				if(sqlList.get(i).isEmpty() || sqlList.get(i).compareTo(" ") == 0) {
+					continue;
+				}
+				statementExecute(sqlList.get(i));
+			}
+		} catch (Exception err) {
+			err.printStackTrace();
 		}
 	}
 
@@ -55,48 +106,46 @@ public class MySQLConnector {
 	}
 
 	public boolean statementExecute(String sql) {
-		if (con != null) {
-			// Statement erzeugen.
-			Statement st;
-			try {
-				st = con.createStatement();
-
-				int result = st.executeUpdate(sql);
-				if (result > 0) {
-					return true;
-				} else {
-					return false;
-				}
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}else if(con == null){
+		if (con == null) {
 			mySQLConnection();
 		}
-		return false;
+		// Statement erzeugen.
+		Statement st;
+		try {
+			st = con.createStatement();
+
+			int result = st.executeUpdate(sql);
+			if (result > 0) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 
 	public ResultSet executeQuery(String sql){
-		if (con != null) {
-			Statement st;
-			try {
-				st = con.createStatement();
-				
-				 ResultSet rs = st.executeQuery(sql);
-				 
-				return rs;
-			}
-		    catch (Exception e)
-		    {
-		      System.err.println("Got an exception! ");
-		      System.err.println(e.getMessage());
-		    }
-		}else if(con == null){
+		if (con == null) {
 			mySQLConnection();
 		}
-		return null;
-		
+
+		Statement st;
+		try {
+			st = con.createStatement();
+
+			ResultSet rs = st.executeQuery(sql);
+
+			return rs;
+		} catch (Exception e) {
+			System.err.println("Got an exception! ");
+			System.err.println(e.getMessage());
+			return null;
+		}
+
 	}
 
 	public String getNewGUID() {
