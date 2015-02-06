@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.UUID;
 
 /**
  * @author dunkel.gregor
@@ -96,4 +97,9 @@ public class SqliteConnector {
 	    }
 		return false;
 	}
+	public String getNewGUID() {
+		UUID uuid = UUID.randomUUID();
+		return uuid.toString();
+	}
+
  }
