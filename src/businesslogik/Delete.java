@@ -1,5 +1,6 @@
 package businesslogik;
 
+import datenbank.provider.StandardDataProvider;
 import objects.Ausbilder;
 import objects.Azubi;
 import objects.Berechtigung;
@@ -22,9 +23,9 @@ import objects.Zeugnis;
 
 public class Delete {
 
-	Object dbRef;
+	StandardDataProvider dbRef;
 
-	public Delete(Object dbRef) {
+	public Delete(StandardDataProvider dbRef) {
 		this.dbRef = dbRef;
 	}
 
