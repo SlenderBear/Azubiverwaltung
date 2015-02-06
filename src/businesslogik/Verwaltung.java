@@ -5,6 +5,8 @@ import gui.MainWindow;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import objects.Azubi;
+import objects.StandardValueObject;
 import datenbank.provider.StandardDataProvider;
 
 /**
@@ -49,7 +51,7 @@ public class Verwaltung {
 	 * @param o {@link Object}
 	 * @return {@link Object} das erstellt wurde.
 	 */
-	public Object insert(Object o) {
+	public StandardValueObject insert(StandardValueObject o) {
 		return dbRef.insert(o);
 	}
 	
@@ -59,7 +61,7 @@ public class Verwaltung {
 	 * 
 	 * @return true wenn erfolgreich.
 	 */
-	public boolean update(Object o)  {
+	public boolean update(StandardValueObject o)  {
 		return dbRef.update(o);
 	}
 	
@@ -68,7 +70,7 @@ public class Verwaltung {
 	 * @param o {@link Object}
 	 * @return true wenn erfolgreich.
 	 */
-	public boolean delete(Object o) {
+	public boolean delete(StandardValueObject o) {
 		return dbRef.delete(o);
 	}
 }

@@ -2,13 +2,15 @@ package datenbank;
 
 import java.util.ArrayList;
 
+import objects.StandardValueObject;
+
 public interface StandardDAO<T> {
 	/**
 	 * Fügt ein beliebiges Objekt in die Datenbank ein
 	 * @param Objekt das gespeichert werden soll
 	 * @return Objekt des selben Eingabetypes mit gefüllter GUID
 	 */
-	T insert(T t);
+	StandardValueObject insert(T t);
 	
 	/**
 	 * Ändert ein beliebiges Objekt in der Datenbank

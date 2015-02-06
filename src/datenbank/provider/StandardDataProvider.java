@@ -8,6 +8,7 @@ import objects.Betrieb;
 import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
+import objects.StandardValueObject;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
 import datenbank.PropertyHandling;
@@ -79,11 +80,11 @@ public abstract class StandardDataProvider {
 	 * @param o {@link Object}
 	 * @return
 	 */
-	public abstract Object insert(Object o);
+	public abstract StandardValueObject insert(StandardValueObject o);
 
-	public abstract boolean update(Object o);
+	public abstract boolean update(StandardValueObject o);
 	
-	public abstract boolean delete(Object o);
+	public abstract boolean delete(StandardValueObject o);
 	
 	/**
 	 * Prüft ob Loginname bereits vorhanden.
@@ -162,11 +163,9 @@ public abstract class StandardDataProvider {
 			return null;
 		}
 		if (db.compareToIgnoreCase(db_optionen.MYSQL.toString()) == 0) {
-			propertieHandler.schreibeProp(DB_PROPERTY, db_optionen.MYSQL.toString());
-			return true;
+			return propertieHandler.schreibeProp(DB_PROPERTY, db_optionen.MYSQL.toString());
 		} else if (db.compareToIgnoreCase(db_optionen.SQLITE.toString()) == 0) {
-			propertieHandler.schreibeProp(DB_PROPERTY, db_optionen.SQLITE.toString());
-			return true;
+			return propertieHandler.schreibeProp(DB_PROPERTY, db_optionen.SQLITE.toString());
 		}
 
 		return false;

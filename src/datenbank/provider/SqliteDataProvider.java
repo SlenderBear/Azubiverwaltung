@@ -21,6 +21,7 @@ import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
 import objects.Login;
+import objects.StandardValueObject;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
 /**
@@ -131,7 +132,7 @@ public class SqliteDataProvider extends StandardDataProvider{
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
-		public Object insert(Object o) {
+		public StandardValueObject insert(StandardValueObject o) {
 			try {
 				for (StandardDAO dao : daoListe) {
 					if (dao.getClassName().compareTo(o.getClass().getName()) == 0) {
@@ -148,7 +149,7 @@ public class SqliteDataProvider extends StandardDataProvider{
 		
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
-		public boolean update(Object o) {
+		public boolean update(StandardValueObject o) {
 			try {
 				for (StandardDAO dao : daoListe) {
 					if (dao.getClassName().compareTo(o.getClass().getName()) == 0) {
@@ -165,7 +166,7 @@ public class SqliteDataProvider extends StandardDataProvider{
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public boolean delete(Object o) {
+		public boolean delete(StandardValueObject o) {
 			try {
 				for (@SuppressWarnings("rawtypes") StandardDAO dao : daoListe) {
 					if (dao.getClassName().compareTo(o.getClass().getName()) == 0) {
