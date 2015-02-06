@@ -41,8 +41,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import objects.Ausbilder;
 import objects.Azubi;
 import objects.Berechtigung;
+import objects.Betrieb;
 import objects.Klasse;
 import objects.Lehrer;
 import objects.Login;
@@ -625,20 +627,21 @@ public class MainWindow {
 		// ///////////////////////////////////////////////////////////
 		final JTextField vorField = new JTextField(20);
 		final JTextField nachField = new JTextField(20);
-		JTextField gebNameField = new JTextField(20);
-		JTextField plzField = new JTextField(6);
+		final JTextField gebNameField = new JTextField(20);
+		final JTextField plzField = new JTextField(6);
 		final JTextField ortField = new JTextField(13);
 		final JTextField gebOrtField = new JTextField(20);
 		final JTextField gebLandField = new JTextField(20);
 		final JTextField gebLandVaterField = new JTextField(20);
 		final JTextField gebLandMutterField = new JTextField(20);
-		JTextField strField = new JTextField(20);
+		final JTextField strField = new JTextField(20);
 		final JTextField tNummerField = new JTextField(20);
 		final JTextField hNummerField = new JTextField(20);
 		final JTextField eMailField = new JTextField(20);
 		final JTextField staatAng1Field = new JTextField(20);
 		final JTextField staatAng2Field = new JTextField(20);
 		final JTextField fehlTageField = new JTextField(20);
+		final JTextField ausJahrField = new JTextField(20);
 
 		final JTextField sonstReliField = new JTextField(20);
 		sonstReliField.setEnabled(false);
@@ -649,8 +652,8 @@ public class MainWindow {
 		final JTextField anmerkField = new JTextField(40);
 
 		final JDatePickerImpl dpGebTag = createNewDatePicker();
-		JDatePickerImpl dpAusBeg = createNewDatePicker();
-		JDatePickerImpl dpAusEnde = createNewDatePicker();
+		final JDatePickerImpl dpAusBeg = createNewDatePicker();
+		final JDatePickerImpl dpAusEnde = createNewDatePicker();
 		final JDatePickerImpl dpZuzug = createNewDatePicker();
 
 		ButtonGroup btgrGeschl = new ButtonGroup();
@@ -694,11 +697,19 @@ public class MainWindow {
 		ortPanel.add(new JLabel(" / "));
 		ortPanel.add(ortField);
 
+		ArrayList<Klasse> klasseList = new ArrayList<Klasse>();
+		ArrayList<Betrieb> betriebList = new ArrayList<Betrieb>();
+		ArrayList<Ausbilder> ausbilderList = new ArrayList<Ausbilder>();
 		//
-		JComboBox cmbBetrieb = new JComboBox();
+		final DefaultComboBoxModel dcbBetrieb = new DefaultComboBoxModel(betriebList.toArray());
+		final DefaultComboBoxModel dcbAusbilder = new DefaultComboBoxModel(ausbilderList.toArray());
+		final DefaultComboBoxModel dcbmKlasse = new DefaultComboBoxModel(
+				klasseList.toArray());
+		
+		final JComboBox cmbBetrieb = new JComboBox(dcbBetrieb);
 		cmbBetrieb.setPreferredSize(new Dimension(200, 20));
 		//
-		JComboBox cmbAusbilder = new JComboBox();
+		final JComboBox cmbAusbilder = new JComboBox(dcbAusbilder);
 		cmbAusbilder.setPreferredSize(new Dimension(200, 20));
 		//
 		final JComboBox cmbFachrichtung = new JComboBox(fRichtungen);
@@ -713,9 +724,6 @@ public class MainWindow {
 		final JComboBox cmbKonfession = new JComboBox(konfessStrings);
 		cmbKonfession.setPreferredSize(new Dimension(200, 20));
 		//
-		ArrayList<Klasse> klasseList = new ArrayList<Klasse>();
-		DefaultComboBoxModel dcbmKlasse = new DefaultComboBoxModel(
-				klasseList.toArray());
 		final JComboBox cmbKlasse = new JComboBox(dcbmKlasse);
 		cmbKlasse.setPreferredSize(new Dimension(200, 20));
 		//
@@ -788,7 +796,8 @@ public class MainWindow {
 				createTiteledPanel("E-Mail", eMailField));
 		addComponentNextLine(innerAzubiPanelStamm,
 				createTiteledPanel("Geburtsland", gebLandField));
-		c.gridy++;
+		addComponentNextLine(innerAzubiPanelStamm,
+				createTiteledPanel("AusbildungsJahr", ausJahrField));
 		addComponentNextLine(innerAzubiPanelStamm,
 				createTiteledPanel("Inklusionsberatung", rbInklusionPanel));
 
@@ -914,18 +923,41 @@ public class MainWindow {
 							newAzubi.setOrt(ortField.getText());
 							newAzubi.setGeburtsort(gebOrtField.getText());
 							newAzubi.setGeburtsland(gebLandField.getText());
-							newAzubi.setGeburtsland_Mutter(gebLandMutterField
+							newAzubi.setStrasse(strField.getText());
+							newAzubi.setPlz(plzField.getText());
+							newAzubi.setLehrjahr(Integer.parseInt(ausJahrField.getText()));
+							if(dpAusEnde.getModel().getValue() != null){
+								DateModel<?> ausEndeModel = dpAusEnde.getModel();
+								newAzubi.setAusbildungsende(ausEndeModel.getDay()+"-"+ausEndeModel.getMonth()+"-"+ausEndeModel.getYear());
+							}
+							{
+								DateModel<?> ausAnfModel = dpAusBeg.getModel();
+								newAzubi.setAusbildungsbeginn(ausAnfModel.getDay()+"-"+ausAnfModel.getMonth()+"-"+ausAnfModel.getYear());
+							}
+							if(!gebNameField.getText().isEmpty()){
+								newAzubi.setGeburtsname(gebNameField.getText());
+							}
+							if(!gebLandMutterField.getText().isEmpty()){
+								newAzubi.setGeburtsland_Mutter(gebLandMutterField
 									.getText());
-							newAzubi.setGeburtsland_Vater(gebLandVaterField
-									.getText());
+							}
+							if(!gebLandVaterField.getText().isEmpty()){
+								newAzubi.setGeburtsland_Vater(gebLandVaterField
+										.getText());
+							}
 							newAzubi.setStaatsangehoerigkeit_1(staatAng1Field
 									.getText());
-							newAzubi.setStaatsangehoerigkeit_2(staatAng2Field
+							if(!staatAng2Field.getText().isEmpty()){
+								newAzubi.setStaatsangehoerigkeit_2(staatAng2Field
 									.getText());
+							}
+							
 							newAzubi.setTelefon(tNummerField.getText());
 							newAzubi.setMobiltelefon(hNummerField.getText());
-							newAzubi.setAnmerkung_Schulabschluss(anmerkField
+							if(!anmerkField.getText().isEmpty()){
+								newAzubi.setAnmerkung_Schulabschluss(anmerkField
 									.getText());
+							}
 							newAzubi.setEmail(eMailField.getText());
 							newAzubi.setFehltage(Integer.parseInt(fehlTageField
 									.getText()));
@@ -974,6 +1006,15 @@ public class MainWindow {
 								newAzubi.setGeschlecht('f');
 
 							}
+							if(cmbBetrieb.getSelectedIndex() > -1){
+								newAzubi.setBetrieb((Betrieb)dcbBetrieb.getElementAt(cmbBetrieb.getSelectedIndex()));
+							}
+							if(cmbAusbilder.getSelectedIndex() > -1){
+								newAzubi.setAusbilder((Ausbilder)dcbAusbilder.getElementAt(cmbAusbilder.getSelectedIndex()));
+							}
+							if(cmbKlasse.getSelectedIndex() > -1){
+								newAzubi.setKlasse((Klasse)dcbmKlasse.getElementAt(cmbKlasse.getSelectedIndex()));
+							}
 
 						}
 					} else {
@@ -991,11 +1032,12 @@ public class MainWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!sonstReliField.isEnabled()) {
-					System.out.println((String) cmbKonfession.getSelectedItem());
-				} else {
-					System.out.println(sonstReliField.getText());
-				}
+//				if (!sonstReliField.isEnabled()) {
+//					System.out.println((String) cmbKonfession.getSelectedItem());
+//				} else {
+//					System.out.println(sonstReliField.getText());
+//				}
+				System.out.println(gebLandVaterField.getText());
  			}
 		});
 
