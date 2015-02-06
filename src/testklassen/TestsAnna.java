@@ -30,7 +30,7 @@ public class TestsAnna {
 		z.setZeugnisKonferenz("01.01.2015");
 		z.setAzubi(a);
 		
-		PdfZeugnisA4 zeug = new PdfZeugnisA4(a, "Test", z, "07.02.2015");
+//		PdfZeugnisA4 zeug = new PdfZeugnisA4(a, "Test", z, "07.02.2015");
 
 	}
 

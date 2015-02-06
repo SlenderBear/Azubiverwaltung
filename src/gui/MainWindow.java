@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -9,23 +10,18 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Properties;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,12 +33,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.border.EtchedBorder;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -56,6 +48,8 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import datenbank.provider.StandardDataProvider;
+
 
 public class MainWindow {
 	private JFrame mainFrame;
@@ -65,25 +59,26 @@ public class MainWindow {
 	private JTabbedPane menuePanel;
 	private int zugangsStufe;
 	private String[] tHeads = {"Azubi","Note"};
+	private String[] fRichtungen = {"Fachinformatiker","Systemintegrator"};
+	private String[] lSFormStrings = {"Hauptschule","Realschule","Gymnasium","Gesamtschule","Berufskoleg","Förderschule","sonstige"};
+	private String[] lAbsStrings = {"HS9","H10A","FOR","FOR Q","FHR","AHR","sonstiger"};
 	private Properties p;
-	private UtilDateModel model;
-    private JDatePanelImpl datePanel;
-    private DateLabelFormatter dlf;
+    private GridBagConstraints c;
+    private StandardDataProvider sdp;
     
-    public MainWindow() {
-    	dlf = new DateLabelFormatter();
+    public MainWindow(StandardDataProvider sdp) {
+    	c = new GridBagConstraints();
     	p = new Properties();
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
-		model=new UtilDateModel();
-	    datePanel = new JDatePanelImpl(model,p);
+		this.sdp = sdp;
 	}
 
 	public void initialize() {
 		mainFrame = new JFrame("HHBK Azubiverwaltung");
 		mainFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		mainFrame.setSize(800, 670);
+		mainFrame.setSize(1275, 750);
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -94,17 +89,9 @@ public class MainWindow {
 		jLogo = new JLabel(icon);
 		logoPanel.add(jLogo);
 		 setShownLogin();
-//		 setShownMenue();
-//		 setShownAzubi();
-//			setShownAusbilder();
-//			setShownRegister();
-//		setShowBetrieb();
-//		 setShownKlassen();
-//		setShownZeugnis();
 		mainPanel.add(logoPanel, BorderLayout.NORTH);
 
 		mainFrame.add(mainPanel);
-		// mainFrame.pack();
 		mainFrame.setVisible(true);
 	}
 
@@ -131,77 +118,13 @@ public class MainWindow {
 		mainFrame.invalidate();
 		mainFrame.validate();
 	}
-//
-//	private void setShownAzubi() {
-//		if (azubiPanel == null) {
-//			createAzubiVerwaltung();
-//		}
-//		shownPanel = azubiPanel;
-//	}
-//
-//	private void setShownAusbilder() {
-//		if (ausbilderPanel == null) {
-//			createAusbilderVerwaltung();
-//		}
-//		shownPanel = ausbilderPanel;
-//	}
-//
-//	private void setShownRegister() {
-//		if (registerPanel == null) {
-//			createRegister();
-//		}
-//		shownPanel = registerPanel;
-//	}
-//	
-//	private void setShowBetrieb(){
-//		if(betriebsPanel == null){
-//			createBetriebVerw();
-//		}
-//		shownPanel = betriebsPanel;
-//	}
-//	
-//	private void setShownKlassen(){
-//		if(klassenPanel == null){
-//			createKlassenVerwaltung();
-//		}
-//		shownPanel = klassenPanel;
-//	}
-//	
-//	private void setShownZeugnis(){
-//		if(zeugnisPanel == null){
-//			createZeugnisVerwaltung();
-//		}
-//		shownPanel = zeugnisPanel;
-//	}
 	
 	private void createZeugnisVerwaltung(){
 		zeugnisPanel = new JPanel(new BorderLayout());
 		JPanel innerZeugnisPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
-		JLabel label = new JLabel("Klassenwahl");
-		c.gridy=0;
-		c.gridwidth = 1;
-		innerZeugnisPanel.add(label, c);
-		JComboBox cmbKlasse = new JComboBox();
-		cmbKlasse.setPreferredSize(new Dimension(200, 25));
-		c.gridy++;
-		innerZeugnisPanel.add(cmbKlasse, c);
-		label = new JLabel("Fächer");
-		c.gridy++;
-		innerZeugnisPanel.add(label, c);
-		JList azubiList = new JList();
-		azubiList.setPreferredSize(new Dimension(200, 150));
-		c.gridy++;
-		c.gridheight = 4;
-		innerZeugnisPanel.add(azubiList, c);
-		//
-		label = new JLabel("Jahr");
-		c.gridx = 1;
-		c.gridy = 0;
-		c.gridheight = 1;
-		innerZeugnisPanel.add(label, c);
-		
+		JPanel druckPanel = new JPanel(new GridLayout(0, 1, 0, 25));
+		setConstraintsDefault();
+		////////////////////////////////////////////////////////////
 		Calendar now = Calendar.getInstance();
 		int jahr = now.get(Calendar.YEAR);
 		Vector years = new Vector();
@@ -209,42 +132,57 @@ public class MainWindow {
 			years.add(jahr-i);
 		}
 		
+		JComboBox cmbKlasse = new JComboBox();
+		cmbKlasse.setPreferredSize(new Dimension(200, 25));
 		JComboBox cmbJahrBox = new JComboBox(years);
 		cmbJahrBox.setPreferredSize(new Dimension(150, 25));
-		c.gridy++;
-		innerZeugnisPanel.add(cmbJahrBox, c);
-		//
-		//
+		
+		JList azubiList = new JList();
+		JScrollPane azubiScrollPane = new JScrollPane(azubiList);
+		azubiScrollPane.setPreferredSize(new Dimension(200, 150));
+		
+		
 		DefaultTableModel dtmNoten = new MyTable(8, 2);
 		dtmNoten.setColumnIdentifiers(tHeads);
+		
 		JTable notenTable = new JTable(dtmNoten);
+		
 		JScrollPane tableScrollPane = new JScrollPane(notenTable);
 		tableScrollPane.setPreferredSize(new Dimension(250, 148));
-		c.gridy = 3;
-		c.gridheight = 4;
-		innerZeugnisPanel.add(tableScrollPane, c);
-		//
 		
-		//
-		label = new JLabel("Zeugniskonferenz am:");
+		JDatePickerImpl dpZeug = createNewDatePicker();
+
+		JButton btZeugDruck = createButton("Schüler", 150, 25);
+		JButton btZeugKlasseDruck = createButton("Gesamte Klasse", 150, 25);
+		////////////////////////////////////////////////////////////
+		c.gridy=0;
+		c.gridx= 0;
+		c.gridwidth = 1;
+		innerZeugnisPanel.add(createTiteledPanel("Klassenwahl", cmbKlasse), c);
+		c.gridheight = 3;
+		addComponentNextLine(innerZeugnisPanel, createTiteledPanel("Faecher", azubiScrollPane));
+		//***************************************//
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridheight = 1;
+		innerZeugnisPanel.add(createTiteledPanel("Jahr", cmbJahrBox), c);
+		c.gridheight = 3;
+		addComponentNextLine(innerZeugnisPanel, createTiteledPanel("Noten", tableScrollPane));
+		//***************************************//
+		
 		c.gridx = 2;
 		c.gridheight = 1;
 		c.gridy = 0;
-		innerZeugnisPanel.add(label, c);
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel,dlf);
-		c.gridy++;
-		innerZeugnisPanel.add(datePicker, c);
+		innerZeugnisPanel.add(createTiteledPanel("Zeugniskonferenz am:", dpZeug), c);
 		
-		//
-		label = new JLabel("Zeugnis drucken für:");
+		JLabel label = new JLabel("Zeugnis drucken für:");
+		
 		c.gridy++;
 		innerZeugnisPanel.add(label, c);
-		JButton btZeugDruck = createButton("Schüler", 150, 25);
-		JButton btZeugKlasseDruck = createButton("Gesamte Klasse", 150, 25);
-		JPanel druckPanel = new JPanel(new GridLayout(0, 1, 0, 25));
-//		druckPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+
 		druckPanel.add(btZeugDruck);
 		druckPanel.add(btZeugKlasseDruck);
+
 		c.gridy++;
 		innerZeugnisPanel.add(druckPanel, c);
 
@@ -257,52 +195,42 @@ public class MainWindow {
 	private void createKlassenVerwaltung(){
 		klassenPanel = new JPanel(new BorderLayout());
 		JPanel innerKlassenPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
-		JLabel label = new JLabel("Klassen");
-		c.gridy = 1;
-		c.gridx = 0;
-		c.gridwidth = 1;
-		innerKlassenPanel.add(label, c);
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		setConstraintsDefault();
+		////////////////////////////////////////////////////////////
 		JList klassenList = new JList();
-		klassenList.setPreferredSize(new Dimension(200, 150));
-		c.gridy = 2;
-		c.gridheight = 6;
-		innerKlassenPanel.add(klassenList, c);
-		
-		label = new JLabel("Bezeichnung");
-		c.gridx = 1;
-		c.gridy = 2;
-		c.gridheight = 1;
-		innerKlassenPanel.add(label,c);
-		
-		label = new JLabel("Lehrer");
-		c.gridy++;
-		innerKlassenPanel.add(label,c);
+		JScrollPane klassenScrollPane = new JScrollPane(klassenList);
+		klassenScrollPane.setPreferredSize(new Dimension(200, 300));
 		
 		JTextField bezField = new JTextField(20);
-		c.gridx = 2;
-		c.gridy = 2;
-		c.gridwidth = 1;
-		innerKlassenPanel.add(bezField,c);
 		
 		JComboBox cmbLehrer = new JComboBox();
 		cmbLehrer.setPreferredSize(new Dimension(200, 25));
-		c.gridy++;
-		innerKlassenPanel.add(cmbLehrer,c);
-		
 		
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
+		////////////////////////////////////////////////////////////
+		c.gridy = 0;
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridheight = 3;
+		innerKlassenPanel.add(createTiteledPanel("Klassen", klassenScrollPane), c);
 		
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		//*********************************************//
+		
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		innerKlassenPanel.add(createTiteledPanel("Bezeichnung", bezField),c);
+		addComponentNextLine(innerKlassenPanel, createTiteledPanel("Lehrer", cmbLehrer));
+		
+		//*********************************************//
+		
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
-		c.gridy = 8;
-		c.gridx = 0;
-		c.gridwidth = 3;
 		
 		klassenPanel.add(createTitlePanel("Klassenverwaltung"),BorderLayout.NORTH);
 		klassenPanel.add(innerKlassenPanel,BorderLayout.CENTER);
@@ -312,74 +240,50 @@ public class MainWindow {
 	private void createBetriebVerw(){
 		betriebsPanel = new JPanel(new BorderLayout());
 		JPanel innerBetriebsPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
-		JLabel label = new JLabel("Betriebe");
-		c.gridy = 1;
-		c.gridx = 0;
-		c.gridwidth = 1;
-		innerBetriebsPanel.add(label, c);
-		JList betriebsList = new JList();
-		betriebsList.setPreferredSize(new Dimension(200, 150));
-		c.gridy = 2;
-		c.gridheight = 6;
-		innerBetriebsPanel.add(betriebsList, c);
-		
-		label = new JLabel("Bezeichnung");
-		c.gridx = 1;
-		c.gridy = 2;
-		c.gridheight = 1;
-		innerBetriebsPanel.add(label,c);
-		label = new JLabel("PLZ / Ort");
-		c.gridy++;
-		innerBetriebsPanel.add(label, c);
-		label = new JLabel("Straße / HausNr");
-		c.gridy++;
-		innerBetriebsPanel.add(label, c);
-		label = new JLabel("Ansprechpartner");
-		c.gridy++;
-		innerBetriebsPanel.add(label,c);
-		label = new JLabel("Telefonnummer");
-		c.gridy++;
-		innerBetriebsPanel.add(label,c);
-		label = new JLabel("E-Mail");
-		c.gridy++;
-		innerBetriebsPanel.add(label,c);
-		
-		JTextField bezField = new JTextField(20);
-		c.gridx = 2;
-		c.gridy = 2;
-		c.gridwidth = 1;
-		innerBetriebsPanel.add(bezField,c);
 		JPanel ortPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		setConstraintsDefault();
+		///////////////////////////////////////////////////////////////
+		JTextField bezField = new JTextField(20);
 		JTextField plzField = new JTextField(6);
 		JTextField ortField = new JTextField(13);
-		ortPanel.add(plzField);
-		ortPanel.add(new JLabel(" / "));
-		ortPanel.add(ortField);
-		c.gridy++;
-		innerBetriebsPanel.add(ortPanel,c);
 		JTextField adresseField = new JTextField(20);
-		c.gridy++;
-		innerBetriebsPanel.add(adresseField,c);
-		JTextField ansprechField = new JTextField(20);
-		c.gridy++;
-		innerBetriebsPanel.add(ansprechField,c);
 		JTextField teleField = new JTextField(20);
-		c.gridy++;
-		innerBetriebsPanel.add(teleField,c);
 		JTextField eMailField = new JTextField(20);
-		c.gridy++;
-		innerBetriebsPanel.add(eMailField,c);
+		
+		JList betriebsList = new JList();
+		JScrollPane betriebsScrollPane = new JScrollPane(betriebsList);
+		betriebsScrollPane.setPreferredSize(new Dimension(200, 300));
+		
 		
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		ortPanel.add(plzField);
+		ortPanel.add(new JLabel(" / "));
+		ortPanel.add(ortField);
+		////////////////////////////////////////////////////////////////
+		JLabel label = new JLabel("Betriebe");
+		c.gridy = 0;
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridheight = 6;
+		innerBetriebsPanel.add(createTiteledPanel("Betriebe", betriebsScrollPane), c);
+		//***********************************//
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		innerBetriebsPanel.add(createTiteledPanel("Bezeichnung", bezField),c);
+		addComponentNextLine(innerBetriebsPanel, createTiteledPanel("PLZ / Ort", ortPanel));
+		addComponentNextLine(innerBetriebsPanel, createTiteledPanel("Strasse / HausNr", adresseField));
+		addComponentNextLine(innerBetriebsPanel, createTiteledPanel("Telefonnummer", teleField));
+		addComponentNextLine(innerBetriebsPanel, createTiteledPanel("E-Mail", eMailField));
+		//***********************************//
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
-		
 		betriebsPanel.add(createTitlePanel("Betriebeverwaltung"),BorderLayout.NORTH);
 		betriebsPanel.add(innerBetriebsPanel,BorderLayout.CENTER);
 		betriebsPanel.add(buttonPanel,BorderLayout.SOUTH);
@@ -395,80 +299,62 @@ public class MainWindow {
 	private void createRegister() {
 		registerPanel = new JPanel(new BorderLayout());
 		JPanel innerRegisterPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
-		JLabel label = new JLabel("Nutzer");
-		c.gridy = 1;
-		c.gridx = 0;
-		c.gridwidth = 1;
-		innerRegisterPanel.add(label, c);
-		//
-		
+		setConstraintsDefault();
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel berPanel = new JPanel(new GridLayout(0,1));
+		//*************************
 		final DefaultListModel model = new DefaultListModel();
 		final JList userList = new JList(model);
-		userList.setPreferredSize(new Dimension(200, 250));
-		c.gridy = 2;
-		c.gridheight = 8;
-		innerRegisterPanel.add(userList, c);
-		
-		
-		//
-		label = new JLabel("Vorname");
-		c.gridx = 1;
-		c.gridy = 2;
-		c.gridheight = 1;
-		innerRegisterPanel.add(label,c);
-		label = new JLabel("Name");
-		c.gridy++;
-		innerRegisterPanel.add(label,c);
-		label = new JLabel("Username");
-		c.gridy++;
-		innerRegisterPanel.add(label,c);
-		label = new JLabel("Passwort");
-		c.gridy++;
-		innerRegisterPanel.add(label,c);
-		label = new JLabel("Telefonnummer");
-		c.gridy++;
-		innerRegisterPanel.add(label,c);
-		label = new JLabel("Berechtigung");
-		c.gridy++;
-		innerRegisterPanel.add(label,c);
+		JScrollPane userScrollPane = new JScrollPane(userList);
+		userScrollPane.setPreferredSize(new Dimension(200, 350));
 		
 		final JTextField vorField = new JTextField(20);
-		c.gridx = 2;
-		c.gridy = 2;
-		c.gridwidth = 1;
-		innerRegisterPanel.add(vorField,c);
 		final JTextField nameField = new JTextField(20);
-		c.gridy++;
-		innerRegisterPanel.add(nameField,c);
 		final JTextField userField = new JTextField(20);
-		c.gridy++;
-		innerRegisterPanel.add(userField,c);
 		final JTextField passField = new JTextField(20);
-		c.gridy++;
-		innerRegisterPanel.add(passField,c);
 		final JTextField teleField = new JTextField(20);
-		c.gridy++;
-		innerRegisterPanel.add(teleField,c);
 		
-		JPanel berPanel = new JPanel(new GridLayout(0,1));
 		ButtonGroup btgr = new ButtonGroup();
+		
 		final JRadioButton rbLehrer = new JRadioButton("Klassenlehrer");
 		final JRadioButton rbLeitung = new JRadioButton("Bereichsleitung");
+		
 		btgr.add(rbLeitung);
 		btgr.add(rbLehrer);
+		
 		berPanel.add(rbLehrer);
 		berPanel.add(rbLeitung);
 		
 		rbLehrer.setSelected(true);
 		
-		c.gridy++;
-		innerRegisterPanel.add(berPanel,c);
-		//
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
+		//***********************//
+		c.gridy = 0;
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridheight = 8;
+		innerRegisterPanel.add(createTiteledPanel("Nutzer", userScrollPane), c);
+		
+		//***********************//
+		
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridheight = 1;
+		innerRegisterPanel.add(createTiteledPanel("Vorname", vorField),c);
+		addComponentNextLine(innerRegisterPanel, createTiteledPanel("Name", nameField));
+		addComponentNextLine(innerRegisterPanel, createTiteledPanel("Username", userField));
+		addComponentNextLine(innerRegisterPanel, createTiteledPanel("Passwort", passField));
+		addComponentNextLine(innerRegisterPanel, createTiteledPanel("Telefonnummer", teleField));
+		addComponentNextLine(innerRegisterPanel, createTiteledPanel("Berechtigung", berPanel));
+		//
+		buttonPanel.add(addButton);
+		buttonPanel.add(editButton);
+		buttonPanel.add(eraseButton);
+		registerPanel.add(createTitlePanel("Registrierung"),BorderLayout.NORTH);
+		registerPanel.add(innerRegisterPanel,BorderLayout.CENTER);
+		registerPanel.add(buttonPanel,BorderLayout.SOUTH);
 		//***************Listeners******************///
 		
 		userList.addListSelectionListener(new ListSelectionListener() {
@@ -564,13 +450,6 @@ public class MainWindow {
 		});
 		///*******************************************////
 		
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		buttonPanel.add(addButton);
-		buttonPanel.add(editButton);
-		buttonPanel.add(eraseButton);
-		registerPanel.add(createTitlePanel("Registrierung"),BorderLayout.NORTH);
-		registerPanel.add(innerRegisterPanel,BorderLayout.CENTER);
-		registerPanel.add(buttonPanel,BorderLayout.SOUTH);
 	}
 	
 	private void clearTextFields(JTextField... textFields){
@@ -613,73 +492,55 @@ public class MainWindow {
 	private void createAusbilderVerwaltung() {
 		ausbilderPanel = new JPanel(new BorderLayout());
 		JPanel innerAusbilderPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
-		JLabel label = new JLabel("Betriebswahl");
-		c.gridx = 0;
-		c.gridy = 1;
-		innerAusbilderPanel.add(label, c);
+		JPanel rbPGeschlechtPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		setConstraintsDefault();
+		//************************
 		JComboBox cmbBetrieb = new JComboBox();
 		cmbBetrieb.setPreferredSize(new Dimension(200, 25));
-		c.gridy = 2;
-		innerAusbilderPanel.add(cmbBetrieb, c);
-		label = new JLabel("Ausbilder");
-		c.gridy = 3;
-		innerAusbilderPanel.add(label, c);
+		
 		JList ausbilderList = new JList();
-		ausbilderList.setPreferredSize(new Dimension(200, 150));
-		c.gridy = 4;
-		c.gridheight = 5;
-		innerAusbilderPanel.add(ausbilderList, c);
-		label = new JLabel("Vorname");
-		c.gridy = 4;
-		c.gridx = 1;
-		c.gridheight = 1;
-		innerAusbilderPanel.add(label, c);
-		label = new JLabel("Name");
-		c.gridy++;
-		innerAusbilderPanel.add(label, c);
-		label = new JLabel("Geschlecht");
-		c.gridy++;
-		innerAusbilderPanel.add(label, c);
-		label = new JLabel("Telefonnummer");
-		c.gridy++;
-		innerAusbilderPanel.add(label, c);
-		label = new JLabel("E-Mail");
-		c.gridy++;
-		innerAusbilderPanel.add(label, c);
-
+		JScrollPane ausbilderScrollPane = new JScrollPane(ausbilderList);
+		ausbilderScrollPane.setPreferredSize(new Dimension(200, 300));
+		
 		JTextField vorField = new JTextField(20);
-		c.gridx = 2;
-		c.gridy = 4;
-		c.gridwidth = 2;
-		innerAusbilderPanel.add(vorField, c);
 		JTextField nachField = new JTextField(20);
-		c.gridy++;
-		innerAusbilderPanel.add(nachField, c);
-		ButtonGroup btgr = new ButtonGroup();
+		JTextField tNummerField = new JTextField(20);
+		JTextField eMailField = new JTextField(20);
+		
+		ButtonGroup btgrGeschlecht = new ButtonGroup();
+		
 		JRadioButton rbMann = new JRadioButton("Herr");
 		JRadioButton rbFrau = new JRadioButton("Frau");
-		btgr.add(rbMann);
-		btgr.add(rbFrau);
-		JPanel rbPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		rbPanel.add(rbFrau);
-		rbPanel.add(rbMann);
-		c.gridy++;
-		c.gridwidth = 2;
-		innerAusbilderPanel.add(rbPanel, c);
-
-		JTextField tNummerField = new JTextField(20);
-		c.gridy++;
-		innerAusbilderPanel.add(tNummerField, c);
-		JTextField eMailField = new JTextField(20);
-		c.gridy++;
-		innerAusbilderPanel.add(eMailField, c);
+		
+		btgrGeschlecht.add(rbMann);
+		btgrGeschlecht.add(rbFrau);
+		rbPGeschlechtPanel.add(rbFrau);
+		rbPGeschlechtPanel.add(rbMann);
+		
 		JButton	addButton = createButton("Erstellen", 150, 25);
 		JButton editButton = createButton("Ändern", 150, 25);
 		JButton	eraseButton = createButton("Löschen", 150, 25);
 		
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		//********************//
+		c.gridx = 0;
+		c.gridy = 0;
+		
+		
+		innerAusbilderPanel.add(createTiteledPanel("Betriebwahl", cmbBetrieb), c);
+
+		c.gridheight = 6;
+		addComponentNextLine(innerAusbilderPanel, createTiteledPanel("Ausbilder", ausbilderScrollPane));
+		//********************//
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridheight = 1;
+		innerAusbilderPanel.add(createTiteledPanel("Vorname", vorField), c);
+		addComponentNextLine(innerAusbilderPanel, createTiteledPanel("Nachname", nachField));
+		addComponentNextLine(innerAusbilderPanel, createTiteledPanel("Geschlecht", rbPGeschlechtPanel));
+		addComponentNextLine(innerAusbilderPanel, createTiteledPanel("Telefon", tNummerField));
+		addComponentNextLine(innerAusbilderPanel, createTiteledPanel("E-Mail", eMailField));
+		//********************//
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
@@ -691,118 +552,176 @@ public class MainWindow {
 
 	private void createAzubiVerwaltung() {
 		azubiPanel = new JPanel(new BorderLayout());
+		JTabbedPane innerAzubiPanel = new JTabbedPane();
+		JPanel innerAzubiPanelStamm = new JPanel(new GridBagLayout());
+		JPanel innerAzubiPanelZusatz = new JPanel(new GridBagLayout());
+		JPanel rbGeschlechtPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		JPanel rbVolljahrPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		JPanel rbInklusionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		JPanel ortPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JPanel innerAzubiPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
-		JLabel label = new JLabel("Klassenwahl");
-		c.gridx = 0;
-		c.gridy = 1;
-		innerAzubiPanel.add(label, c);
+		setConstraintsDefault();
+		
+		
+		/////////////////////////////////////////////////////////////
+		JTextField vorField = new JTextField(20);
+		JTextField nachField = new JTextField(20);
+		JTextField gebNameField = new JTextField(20);
+		JTextField plzField = new JTextField(6);
+		JTextField ortField = new JTextField(13);
+		JTextField gebOrtField = new JTextField(20);
+		JTextField gebLandField = new JTextField(20);
+		JTextField gebLandVaterField = new JTextField(20);
+		JTextField gebLandMutterField = new JTextField(20);
+		JTextField strField = new JTextField(20);
+		JTextField tNummerField = new JTextField(20);
+		JTextField hNummerField = new JTextField(20);
+		JTextField eMailField = new JTextField(20);
+		JTextField staatAng1Field = new JTextField(20);
+		JTextField staatAng2Field = new JTextField(20);
+		JTextField fehlTageField = new JTextField(20);
+		JTextField konfessField = new JTextField(20);
+		
+		JDatePickerImpl dpGebTag = createNewDatePicker();
+		JDatePickerImpl dpAusBeg = createNewDatePicker();
+		JDatePickerImpl dpAusEnde = createNewDatePicker();
+		JDatePickerImpl dpZuzug = createNewDatePicker();
+		
+		ButtonGroup btgrGeschl = new ButtonGroup();
+		
+		JRadioButton rbMann = new JRadioButton("Männlich");
+		JRadioButton rbFrau = new JRadioButton("Weiblich");
+		
+		btgrGeschl.add(rbMann);
+		btgrGeschl.add(rbFrau);
+		
+		rbGeschlechtPanel.add(rbFrau);
+		rbGeschlechtPanel.add(rbMann);
+		
+		ButtonGroup btgrVolljahr = new ButtonGroup();
+		
+		JRadioButton rbAdult = new JRadioButton("Ja");
+		JRadioButton rbTeen = new JRadioButton("Nein");
+		
+		btgrVolljahr.add(rbAdult);
+		btgrVolljahr.add(rbTeen);
+		
+		rbVolljahrPanel.add(rbAdult);
+		rbVolljahrPanel.add(rbTeen);
+		
+		
+		ButtonGroup btgrInklusion = new ButtonGroup();
+		
+		JRadioButton rbBraucht = new JRadioButton("Ja");
+		JRadioButton rbNBraucht = new JRadioButton("Nein");
+		
+		btgrInklusion.add(rbBraucht);
+		btgrInklusion.add(rbNBraucht);
+		
+		rbInklusionPanel.add(rbBraucht);
+		rbInklusionPanel.add(rbNBraucht);
+		
+		
+		
+		ortPanel.add(plzField);
+		ortPanel.add(new JLabel(" / "));
+		ortPanel.add(ortField);
+		
+		//
+		JComboBox cmbBetrieb = new JComboBox();
+		cmbBetrieb.setPreferredSize(new Dimension(200, 20));
+		//
+		JComboBox cmbAusbilder = new JComboBox();
+		cmbAusbilder.setPreferredSize(new Dimension(200, 20));
+		//
+		JComboBox cmbFachrichtung = new JComboBox(fRichtungen);
+		cmbFachrichtung.setPreferredSize(new Dimension(200, 20));
+		//
+		JComboBox cmbletzteSchule = new JComboBox(lSFormStrings);
+		cmbletzteSchule.setPreferredSize(new Dimension(200, 20));
+		//
+		JComboBox cmbletzterAbschluss = new JComboBox(lAbsStrings);
+		cmbletzterAbschluss.setPreferredSize(new Dimension(200, 20));
 		//
 		ArrayList<Klasse> klasseList = new ArrayList();
 		DefaultComboBoxModel dcbmKlasse = new DefaultComboBoxModel(klasseList.toArray());
 		JComboBox cmbKlasse = new JComboBox(dcbmKlasse);
+		cmbKlasse.setPreferredSize(new Dimension(200, 20));
 		//
-		cmbKlasse.setPreferredSize(new Dimension(200, 25));
-		c.gridy = 2;
-		innerAzubiPanel.add(cmbKlasse, c);
-		label = new JLabel("Azubis");
-		c.gridy = 3;
-		innerAzubiPanel.add(label, c);
 		JList azubiList = new JList();
-		azubiList.setPreferredSize(new Dimension(200, 300));
-		c.gridy = 4;
-		c.gridheight = 10;
-		innerAzubiPanel.add(azubiList, c);
-		label = new JLabel("Vorname");
-		c.gridy = 4;
-		c.gridx = 1;
-		c.gridheight = 1;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Name");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Geburtsdatum");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Geschlecht");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("PLZ / Ort");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Straße / HausNr");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Telefonnummer");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("E-Mail");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Betrieb");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-		label = new JLabel("Ausbilder");
-		c.gridy++;
-		innerAzubiPanel.add(label, c);
-
-		JTextField vorField = new JTextField(20);
-		c.gridx = 2;
-		c.gridy = 4;
-		c.gridwidth = 2;
-		innerAzubiPanel.add(vorField, c);
-		JTextField nachField = new JTextField(20);
-		c.gridy++;
-		innerAzubiPanel.add(nachField, c);
-		//
-	    JDatePickerImpl datePicker = new JDatePickerImpl(datePanel,dlf);
-		c.gridy++;
-		innerAzubiPanel.add(datePicker, c);
-		//
-		ButtonGroup btgr = new ButtonGroup();
-		JRadioButton rbMann = new JRadioButton("Männlich");
-		JRadioButton rbFrau = new JRadioButton("Weiblich");
-		btgr.add(rbMann);
-		btgr.add(rbFrau);
-		JPanel rbPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		rbPanel.add(rbFrau);
-		rbPanel.add(rbMann);
-		c.gridy++;
-		c.gridwidth = 2;
-		innerAzubiPanel.add(rbPanel, c);
-		JPanel ortPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		JTextField plzField = new JTextField(6);
-		JTextField ortField = new JTextField(13);
-		ortPanel.add(plzField);
-		ortPanel.add(new JLabel(" / "));
-		ortPanel.add(ortField);
-		c.gridy++;
-		innerAzubiPanel.add(ortPanel, c);
-
-		JTextField strField = new JTextField(20);
-		c.gridy++;
-		c.gridwidth = 2;
-		innerAzubiPanel.add(strField, c);
-		JTextField tNummerField = new JTextField(20);
-		c.gridy++;
-		innerAzubiPanel.add(tNummerField, c);
-		JTextField eMailField = new JTextField(20);
-		c.gridy++;
-		innerAzubiPanel.add(eMailField, c);
-		//
-		JComboBox cmbBetrieb = new JComboBox();
-		cmbBetrieb.setPreferredSize(new Dimension(200, 25));
-		c.gridy++;
-		innerAzubiPanel.add(cmbBetrieb, c);
-		//
-		JComboBox cmbAusbilder = new JComboBox();
-		cmbAusbilder.setPreferredSize(new Dimension(200, 25));
-		c.gridy++;
-		innerAzubiPanel.add(cmbAusbilder,c);
+		JScrollPane azubiScrollPane = new JScrollPane(azubiList);
+		azubiScrollPane.setPreferredSize(new Dimension(200, 250));
 		//
 		JButton	addButton = createButton("Erstellen", 150, 25);
+		JButton editButton = createButton("Ändern", 150, 25);
+		JButton	eraseButton = createButton("Löschen", 150, 25);
+		////////////////////////////
+		buttonPanel.add(addButton);
+		buttonPanel.add(editButton);
+		buttonPanel.add(eraseButton);
+		
+		innerAzubiPanel.addTab("Stammdaten", innerAzubiPanelStamm);
+		innerAzubiPanel.addTab("Ergänzung", innerAzubiPanelZusatz);
+		azubiPanel.add(createTitlePanel("Ausbilderverwaltung"), BorderLayout.NORTH);
+		azubiPanel.add(innerAzubiPanel,BorderLayout.CENTER);
+		azubiPanel.add(buttonPanel, BorderLayout.SOUTH);
+		//////************/////////
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		innerAzubiPanelStamm.add(createTiteledPanel("Fachrichtung", cmbFachrichtung), c);
+//		innerAzubiPanel.add(createTiteledPanel("Klassenwahl", cmbKlasse), c);
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Klassenwahl", cmbKlasse));
+		c.gridheight = 5;
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Azubis", azubiScrollPane));
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 1;
+		c.gridheight = 1;
+		innerAzubiPanelStamm.add(createTiteledPanel("Name", nachField), c);
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Telefon", tNummerField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Geburtsdatum", dpGebTag));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Straße / HausNr",strField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("1.Staatsangehörigkeit",staatAng1Field));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Geburtsland Vater",gebLandVaterField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("FehlTage",fehlTageField));
+		
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 2;
+		innerAzubiPanelStamm.add(createTiteledPanel("Vorname",vorField), c);
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Mobil",hNummerField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Geburtsort",gebOrtField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("PLZ / Ort",ortPanel));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("2.Staatsangehörigkeit",staatAng2Field));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Geburtsland Mutter",gebLandMutterField));
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 3;
+		innerAzubiPanelStamm.add(createTiteledPanel("Geburtsname",gebNameField), c);
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("E-Mail",eMailField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Geburtsland",gebLandField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Letzte Schulform",cmbletzteSchule));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Zuzugsdatum",dpZuzug));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Ausbildungsbegin",dpAusBeg));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Betrieb",cmbBetrieb));
+		
+		//////************/////////
+		c.gridy = 0;
+		c.gridx = 4;
+		innerAzubiPanelStamm.add(createTiteledPanel("Geschlecht",rbGeschlechtPanel), c);
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Volljährig",rbVolljahrPanel));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Inklusionsberatung",rbInklusionPanel));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Schulabschluss",cmbletzterAbschluss));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Konfession",konfessField));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Ausbildungsende",dpAusEnde));
+		addComponentNextLine(innerAzubiPanelStamm, createTiteledPanel("Ausbilder",cmbAusbilder));
+		
+		//////************/////////
+		//////************/////////
+		//////************/////////
+		//////************/////////
 		addButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -811,20 +730,16 @@ public class MainWindow {
 				
 			}
 		});
-		JButton editButton = createButton("Ändern", 150, 25);
-		JButton	eraseButton = createButton("Löschen", 150, 25);
-		
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		buttonPanel.add(addButton);
-		buttonPanel.add(editButton);
-		buttonPanel.add(eraseButton);
-//		c.gridy++;
-//		c.gridx = 0;
-//		c.gridwidth = 4;
-		azubiPanel.add(createTitlePanel("Ausbilderverwaltung"), BorderLayout.NORTH);
-		azubiPanel.add(innerAzubiPanel,BorderLayout.CENTER);
-		azubiPanel.add(buttonPanel, BorderLayout.SOUTH);
+		//
 
+	}
+	
+	private JPanel createTiteledPanel(String title, Component component){
+		JPanel returnPanel = new JPanel();
+//		returnPanel.setPreferredSize(new Dimension(400, 200));
+		returnPanel.setBorder(BorderFactory.createTitledBorder(title));
+		returnPanel.add(component);
+		return returnPanel;
 	}
 
 	private void createMenuePanel() {
@@ -854,53 +769,19 @@ public class MainWindow {
 			createZeugnisVerwaltung();
 			menuePanel.addTab("Zeugnisverwaltung", zeugnisPanel);
 		}
-		
-		
-		
-//		menuePanel = new JPanel(new GridBagLayout());
-//		GridBagConstraints c = new GridBagConstraints();
-//		c.insets = new Insets(20, 20, 20, 20);
-//		JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-//		JLabel jlabel = new JLabel("Benutzer:");
-//		userPanel.add(jlabel);
-//		JLabel benutzerLabel = new JLabel("Benutzername");
-//		userPanel.add(benutzerLabel);
-//		JButton logoutButton = createButton("Logout", 100, 25);
-//		userPanel.add(logoutButton);
-//		c.gridx = 0;
-//		c.gridy = 0;
-//		c.gridwidth = 1;
-//		menuePanel.add(userPanel, c);
-//		JButton azubiButton = createButton("Azubiverwaltung", 175, 25);
-//		c.gridx = 0;
-//		c.gridy = 1;
-//		c.gridwidth = 1;
-//		menuePanel.add(azubiButton, c);
-//		JButton ausbilderButton = createButton("Ausbilderverwaltung", 175, 25);
-//		c.gridx = 2;
-//		menuePanel.add(ausbilderButton, c);
-//		JButton regButton = createButton("Registrieren", 175, 25);
-//		c.gridx = 1;
-//		c.gridy = 2;
-//		menuePanel.add(regButton, c);
-//		JButton betriebButton = createButton("Betriebsverwaltung", 175, 25);
-//		c.gridx = 0;
-//		c.gridy = 3;
-//		menuePanel.add(betriebButton, c);
-//		JButton zeugnisButton = createButton("Zeugnisverwaltung", 175, 25);
-//		c.gridx = 2;
-//		c.gridy = 3;
-//		menuePanel.add(zeugnisButton, c);
 
 	}
 	
 	private void addUserPanel(){
-		userPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		JLabel label = new JLabel("Benutzer: ");
+		JButton btLogout= createButton("Logout", 150, 25);
+		JButton closeButton = createButton("Schließen", 150, 25);
+		userPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
 		userPanel.add(label);
 		label = new JLabel("Hier Kommt benutzername");
 		userPanel.add(label);
-		JButton btLogout= createButton("Logout", 150, 25);
+		
 		btLogout.addActionListener(new ActionListener() {
 			
 			@Override
@@ -910,7 +791,6 @@ public class MainWindow {
 			}
 		});
 		userPanel.add(btLogout);
-		JButton closeButton = createButton("Schließen", 150, 25);
 		closeButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -933,8 +813,7 @@ public class MainWindow {
 	private void createLoginPanel() {
 		loginPanel = new JPanel();
 		loginPanel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(20, 20, 20, 20);
+		setConstraintsDefault();
 		JLabel jlabel = new JLabel("Login");
 		c.gridx = 2;
 		c.gridy = 0;
@@ -993,5 +872,28 @@ public class MainWindow {
 		JButton button = new JButton(text);
 		button.setPreferredSize(new Dimension(wight, height));
 		return button;
+	}
+	
+	private void setConstraintsDefault(){
+		c.gridx=0;
+		c.gridy=0;
+		c.gridheight=1;
+		c.gridwidth=1;
+		c.insets = new Insets(0, 0, 0, 0);
+	}
+	
+	private void addComponentNextLine(JPanel parent, Component addetCom){
+		c.gridy++;
+		parent.add(addetCom,c);
+	}
+	
+	private JDatePickerImpl createNewDatePicker(){
+		UtilDateModel model;
+	    JDatePanelImpl datePanel;
+	    DateLabelFormatter dlf;
+		dlf = new DateLabelFormatter();
+		model=new UtilDateModel();
+		datePanel = new JDatePanelImpl(model,p);
+		return new JDatePickerImpl(datePanel,dlf);
 	}
 }
