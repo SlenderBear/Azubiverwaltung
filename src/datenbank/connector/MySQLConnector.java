@@ -45,6 +45,9 @@ public class MySQLConnector implements StandardSqlConnector {
 		}
 	}
 	
+	/**
+	 * Erstellt die Datenbank / Tabellen.
+	 */
 	private void initDB(){
 		try{
 			getConnection();
@@ -92,9 +95,8 @@ public class MySQLConnector implements StandardSqlConnector {
 		}
 		return connector;
 	}
-	/**
-	 * SQL ausführen
-	 */
+	
+
 	public boolean statementExecute(String sql) {
 		if (con == null) {
 			getConnection();
