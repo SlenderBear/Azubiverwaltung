@@ -21,7 +21,7 @@ public class Main {
 		Verwaltung v = new Verwaltung();
 			
 		} catch(Exception e){
-			JOptionPane.showMessageDialog(new JFrame(), "Das Programm konnte nicht gestartet werden.");
+			JOptionPane.showMessageDialog(new JFrame(), "Es trat ein unerwarteter Fehler auf.\nBitte starten Sie die Anwednung neu. Sorry.");
 			System.exit(0);
 		}
 
