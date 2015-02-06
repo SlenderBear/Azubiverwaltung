@@ -54,9 +54,9 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import com.sun.media.sound.ModelAbstractChannelMixer;
+import businesslogik.dataprovider.StandardDataProvider;
 
-import datenbank.provider.StandardDataProvider;
+import com.sun.media.sound.ModelAbstractChannelMixer;
 
 public class MainWindow {
 	private JFrame mainFrame;

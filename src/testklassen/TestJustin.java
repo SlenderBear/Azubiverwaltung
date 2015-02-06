@@ -1,6 +1,6 @@
 package testklassen;
 
-import datenbank.provider.StandardDataProvider;
+import businesslogik.dataprovider.StandardDataProvider;
 import objects.Ausbilder;
 import objects.Betrieb;
 

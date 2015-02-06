@@ -1,4 +1,4 @@
-package datenbank.provider;
+package businesslogik.dataprovider;
 
 import java.util.ArrayList;
 

@@ -5,9 +5,9 @@ import gui.MainWindow;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import businesslogik.dataprovider.StandardDataProvider;
 import objects.Azubi;
 import objects.StandardValueObject;
-import datenbank.provider.StandardDataProvider;
 
 /**
  * @author backs.kristin-anna, imeav.maksim
