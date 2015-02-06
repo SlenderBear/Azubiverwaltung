@@ -4,12 +4,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import objects.Ausbilder;
 import objects.Berechtigung;
 import objects.Note;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
 
 public class MySqlNoteDAO implements StandardDAO<Note>{
+	
+	private static final String DAO_NAME= Note.class.getName();
+	
+	
+	@Override
+	public String getClassName() {
+		return DAO_NAME;
+	}
+	
 
 	@Override
 	public Note insert(Note t) {
@@ -36,7 +46,7 @@ public class MySqlNoteDAO implements StandardDAO<Note>{
 
 	@Override
 	public Note getByGuid(String beschreibung) {
-		String sql = "select * from note where beschreibung="+beschreibung+"";
+		String sql = "select * from note where beschreibung='"+beschreibung+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Note b = new Note();
 		try {
@@ -47,6 +57,11 @@ public class MySqlNoteDAO implements StandardDAO<Note>{
 			e.printStackTrace();
 		}
 		return b;
+	}
+
+	@Override
+	public boolean isVorhanden(Note t) {
+		return true;
 	}
 
 }

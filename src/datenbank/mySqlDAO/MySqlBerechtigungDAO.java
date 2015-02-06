@@ -4,11 +4,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import objects.Ausbilder;
 import objects.Berechtigung;
 import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
 
 public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
+	
+	private static final String DAO_NAME= Berechtigung.class.getName();
+	
+	@Override
+	public String getClassName() {
+		return DAO_NAME;
+	}
 
 	@Override
 	public Berechtigung insert(Berechtigung t) {
@@ -28,7 +36,7 @@ public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
 
 	@Override
 	public ArrayList<Berechtigung> getAll() {
-		String sql = "select * from berechtigung";
+		String sql = "select * from berechtigung;";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Berechtigung> berechtigungListe = new ArrayList<Berechtigung>();
 		try{
@@ -48,7 +56,7 @@ public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
 
 	@Override
 	public Berechtigung getByGuid(String bezeichnung) {
-		String sql = "select * from berechtigung where bezeichnung="+bezeichnung+"";
+		String sql = "select * from berechtigung where bezeichnung='"+bezeichnung+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Berechtigung b = new Berechtigung();
 		try {
@@ -59,6 +67,11 @@ public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
 			e.printStackTrace();
 		}
 		return b;
+	}
+
+	@Override
+	public boolean isVorhanden(Berechtigung t) {
+			return true;
 	}
 
 }
