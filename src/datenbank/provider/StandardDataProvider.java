@@ -23,12 +23,14 @@ import objects.Zeugnisposition;
  */
 public abstract class StandardDataProvider {
 
+	public enum db_optionen {
+		MYSQL, SQLITE
+	}
+	
 	private static StandardDataProvider provider = null;
-	public static final String DB_MYSQL = "MYSQL";
-	public static final String DB_SQLITE = "SQLITE";
 	public static final String DB_PROPERTY = "db";
-	private static String akt_db;
-	private static PropertyHandling propertieHandler;
+	private static String akt_db = "";
+	private static final PropertyHandling propertieHandler = new PropertyHandling();
 
 	/**
 	 * Liefert alle Lehrer.
@@ -101,11 +103,11 @@ public abstract class StandardDataProvider {
 	 * @return {@link StandardDataProvider}
 	 */
 	private static StandardDataProvider getDataProvider(String db) {
-		if (db.compareToIgnoreCase(DB_MYSQL) == 0) {
-			akt_db = DB_MYSQL;
+		if (db.compareToIgnoreCase(db_optionen.MYSQL.toString()) == 0) {
+			akt_db = db_optionen.MYSQL.toString();
 			return new MySqlDataProvider();
-		} else if (db.compareToIgnoreCase(DB_SQLITE) == 0) {
-			akt_db = DB_SQLITE;
+		} else if (db.compareToIgnoreCase(db_optionen.SQLITE.toString()) == 0) {
+			akt_db = db_optionen.SQLITE.toString();
 			return new SqliteDataProvider();
 		}
 		return null;
@@ -130,9 +132,6 @@ public abstract class StandardDataProvider {
 	 *         entsprechende Datenbank gefunden werden konnte.
 	 */
 	public static StandardDataProvider initAndGetProvider() {
-		if (propertieHandler == null) {
-			propertieHandler = new PropertyHandling();
-		}
 		String db_property = propertieHandler.liesPropAus(DB_PROPERTY);
 		if (db_property.compareToIgnoreCase(PropertyHandling.PROP_EMPTY) == 0) {
 			//TODO Fehlerbehandlung
@@ -150,15 +149,15 @@ public abstract class StandardDataProvider {
 	 *         false:  hat keinen passenden Provider gefunden wurde.
 	 *         null: Wurde nicht geändert, da bereits ausgewählt.
 	 */
-	public Boolean changeDataProvider(String db) {
+	public static Boolean changeDataProvider(String db) {
 		if (db.compareTo(akt_db) == 0) {
 			return null;
 		}
-		if (db.compareToIgnoreCase(DB_MYSQL) == 0) {
-			propertieHandler.schreibeProp(DB_PROPERTY, DB_MYSQL);
+		if (db.compareToIgnoreCase(db_optionen.MYSQL.toString()) == 0) {
+			propertieHandler.schreibeProp(DB_PROPERTY, db_optionen.MYSQL.toString());
 			return true;
-		} else if (db.compareToIgnoreCase(DB_SQLITE) == 0) {
-			propertieHandler.schreibeProp(DB_PROPERTY, DB_SQLITE);
+		} else if (db.compareToIgnoreCase(db_optionen.SQLITE.toString()) == 0) {
+			propertieHandler.schreibeProp(DB_PROPERTY, db_optionen.SQLITE.toString());
 			return true;
 		}
 
