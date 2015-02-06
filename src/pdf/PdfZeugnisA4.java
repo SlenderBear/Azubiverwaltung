@@ -1,6 +1,7 @@
 package pdf;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -21,6 +22,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import datenbank.provider.StandardDataProvider;
 import objects.Azubi;
 import objects.Zeugnis;
+import objects.Zeugnisposition;
 
 public class PdfZeugnisA4 {
 
@@ -32,6 +34,8 @@ public class PdfZeugnisA4 {
 	private Font fSmaBo = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);
 
 	Document document = null;
+	
+	ArrayList<Zeugnisposition> noten = null;
 
 	public PdfZeugnisA4(Azubi azubi, String filepath, Zeugnis zeugnis,
 			String zeugDatum, Short format) {
@@ -44,7 +48,7 @@ public class PdfZeugnisA4 {
 			if (format == 4) {
 				doHeader();
 			}
-
+			holeZeugnisnote(zeugnis);
 			schreibeAzubi(azubi, zeugnis.getZeugnisKonferenz(), format);
 			schreibeLeistungen(azubi, zeugnis.getZeugnisKonferenz(), format);
 			schreibeSignaturen(azubi, zeugDatum, format);
@@ -73,10 +77,10 @@ public class PdfZeugnisA4 {
 			throws Exception {
 		Paragraph azubiDaten = new Paragraph();
 		azubiDaten.setLeading(22.0f);
+		azubiDaten.setTabSettings(new TabSettings(56f));
 
 		Phrase name = new Phrase();
 		name.add(new Chunk("Vor- und Zuname:", fNorm));
-		name.setTabSettings(new TabSettings(56f));
 		name.add(Chunk.TABBING);
 		name.add(Chunk.TABBING);
 		name.add(new Chunk(azubi.getVorname() + " " + azubi.getName(), fBold));
@@ -85,7 +89,6 @@ public class PdfZeugnisA4 {
 
 		Phrase gebi = new Phrase();
 		gebi.add(new Chunk("geboren am:", fSmall));
-		gebi.setTabSettings(new TabSettings(56f));
 		gebi.add(Chunk.TABBING);
 		gebi.add(Chunk.TABBING);
 		gebi.add(Chunk.TABBING);
@@ -104,7 +107,7 @@ public class PdfZeugnisA4 {
 			zeitraum.add(Chunk.TABBING);
 			zeitraum.add(Chunk.TABBING);
 			zeitraum.add(new Chunk(azubi.getAusbildungsbeginn(), fSmaBo));
-			zeitraum.add(new Chunk(" bis zum "));
+			zeitraum.add(new Chunk(" bis zum ", fSmall));
 			zeitraum.add(new Chunk(azubi.getAusbildungsende(), fSmaBo));
 			if (azubi.getGeschlecht() == 'f') {
 				zeitraum.add(new Chunk(" Schülerin", fSmaBo));
@@ -121,63 +124,60 @@ public class PdfZeugnisA4 {
 			azubiDaten.add(zeitraum);
 		} else if (format == 4) {
 			Phrase klasse = new Phrase();
-			klasse.add(new Chunk("Fachklasse:"));
-			klasse.setTabSettings(new TabSettings(56f));
+			klasse.add(new Chunk("Fachklasse:", fSmall));
 			klasse.add(Chunk.TABBING);
 			klasse.add(Chunk.TABBING);
 			klasse.add(Chunk.TABBING);
 			klasse.add(new Chunk(azubi.getKlasse().getBezeichnung() + "   "
-					+ azubi.getLehrjahr(), fBold));
-			klasse.add(new Chunk(". Jahr   Schuljahr "));
+					+ azubi.getLehrjahr(), fSmaBo));
+			klasse.add(new Chunk(". Jahr   Schuljahr ", fSmall));
 			klasse.add(new Chunk(
 					String.valueOf((azubi.getKlasse().getJahr()) - 1) + "/"
 							+ String.valueOf(azubi.getKlasse().getJahr()),
-					fBold));
-			klasse.add(new Chunk("   " + getHalbjahr(konfDatum), fBold));
-			klasse.add(new Chunk(". Halbjahr"));
+					fSmaBo));
+			klasse.add(new Chunk("   " + getHalbjahr(konfDatum), fSmaBo));
+			klasse.add(new Chunk(". Halbjahr", fSmall));
 			klasse.add(Chunk.NEWLINE);
 			azubiDaten.add(klasse);
 		}
 
 		Phrase beruf = new Phrase();
-		beruf.add(new Chunk("Ausbildungsberuf:"));
-		beruf.setTabSettings(new TabSettings(56f));
+		beruf.add(new Chunk("Ausbildungsberuf:", fSmall));
 		beruf.add(Chunk.TABBING);
 		beruf.add(Chunk.TABBING);
 		if (azubi.getGeschlecht() == 'f') {
-			beruf.add(new Chunk("Fachinformatikerin", fBold));
+			beruf.add(new Chunk("Fachinformatikerin", fSmaBo));
 		} else {
-			beruf.add(new Chunk("Fachinformatiker", fBold));
+			beruf.add(new Chunk("Fachinformatiker", fSmaBo));
 		}
 		beruf.add(Chunk.NEWLINE);
 		azubiDaten.add(beruf);
 
 		Phrase richtung = new Phrase();
-		richtung.add(new Chunk("Fachrichtung:"));
-		richtung.setTabSettings(new TabSettings(56f));
+		richtung.add(new Chunk("Fachrichtung:", fSmall));
 		richtung.add(Chunk.TABBING);
 		richtung.add(Chunk.TABBING);
 		if (azubi.getFachrichtung() == 's') {
-			richtung.add(new Chunk("Systemintegration", fBold));
+			richtung.add(new Chunk("Systemintegration", fSmaBo));
 		} else if (azubi.getFachrichtung() == 'a') {
-			richtung.add(new Chunk("Anwendungsentwicklung", fBold));
+			richtung.add(new Chunk("Anwendungsentwicklung", fSmaBo));
 		}
 		richtung.add(Chunk.NEWLINE);
 		azubiDaten.add(richtung);
 
 		Phrase fehltage = new Phrase();
-		fehltage.add("Schulversäumnisse:");
+		fehltage.add(new Chunk("Schulversäumnisse:", fSmall));
 		fehltage.add(Chunk.TABBING);
 		fehltage.add(Chunk.TABBING);
 		if (format == 4) {
-			fehltage.add(new Chunk(String.valueOf(azubi.getFehltage()), fBold));
-			fehltage.add(new Chunk(" Fehltage, davon "));
+			fehltage.add(new Chunk(String.valueOf(azubi.getFehltage()), fSmaBo));
+			fehltage.add(new Chunk(" Fehltage, davon ", fSmall));
 		}
-		fehltage.add(new Chunk("0", fBold));
+		fehltage.add(new Chunk("0", fSmaBo));
 		if (format == 4) {
-			fehltage.add(new Chunk(" unentschuldigt"));
+			fehltage.add(new Chunk(" unentschuldigt", fSmall));
 		} else if (format == 3) {
-			fehltage.add(new Chunk(" unentschuldigte Unterrichtstage"));
+			fehltage.add(new Chunk(" unentschuldigte Unterrichtstage", fSmall));
 		}
 		azubiDaten.add(fehltage);
 
@@ -209,29 +209,32 @@ public class PdfZeugnisA4 {
 		tableB1.setWidthPercentage(100);
 		tableB1.setHorizontalAlignment(Element.ALIGN_TOP);
 
-		tableFach(tableB1, "Deutsch / Kommunikation");
+		String[] faecher = gibFachStrings(format);
+		
+		tableFach(tableB1, new Chunk(faecher[0], fSmall));
 		tableNote(tableB1, "- gut -");
-		tableFach(tableB1, "Politik / Gesellschaftslehre");
+		tableFach(tableB1, new Chunk(faecher[1], fSmall));
 		tableNote(tableB1, "- gut -");
-		tableFach(tableB1, "Religionslehre");
+		tableFach(tableB1, new Chunk(faecher[2], fSmall));
 		tableNote(tableB1, "- gut -");
-		tableFach(tableB1, "Sport / Gesundheitsförderung");
+		tableFach(tableB1, new Chunk(faecher[3], fSmall));
 		tableNote(tableB1, "- gut -");
 
 		PdfPTable tableB2 = new PdfPTable(3);
 		tableB2.setWidthPercentage(100);
 		tableB2.setHorizontalAlignment(Element.ALIGN_TOP);
 
+		
 		Phrase bereich2 = new Phrase();
 		bereich2.add(new Chunk("II. Berufsbezogener Bereich", fBold));
 		bereich2.add(new Chunk("\u00B9\u207E"));
-		tableFach(tableB2, "Informations- und Telekommunikationssysteme");
+		tableFach(tableB2, new Chunk(faecher[4], fSmall));
 		tableNote(tableB2, "- gut -");
-		tableFach(tableB2, "Anwendungsentwicklung");
+		tableFach(tableB2, new Chunk(faecher[5], fSmall));
 		tableNote(tableB2, "- gut -");
-		tableFach(tableB2, "Wirtschafts- und Geschäftsprozesse");
+		tableFach(tableB2, new Chunk(faecher[6], fSmall));
 		tableNote(tableB2, "- gut -");
-		tableFach(tableB2, "Englisch");
+		tableFach(tableB2, new Chunk(faecher[7], fSmall));
 		tableNote(tableB2, "- gut -");
 
 		Phrase bereich3 = new Phrase("I. Differenzierungsbereich", fBold);
@@ -240,7 +243,7 @@ public class PdfZeugnisA4 {
 		tableB3.setWidthPercentage(100);
 		tableB3.setHorizontalAlignment(Element.ALIGN_TOP);
 
-		tableFach(tableB3, "------------------------");
+		tableFach(tableB3, new Chunk("------------------------", fSmall));
 		tableNote(tableB3, "------------------------");
 
 		tableBemerkung(tableB3, "Bemerkungen:");
@@ -330,7 +333,7 @@ public class PdfZeugnisA4 {
 
 	}
 
-	private void tableFach(PdfPTable table, String fach) {
+	private void tableFach(PdfPTable table, Chunk fach) {
 		PdfPCell cellFach = new PdfPCell(new Paragraph(fach));
 		cellFach.setBorder(Rectangle.NO_BORDER);
 		cellFach.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -403,14 +406,36 @@ public class PdfZeugnisA4 {
 		}
 	}
 	
-	private void addUpperNumber(Short num){
+	private String[] gibFachStrings(Short format){
+		String[] strings = new String[8];
+		if(format == 3){
+			strings[0] = "Deutsch / Kommunikation\u00B2\u207E";
+			strings[1] = "Politik / Gesellschaftslehre\u00B2\u207E";
+			strings[3] = "Sport / Gesundheitsförderung\u00B9\u207E";
+			strings[4] = "Informations- und Telekommunikationssysteme\u00B2\u207E";
+			strings[5] = "Anwendungsentwicklung\u00B2\u207E";
+			strings[6] = "Wirtschafts- und Geschäftsprozesse\u00B2\u207E";
+			strings[7] = "Englisch\u00B2\u207E";
+		} else{
+			strings[0] = "Deutsch / Kommunikation";
+			strings[1] = "Politik / Gesellschaftslehre";
+			strings[3] = "Sport / Gesundheitsförderung";
+			strings[4] = "Informations- und Telekommunikationssysteme";
+			strings[5] = "Anwendungsentwicklung";
+			strings[6] = "Wirtschafts- und Geschäftsprozesse";
+			strings[7] = "Englisch";
+		}
+		strings[2] = "Religionslehre";
 		
+		return strings;
 	}
 
-	private void holeZeugnisnote(Zeugnis zeunigs) {
+	private void holeZeugnisnote(Zeugnis zeugnis) throws Exception{
 		StandardDataProvider dataGetter = StandardDataProvider.getInstance();
-
-		// TO DO Zeugnisnoten holen
+		noten = dataGetter.gibPositionenZuZeugnis();
+		if(noten.isEmpty()){
+			throw new Exception("Keine Noten vorhanden.");
+		}
 	}
 
 }
