@@ -16,6 +16,8 @@ import org.apache.commons.io.FileUtils;
  */
 public class SqliteConnector implements StandardSqlConnector {
 	
+	private static final String FILE_SKRIPT = "W:\\git\\Azubiverwaltung\\src\\Erstellung_DB_SqLite.sql";
+	
 	private static SqliteConnector connector;
 	private static Connection con;
 
@@ -70,7 +72,7 @@ public class SqliteConnector implements StandardSqlConnector {
 	 */
 	private void executeInitSkript() {
 		try {
-			File f = new File("W:\\git\\Azubiverwaltung\\src\\Erstellung_DB_SqLite.sql");
+			File f = new File(FILE_SKRIPT);
 			List<String> sqlList = FileUtils.readLines(f);
 
 			 Class.forName("org.sqlite.JDBC"); // Datenbanktreiber für JDBC
