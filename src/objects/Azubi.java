@@ -41,7 +41,6 @@ public class Azubi {
 	private String anmerkung_Schulabschluss;
 	private int fehltage;
 	
-	private Betrieb betrieb;
 	private Ausbilder ausbilder;
 	private Klasse klasse;
 
@@ -123,14 +122,6 @@ public class Azubi {
 
 	public void setGeschlecht(char geschlecht) {
 		this.geschlecht = geschlecht;
-	}
-
-	public Betrieb getBetrieb() {
-		return betrieb;
-	}
-
-	public void setBetrieb(Betrieb betrieb) {
-		this.betrieb = betrieb;
 	}
 
 	public Ausbilder getAusbilder() {

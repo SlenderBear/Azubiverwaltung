@@ -15,7 +15,6 @@ import datenbank.StandardDAO;
  */
 public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	private MySqlKlasseDAO daoKlasse= new MySqlKlasseDAO();
-	private MySqlBetriebDAO daoBetrieb = new MySqlBetriebDAO();
 	private MySqlAusbilderDAO daoAusbilder = new MySqlAusbilderDAO();
 	
 	private static final String DAO_NAME= Azubi.class.getName();
@@ -55,7 +54,6 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 				+ "','" + t.getAnmerkung_Schulabschluss()
 				+ "'," + t.getFehltage()				
 				+ ",'" + t.getKlasse().getID()
-				+ "','" + t.getBetrieb().getID()
 				+ "','" + t.getAusbilder().getID()
 				+ "');";
 		MySQLConnector.getInstance().statementExecute(sql);
@@ -97,7 +95,6 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 				+"',anmerkung_schulabschluss='"+t.getAnmerkung_Schulabschluss()
 				+"',fehltage="+t.getFehltage()
 				+",klasseid='"+t.getKlasse().getID()
-				+"',betriebid='"+t.getBetrieb().getID()
 				+"',ausbilderid='"+t.getAusbilder().getID()
 				+"' WHERE azubiid='"+t.getID()+"';";
 		return MySQLConnector.getInstance().statementExecute(sql);
@@ -152,7 +149,6 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	        a.setAnmerkung_Schulabschluss(rs.getString("Anmerkung_Schulabschluss"));  
 	        a.setFehltage(rs.getInt("Fehltage"));  
 	        a.setKlasse(daoKlasse.getByGuid(rs.getString("KlassenID")));  
-	        a.setBetrieb(daoBetrieb.getByGuid(rs.getString("BetriebID")));  
 	        a.setAusbilder(daoAusbilder.getByGuid(rs.getString("AusbilderID")));  
 	        
 	        azubiListe.add(a);
@@ -201,7 +197,6 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 		        b.setAnmerkung_Schulabschluss(rs.getString("Anmerkung_Schulabschluss"));  
 		        b.setFehltage(rs.getInt("Fehltage"));  
 		        b.setKlasse(daoKlasse.getByGuid(rs.getString("KlassenID")));  
-		        b.setBetrieb(daoBetrieb.getByGuid(rs.getString("BetriebID")));  
 		        b.setAusbilder(daoAusbilder.getByGuid(rs.getString("AusbilderID")));  
 		        
 		} catch (SQLException e) {
@@ -243,7 +238,6 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 				+"',anmerkung_schulabschluss='"+t.getAnmerkung_Schulabschluss()
 				+"',fehltage="+t.getFehltage()
 				+",klasseid='"+t.getKlasse().getID()
-				+"',betriebid='"+t.getBetrieb().getID()
 				+"',ausbilderid='"+t.getAusbilder().getID()
 				+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
@@ -304,7 +298,6 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 		        a.setAnmerkung_Schulabschluss(rs.getString("Anmerkung_Schulabschluss"));  
 		        a.setFehltage(rs.getInt("Fehltage"));  
 		        a.setKlasse(daoKlasse.getByGuid(rs.getString("KlassenID")));  
-		        a.setBetrieb(daoBetrieb.getByGuid(rs.getString("BetriebID")));  
 		        a.setAusbilder(daoAusbilder.getByGuid(rs.getString("AusbilderID")));  
 		        
 		        azubiListe.add(a);
