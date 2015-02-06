@@ -1,6 +1,5 @@
 package datenbank.provider;
 
-import gui.main;
 
 import java.util.ArrayList;
 
