@@ -589,7 +589,7 @@ public class PdfZeugnisA4 {
 
 	private void holeZeugnisnote(Zeugnis zeugnis) throws Exception {
 		StandardDataProvider dataGetter = StandardDataProvider.getInstance();
-		noten = dataGetter.gibPositionenZuZeugnis();
+		noten = dataGetter.gibPositionenZuZeugnis(zeugnis);
 		if (noten.isEmpty()) {
 			throw new Exception("Keine Noten vorhanden.");
 		}
