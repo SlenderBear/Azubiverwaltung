@@ -30,7 +30,7 @@ public class SqliteConnector implements StandardSqlConnector {
 	/**
 	 * Liefert die Instanz des {@link SqliteConnector}s.
 	 * 
-	 * @return
+	 * @return Connector
 	 */
 	public static SqliteConnector getInstance() {
 		if(connector == null) {
@@ -102,6 +102,7 @@ public class SqliteConnector implements StandardSqlConnector {
 	 * @param sql String
 	 * @return {@link ResultSet} Ergebnisse.
 	 */
+	@Override
 	public ResultSet executeQuery(String sql) {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -122,6 +123,7 @@ public class SqliteConnector implements StandardSqlConnector {
 	 * @param sql String
 	 * @return true wenn erfolgreich.
 	 */
+	@Override
 	public boolean statementExecute(String sql) {
 	    Statement stmt = null;
 	    try {
@@ -141,6 +143,7 @@ public class SqliteConnector implements StandardSqlConnector {
 		return false;
 	}
 	
+	@Override
 	public String getNewGUID() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
