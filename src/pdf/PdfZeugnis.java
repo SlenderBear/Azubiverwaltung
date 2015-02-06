@@ -1,30 +1,20 @@
 package pdf;
 
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.TabSettings;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import datenbank.provider.StandardDataProvider;
 import objects.Azubi;
-import objects.Fach;
-import objects.Note;
 import objects.Zeugnis;
-import objects.Zeugnisposition;
 
 public class PdfZeugnis {
 
@@ -37,17 +27,17 @@ public class PdfZeugnis {
 	private Font fTiny = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.NORMAL);
 
 	Document document = null;
-	
+
 	NotenFuerPdf noten = new NotenFuerPdf();
 	NotenTabelle table = new NotenTabelle();
 
 	public PdfZeugnis(Azubi azubi, String filepath, Zeugnis zeugnis,
 			String zeugDatum, Short format) {
-		
+
 		try {
 			document = new Document();
 			noten.holeZeugnisnote(zeugnis);
-			
+
 			PdfWriter.getInstance(document, new FileOutputStream(filepath + "_"
 					+ azubi.getName() + "_" + azubi.getVorname() + ".pdf"));
 			document.open();
@@ -55,10 +45,10 @@ public class PdfZeugnis {
 			if (format == 4) {
 				doHeader();
 			}
-			
+
 			schreibeAzubi(azubi, zeugnis.getZeugnisKonferenz(), format);
 			schreibeLeistungen(azubi, zeugnis.getZeugnisKonferenz(), format);
-			
+
 			if (format == 3) {
 				schreibeZweiteSeite(azubi, zeugnis);
 			} else if (format == 4) {
@@ -112,42 +102,9 @@ public class PdfZeugnis {
 		azubiDaten.add(gebi);
 
 		if (format == 3) {
-			Phrase zeitraum = new Phrase();
-			zeitraum.add(new Chunk("war vom", fSmall));
-			zeitraum.add(Chunk.TABBING);
-			zeitraum.add(Chunk.TABBING);
-			zeitraum.add(new Chunk(azubi.getAusbildungsbeginn(), fSmaBo));
-			zeitraum.add(new Chunk(" bis zum ", fSmall));
-			zeitraum.add(new Chunk(azubi.getAusbildungsende(), fSmaBo));
-			if (azubi.getGeschlecht() == 'f') {
-				zeitraum.add(new Chunk(" Schülerin", fSmaBo));
-			} else {
-				zeitraum.add(new Chunk(" Schüler", fSmaBo));
-			}
-			zeitraum.add(new Chunk(" der Berufsschule", fSmall));
-			zeitraum.add(Chunk.NEWLINE);
-			zeitraum.add(new Chunk("Fachklasse: ", fSmall));
-			zeitraum.add(Chunk.TABBING);
-			zeitraum.add(Chunk.TABBING);
-			zeitraum.add(new Chunk(azubi.getKlasse().getBezeichnung(), fSmaBo));
-			zeitraum.add(Chunk.NEWLINE);
-			azubiDaten.add(zeitraum);
+			azubiDaten.add(schreibeZeitraum(azubi));
 		} else if (format == 4) {
-			Phrase klasse = new Phrase();
-			klasse.add(new Chunk("Fachklasse:", fSmall));
-			klasse.add(Chunk.TABBING);
-			klasse.add(Chunk.TABBING);
-			klasse.add(new Chunk(azubi.getKlasse().getBezeichnung() + "   "
-					+ azubi.getLehrjahr(), fSmaBo));
-			klasse.add(new Chunk(". Jahr   Schuljahr ", fSmall));
-			klasse.add(new Chunk(
-					String.valueOf((azubi.getKlasse().getJahr()) - 1) + "/"
-							+ String.valueOf(azubi.getKlasse().getJahr()),
-					fSmaBo));
-			klasse.add(new Chunk("   " + getHalbjahr(konfDatum), fSmaBo));
-			klasse.add(new Chunk(". Halbjahr", fSmall));
-			klasse.add(Chunk.NEWLINE);
-			azubiDaten.add(klasse);
+			azubiDaten.add(schreibeKlasseDetail(azubi, konfDatum));
 		}
 
 		Phrase beruf = new Phrase();
@@ -190,6 +147,48 @@ public class PdfZeugnis {
 
 		document.add(azubiDaten);
 	}
+	
+	private Phrase schreibeKlasseDetail(Azubi azubi, String konfDatum){
+		Phrase klasse = new Phrase();
+		klasse.add(new Chunk("Fachklasse:", fSmall));
+		klasse.add(Chunk.TABBING);
+		klasse.add(Chunk.TABBING);
+		klasse.add(new Chunk(azubi.getKlasse().getBezeichnung() + "   "
+				+ azubi.getLehrjahr(), fSmaBo));
+		klasse.add(new Chunk(". Jahr   Schuljahr ", fSmall));
+		klasse.add(new Chunk(
+				String.valueOf((azubi.getKlasse().getJahr()) - 1) + "/"
+						+ String.valueOf(azubi.getKlasse().getJahr()),
+				fSmaBo));
+		klasse.add(new Chunk("   " + getHalbjahr(konfDatum), fSmaBo));
+		klasse.add(new Chunk(". Halbjahr", fSmall));
+		klasse.add(Chunk.NEWLINE);
+		
+		return klasse;
+	}
+	
+	private Phrase schreibeZeitraum(Azubi azubi){
+		Phrase zeitraum = new Phrase();
+		zeitraum.add(new Chunk("war vom", fSmall));
+		zeitraum.add(Chunk.TABBING);
+		zeitraum.add(Chunk.TABBING);
+		zeitraum.add(new Chunk(azubi.getAusbildungsbeginn(), fSmaBo));
+		zeitraum.add(new Chunk(" bis zum ", fSmall));
+		zeitraum.add(new Chunk(azubi.getAusbildungsende(), fSmaBo));
+		if (azubi.getGeschlecht() == 'f') {
+			zeitraum.add(new Chunk(" Schülerin", fSmaBo));
+		} else {
+			zeitraum.add(new Chunk(" Schüler", fSmaBo));
+		}
+		zeitraum.add(new Chunk(" der Berufsschule", fSmall));
+		zeitraum.add(Chunk.NEWLINE);
+		zeitraum.add(new Chunk("Fachklasse: ", fSmall));
+		zeitraum.add(Chunk.TABBING);
+		zeitraum.add(Chunk.TABBING);
+		zeitraum.add(new Chunk(azubi.getKlasse().getBezeichnung(), fSmaBo));
+		zeitraum.add(Chunk.NEWLINE);
+		return zeitraum;
+	}
 
 	private void schreibeLeistungen(Azubi azubi, String konfDatum, Short format)
 			throws Exception {
@@ -216,7 +215,6 @@ public class PdfZeugnis {
 		Phrase bereich1 = new Phrase("I. Berufsübergreifender Bereich", fSmaBo);
 		leistung.add(bereich1);
 
-
 		String[][] faecher = noten.gibFachStrings(format);
 		leistung.add(table.doTabelle(faecher, 0, 4));
 
@@ -229,17 +227,16 @@ public class PdfZeugnis {
 		}
 		leistung.add(bereich2);
 
-
 		leistung.add(table.doTabelle(faecher, 4, 8));
 
 		Phrase bereich3 = new Phrase("III. Differenzierungsbereich", fSmaBo);
 		leistung.add(bereich3);
 
-		leistung.add(table.doTabelleB3(format));
+		leistung.add(table.doTabelleDiff(format));
 
 		document.add(leistung);
 	}
-
+	
 	private void schreibeZweiteSeite(Azubi azubi, Zeugnis zeugnis)
 			throws Exception {
 		document.add(Chunk.NEXTPAGE);
@@ -276,15 +273,11 @@ public class PdfZeugnis {
 		note.add(Chunk.NEWLINE);
 		zweiteSeite.add(note);
 
-		Phrase datum = new Phrase();
-		datum.add(new Chunk("Düsseldorf, den ", fSmall));
-		datum.add(new Chunk(zeugnis.getZeugnisKonferenz(), fSmaBo));
-		datum.add(new Chunk(" (Datum der Zeugnisausgabe)", fSmall));
-		datum.add(Chunk.NEWLINE);
-		datum.add(Chunk.NEWLINE);
-		zweiteSeite.add(datum);
+		zweiteSeite.add(schreibeZeugnisDatum(zeugnis.getZeugnisKonferenz()));
 
-		Phrase lineSig = new Phrase("____________________________");
+		Phrase lineSig = new Phrase();
+		lineSig.add(Chunk.NEWLINE);
+		lineSig.add(new Chunk("____________________________"));
 		lineSig.add(Chunk.TABBING);
 		lineSig.add(Chunk.TABBING);
 		lineSig.add(Chunk.TABBING);
@@ -308,67 +301,55 @@ public class PdfZeugnis {
 		zweiteSeite.add(stuffSig);
 
 		document.add(zweiteSeite);
-		document.bottom();
-		schreibeFooter();
+		document.add(schreibeFooter((short)3));
 
 	}
 
-	private void schreibeFooter() throws Exception {
+	private Paragraph schreibeFooter(Short format) throws Exception {
 		Paragraph footer = new Paragraph();
 
-		for(int i = 0; i <= 23; i++){			
+		for (int i = 0; i <= 23; i++) {
 			footer.add(Chunk.NEWLINE);
 		}
 		footer.add(new Chunk(
 				"______________________________________________________________________________"));
 		footer.add(Chunk.NEWLINE);
 
-		Phrase eins = new Phrase("1)", fTiny);
-		eins.add(Chunk.TABBING);
-		eins.add(new Chunk(
-				"Dieses Fach wurde vorher abgeschlossen. Die Note entspricht der zuletzt erstellen Zeugnisnote in diesem Fach.",
-				fTiny));
-		eins.add(Chunk.NEWLINE);
+		if (format == 3) {
+			footer.add(footerElement("Dieses Fach wurde vorher abgeschlossen. Die Note entspricht der zuletzt erstellen Zeugnisnote in diesem Fach."));
+			footer.add(footerElement("Die Note des Faches erbigt sich aus den in den letzten beiden vorangegangenen Schulhalbjahren erbrachten Leistungen."));
+		}
+		footer.add(footerElement("Die Fächer im berufsbezogenen Bereich umfassen die in der Anlage aufgeführten Lernfelder."));
 
-		Phrase zwei = new Phrase("2)", fTiny);
-		zwei.add(Chunk.TABBING);
-		zwei.add(new Chunk(
-				"Die Note des Faches erbigt sich aus den in den letzten beiden vorangegangenen Schulhalbjahren erbrachten Leistungen.",
-				fTiny));
-		zwei.add(Chunk.NEWLINE);
+		if (format == 3) {
+			footer.add(footerElement("Fächer des Differzierungsbereiches sind in die Durchschnittsnote nicht einbezogen."));
+		}
 
-		Phrase drei = new Phrase("3)", fTiny);
-		drei.add(Chunk.TABBING);
-		drei.add(new Chunk(
-				"Die Fächer im berufsbezogenen Bereich umfassen die in der Anlage aufgeführten Lernfelder.",
-				fTiny));
-		drei.add(Chunk.NEWLINE);
-
-		Phrase vier = new Phrase("4)", fTiny);
-		vier.add(Chunk.TABBING);
-		vier.add(new Chunk(
-				"Fächer des Differzierungsbereiches sind in die Durchschnittsnote nicht einbezogen.",
-				fTiny));
-		vier.add(Chunk.NEWLINE);
-
-		footer.add(eins);
-		footer.add(zwei);
-		footer.add(drei);
-		footer.add(vier);
-
-		document.add(footer);
+		return footer;
 	}
 
-	private void schreibeSignaturen(Azubi azubi, String zeugDatum, Short Format)
-			throws Exception {
-		Paragraph signatur = new Paragraph();
-		signatur.setLeading(22.0f);
+	private Phrase footerElement(String value) {
+		Phrase elem = new Phrase("4)", fTiny);
+		elem.add(Chunk.TABBING);
+		elem.add(new Chunk(value, fTiny));
+		elem.add(Chunk.NEWLINE);
 
+		return elem;
+	}
+
+	private Phrase schreibeZeugnisDatum(String zeugDatum){
 		Phrase datum = new Phrase();
 		datum.add(new Chunk("Düsseldorf, den ", fSmall));
 		datum.add(new Chunk(zeugDatum, fSmaBo));
 		datum.add(new Chunk(" (Datum der Zeugnisausgabe)", fSmall));
 		datum.add(Chunk.NEWLINE);
+		return datum;
+	}
+	
+	private void schreibeSignaturen(Azubi azubi, String zeugDatum, Short format)
+			throws Exception {
+		Paragraph signatur = new Paragraph();
+		signatur.setLeading(22.0f);
 
 		Phrase lineSig = new Phrase("___________________________________");
 		lineSig.add(Chunk.TABBING);
@@ -377,13 +358,9 @@ public class PdfZeugnis {
 		lineSig.add(Chunk.NEWLINE);
 
 		Phrase stuffSig = new Phrase("Schulleiter", fSmall);
-		stuffSig.add(Chunk.TABBING);
-		stuffSig.add(Chunk.TABBING);
-		stuffSig.add(Chunk.TABBING);
-		stuffSig.add(Chunk.TABBING);
-		stuffSig.add(Chunk.TABBING);
-		stuffSig.add(Chunk.TABBING);
-		stuffSig.add(Chunk.TABBING);
+		for(int i = 0; i < 8; i++){
+			stuffSig.add(Chunk.TABBING);
+		}
 		stuffSig.add(new Chunk("Klassenleitung ("
 				+ azubi.getKlasse().getLehrer().getName() + ")", fTiny));
 		stuffSig.add(Chunk.TABBING);
@@ -409,23 +386,12 @@ public class PdfZeugnis {
 		kenntnis.add(new Chunk("Ausbildende(r)", fTiny));
 		kenntnis.add(Chunk.NEWLINE);
 
-		Phrase line = new Phrase(
-				"______________________________________________________________________________");
-		line.add(Chunk.NEWLINE);
-
-		Phrase fuss = new Phrase("1)", fTiny);
-		fuss.add(Chunk.TABBING);
-		fuss.add(new Chunk(
-				"Die Fächer im berufsbezogenen Bereich umfassen die in der Anlage aufgeführten Lernfelder.",
-				fTiny));
-
-		signatur.add(datum);
+		signatur.add(schreibeZeugnisDatum(zeugDatum));
 		signatur.add(lineSig);
 		signatur.add(stuffSig);
 		signatur.add(lineKenn);
 		signatur.add(kenntnis);
-		signatur.add(line);
-		signatur.add(fuss);
+		signatur.add(schreibeFooter(format));
 		document.add(signatur);
 
 	}
@@ -438,6 +404,5 @@ public class PdfZeugnis {
 			return "2";
 		}
 	}
-
 
 }
