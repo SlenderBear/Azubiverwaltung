@@ -23,7 +23,11 @@ import objects.Lehrer;
 import objects.Login;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
-
+/**
+ * 
+ * @author mertmann.justin
+ * Der SqliteDataProvider delegiert die Methoden an die jeweiligen DAOs weiter, die für das passende Objekt zuständig sind
+ */
 public class SqliteDataProvider extends StandardDataProvider{
 	//Erstellung der DAO-Objekte zur Verwendung der Sqlite-Methoden
 		SqliteAusbilderDAO ausbilderDAO = new SqliteAusbilderDAO();
@@ -39,7 +43,9 @@ public class SqliteDataProvider extends StandardDataProvider{
 		SqliteZeugnisPositionDAO zeugnisPositionDAO = new SqliteZeugnisPositionDAO();
 		@SuppressWarnings("rawtypes")
 		ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
-		
+		/**
+		 * Konstruktor
+		 */
 		protected SqliteDataProvider(){
 			daoListe.add(ausbilderDAO);
 			daoListe.add(azubiDAO);
@@ -155,10 +161,6 @@ public class SqliteDataProvider extends StandardDataProvider{
 				// Datenbankfehler -> Fehlermeldung zurückgeben.
 				return false;
 			}
-		}
-		
-		public static void main(String[] args) {
-			StandardDataProvider.getInstance().update(new Azubi());
 		}
 
 		@SuppressWarnings("unchecked")

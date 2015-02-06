@@ -1,10 +1,14 @@
 package datenbank;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
 import java.util.UUID;
+
+import org.apache.commons.io.FileUtils;
 
 /**
  * @author dunkel.gregor
@@ -29,26 +33,59 @@ public class SqliteConnector {
 	public static SqliteConnector getInstance() {
 		if(connector == null) {
 			connector = new SqliteConnector();
+			connector.initDB();
 		}
 		return connector;
+	}
+	
+	public void initDB(){
+		try{
+			getConnection();
+		}catch(Exception e){
+			executeInitSkript();
+		}
 	}
 	
 	/**
 	 * Baut eine Verbindung zur Datenbank auf.
 	 * @return {@link Connection}
 	 */
-	private Connection getConnection() {
-		 Connection c = null;
+	private void getConnection() {
 		 if(con == null)
 		 {
 		    try {
 		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:azubiverwaltung.db");
+		      con = DriverManager.getConnection("jdbc:sqlite:azubiverwaltung.db");
 		    } catch ( Exception e ) {
 		    	throw new RuntimeException(this.getClass() + ":" + e.getMessage());
 		    }
 		 }
-		 return c;
+	}
+	
+	/**
+	 * Führt das Skript aus, das die Datenbank initialisiert.
+	 */
+	private void executeInitSkript() {
+		try {
+			File f = new File("W:\\git\\Azubiverwaltung\\src\\Erstellung_DB_SqLite.sql");
+			List<String> sqlList = FileUtils.readLines(f);
+
+			 Class.forName("org.sqlite.JDBC"); // Datenbanktreiber für JDBC
+													// Schnittstellen laden.
+
+			// Verbindung zur JDBC-Datenbank herstellen.
+			con = DriverManager.getConnection("jdbc:sqlite:azubiverwaltung.db");
+			System.out.println(con.getClientInfo());
+			
+			for (int i = 0; i < sqlList.size(); i++) {
+				if(sqlList.get(i).isEmpty() || sqlList.get(i).compareTo(" ") == 0) {
+					continue;
+				}
+				statementExecute(sqlList.get(i));
+			}
+		} catch (Exception err) {
+			err.printStackTrace();
+		}
 	}
 
 	/**
@@ -57,14 +94,13 @@ public class SqliteConnector {
 	 * @return {@link ResultSet} Ergebnisse.
 	 */
 	public ResultSet executeQuery(String sql) {
-		Connection c = this.getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c.setAutoCommit(false);
+			con.setAutoCommit(false);
 
-			stmt = c.createStatement();
+			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
 		} catch (Exception e) {
 			throw new RuntimeException(this.getClass() + ":" + e.getMessage());
@@ -78,18 +114,17 @@ public class SqliteConnector {
 	 * @return true wenn erfolgreich.
 	 */
 	public boolean statementExecute(String sql) {
-	    Connection c = this.getConnection();
 	    Statement stmt = null;
 	    try {
 	      Class.forName("org.sqlite.JDBC");
-	      c.setAutoCommit(false);
+	      con.setAutoCommit(false);
 	      System.out.println("Opened database successfully");
 
-	      stmt = c.createStatement();
+	      stmt = con.createStatement();
 	      if(stmt.executeUpdate(sql) > 0) {
-	    	  c.commit();
+	    	  con.commit();
 		      stmt.close();
-		      c.close();
+		      con.close();
 	    	  return true;
 	      }
 	    } catch ( Exception e ) {

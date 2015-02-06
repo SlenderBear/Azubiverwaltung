@@ -24,7 +24,11 @@ import datenbank.mySqlDAO.MySqlLoginDatenDAO;
 import datenbank.mySqlDAO.MySqlNoteDAO;
 import datenbank.mySqlDAO.MySqlZeugnisDAO;
 import datenbank.mySqlDAO.MySqlZeugnisPositionDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ * MySqlDataProvider delegiert die Methoden an die jeweiligen DAOS die für die einzelnen Objekte zuständig sind.
+ */
 public class MySqlDataProvider extends StandardDataProvider{
 	
 	//Erstellung der DAO-Objekte zur Verwendung der MySQL-Methoden
@@ -41,7 +45,9 @@ public class MySqlDataProvider extends StandardDataProvider{
 	MySqlZeugnisPositionDAO zeugnisPositionDAO = new MySqlZeugnisPositionDAO();
 	@SuppressWarnings("rawtypes")
 	ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
-	
+	/**
+	 * Der Konstruktor von MySqlDataProvider erstellt eine Liste, in der sämtliche DAOS gespeichert werden
+	 */
 	protected MySqlDataProvider(){
 		daoListe.add(ausbilderDAO);
 		daoListe.add(azubiDAO);
