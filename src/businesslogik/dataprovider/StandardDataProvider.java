@@ -76,14 +76,24 @@ public abstract class StandardDataProvider {
 	public abstract ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z);
 	
 	/**
-	 * Führt den Insert durch.
+	 * Führt den Insert des {@link StandardValueObject} durch.
 	 * @param o {@link Object}
 	 * @return
 	 */
 	public abstract StandardValueObject insert(StandardValueObject o);
 
+	/**
+	 * Führt das Update des {@link StandardValueObject} durch.
+	 * @param o {@link StandardValueObject}
+	 * @return true wenn erfolgreich.
+	 */
 	public abstract boolean update(StandardValueObject o);
 	
+	/**
+	 * Löscht das {@link StandardValueObject}.
+	 * @param o {@link StandardValueObject}
+	 * @return true wenn erfolgreich.
+	 */
 	public abstract boolean delete(StandardValueObject o);
 	
 	/**
@@ -93,14 +103,39 @@ public abstract class StandardDataProvider {
 	 */
 	public abstract boolean gibtLogin(String login);
 
+	/**
+	 * Prüft ob Azubi bereits vorhanden.
+	 * @param azubi {@link Azubi}
+	 * @return true wenn vorhanden.
+	 */
 	public abstract boolean gibtAzubi(Azubi azubi);
 
+	/**
+	 * Prüft ob Lehrer bereits vorhanden.
+	 * @param lehrer {@link Lehrer}
+	 * @return true wenn vorhanden.
+	 */
 	public abstract boolean gibtLehrer(Lehrer lehrer);
 
+	/**
+	 * Prüft ob Ausbilder bereits vorhanden.
+	 * @param ausbilder {@link Ausbilder}
+	 * @return truew wenn vorhanden.
+	 */
 	public abstract boolean gibtAusbilder(Ausbilder ausbilder);
 
+	/**
+	 * Prüft ob Betrieb bereits vorhanden.
+	 * @param betrieb {@link Betrieb}
+	 * @return true wenn vorhanden.
+	 */
 	public abstract boolean gibtBetrieb(Betrieb betrieb);
 
+	/**
+	 * Prüft ob Klasse bereits vorhanden.
+	 * @param klasse {@link Klasse}
+	 * @return true wenn vorhanden.
+	 */
 	public abstract boolean gibtKlasse(Klasse klasse);
 
 	/**
