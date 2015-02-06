@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import objects.Azubi;
 import objects.Klasse;
-import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
+import datenbank.connector.MySQLConnector;
 /**
  * 
  * @author mertmann.justin

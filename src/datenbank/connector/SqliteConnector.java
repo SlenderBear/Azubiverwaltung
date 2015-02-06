@@ -1,4 +1,4 @@
-package datenbank;
+package datenbank.connector;
 
 import java.io.File;
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import org.apache.commons.io.FileUtils;
  * @author dunkel.gregor
  * 
  */
-public class SqliteConnector {
+public class SqliteConnector implements StandardSqlConnector {
 	
 	private static SqliteConnector connector;
 	private static Connection con;
@@ -38,7 +38,7 @@ public class SqliteConnector {
 		return connector;
 	}
 	
-	public void initDB(){
+	private void initDB(){
 		try{
 			getConnection();
 		}catch(Exception e){

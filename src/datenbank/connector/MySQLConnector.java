@@ -1,4 +1,4 @@
-package datenbank;
+package datenbank.connector;
 
 import java.io.File;
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 
-public class MySQLConnector {
+public class MySQLConnector implements StandardSqlConnector {
 	String sql = "";
 
 	String url = "mysql://localhost:3306/Azubiverwaltung";
@@ -25,7 +25,7 @@ public class MySQLConnector {
 	private static MySQLConnector connector;
 	
 	
-	private static void mySQLConnection() {
+	private void getConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); // Datenbanktreiber für JDBC
 													// Schnittstellen laden.
@@ -45,9 +45,9 @@ public class MySQLConnector {
 		}
 	}
 	
-	public void initDB(){
+	private void initDB(){
 		try{
-			mySQLConnection();
+			getConnection();
 		}catch(Exception e){
 			executeInitSkript();
 		}
@@ -97,7 +97,7 @@ public class MySQLConnector {
 	 */
 	public boolean statementExecute(String sql) {
 		if (con == null) {
-			mySQLConnection();
+			getConnection();
 		}
 		// Statement erzeugen.
 		Statement st;
@@ -120,7 +120,7 @@ public class MySQLConnector {
 
 	public ResultSet executeQuery(String sql){
 		if (con == null) {
-			mySQLConnection();
+			getConnection();
 		}
 
 		Statement st;

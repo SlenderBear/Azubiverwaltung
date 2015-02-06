@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import objects.Zeugnis;
 import objects.Zeugnisposition;
-import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
+import datenbank.connector.MySQLConnector;
 /**
  * 
  * @author mertmann.justin

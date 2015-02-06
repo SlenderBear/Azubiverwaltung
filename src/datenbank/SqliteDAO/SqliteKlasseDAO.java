@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Klasse;
-import datenbank.SqliteConnector;
 import datenbank.StandardDAO;
+import datenbank.connector.SqliteConnector;
 
 public class SqliteKlasseDAO implements StandardDAO<Klasse> {
 private static final String DAO_NAME= Klasse.class.getName();

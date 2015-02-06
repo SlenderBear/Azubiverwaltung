@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 import objects.Zeugnis;
 import objects.Zeugnisposition;
-import datenbank.SqliteConnector;
 import datenbank.StandardDAO;
 import datenbank.SqliteDAO.SqliteFachDAO;
 import datenbank.SqliteDAO.SqliteNoteDAO;
 import datenbank.SqliteDAO.SqliteZeugnisDAO;
+import datenbank.connector.SqliteConnector;
 
 public class SqliteZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 private static final String DAO_NAME= Zeugnisposition.class.getName();

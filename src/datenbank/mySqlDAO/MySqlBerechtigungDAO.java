@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Berechtigung;
-import datenbank.MySQLConnector;
 import datenbank.StandardDAO;
+import datenbank.connector.MySQLConnector;
 /**
  * 
  * @author mertmann.justin
