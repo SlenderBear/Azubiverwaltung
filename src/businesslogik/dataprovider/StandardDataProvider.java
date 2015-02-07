@@ -189,9 +189,9 @@ public abstract class StandardDataProvider {
 	 * 
 	 * @param db
 	 *            String
-	 * @return true: der DataProvider wurde geändert <br>
-	 *         false:  hat keinen passenden Provider gefunden wurde.
-	 *         null: Wurde nicht geändert, da bereits ausgewählt.
+	 * @return true: der DataProvider wurde geändert 
+	 *         <br>false:  hat keinen passenden Provider gefunden wurde.
+	 *         <br>null: Wurde nicht geändert, da bereits ausgewählt.
 	 */
 	public static Boolean changeDataProvider(String db) {
 		if (db.compareTo(akt_db) == 0) {
