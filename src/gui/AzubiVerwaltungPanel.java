@@ -726,6 +726,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 			selectedAzubi.setKlasse((Klasse) dcbmKlasse.getElementAt(cmbKlasse
 					.getSelectedIndex()));
 		}
+		sdp.update(selectedAzubi);
 
 	}
 	

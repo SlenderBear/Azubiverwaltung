@@ -229,13 +229,13 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 					getNote((Fach) dlmFach.getElementAt(faecherList
 							.getSelectedIndex()),
 							findZeugnis(azubiList.get(i),
-									jahrAusbildung.getYear())) });
+									jahrAusbildung.getYear())).toString() });
 		}
 	}
 
 	private Zeugnis findZeugnis(Azubi azubi, int jahr) {
 		for (int i = 0; i < zeugnisList.size(); i++) {
-			if (zeugnisList.get(i).getAzubi() == azubi
+			if (zeugnisList.get(i).getAzubi().getID().compareTo(azubi.getID()) == 0
 					&& zeugnisList.get(i).getJahr() == jahr) {
 				return zeugnisList.get(i);
 			}
@@ -248,7 +248,7 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 		if(zeugnis != null){
 			ArrayList<Zeugnisposition> zpList = sdp.gibPositionenZuZeugnis(zeugnis);
 			for (int i = 0; i < zpList.size(); i++) {
-				if (zpList.get(i).getFach() == fach) {
+				if (zpList.get(i).getFach().getID().compareTo(fach.getID()) == 0) {
 					foundNote = zpList.get(i).getNote();
 				}
 			}

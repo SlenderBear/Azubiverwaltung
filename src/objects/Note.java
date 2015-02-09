@@ -11,15 +11,15 @@ package objects;
 public class Note implements StandardValueObject{
 	
 	private String noteID;
-	private String Beschreibung;
+	private String beschreibung;
 
 
 	public String getBeschreibung() {
-		return Beschreibung;
+		return beschreibung;
 	}
 
 	public void setBeschreibung(String beschreibung) {
-		Beschreibung = beschreibung;
+		this.beschreibung = beschreibung;
 	}
 
 	public String getNoteID() {
@@ -28,6 +28,11 @@ public class Note implements StandardValueObject{
 
 	public void setNoteID(String noteID) {
 		this.noteID = noteID;
+	}
+	
+	@Override
+	public String toString() {
+		return this.beschreibung;
 	}
 
 }
