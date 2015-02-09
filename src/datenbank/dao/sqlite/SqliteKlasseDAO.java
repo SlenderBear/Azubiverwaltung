@@ -10,7 +10,7 @@ import datenbank.dao.StandardDAO;
 /**
  * 
  * @author mertmann.justin
- *	Die Klasse MySqlKlasseDAO enthält sämtliche Funktionen zur Datenbankanbindung des Klasseobjektes
+ *	Die Klasse MySqlKlasseDAO enthält  sämtliche Funktionen zur Datenbankanbindung des Klasseobjektes
  */
 public class SqliteKlasseDAO implements StandardDAO<Klasse> {
 private static final String DAO_NAME= Klasse.class.getName();
