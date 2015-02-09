@@ -1,5 +1,4 @@
 package gui;
-
 import javax.swing.table.DefaultTableModel;
 
 public class MyTable extends DefaultTableModel {
