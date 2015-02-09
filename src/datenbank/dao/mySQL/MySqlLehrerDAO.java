@@ -10,7 +10,7 @@ import datenbank.dao.StandardDAO;
 /**
  * 
  * @author mertmann.justin
- *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Lehrerobjektes
+ *	Die Klasse MySqlLehrerDAO enthält sämtliche Funktionen zur Datenbankanbindung des Lehrerobjektes
  */
 public class MySqlLehrerDAO implements StandardDAO<Lehrer>{
 	

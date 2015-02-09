@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import objects.Ausbilder;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqliteAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Ausbilderobjektes
+ */
 public class SqliteAusbilderDAO implements StandardDAO<Ausbilder>{
 
 	private static final String DAO_NAME= Ausbilder.class.getName();

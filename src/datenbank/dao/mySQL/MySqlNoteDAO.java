@@ -10,7 +10,9 @@ import datenbank.dao.StandardDAO;
 /**
  * 
  * @author mertmann.justin
- *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Notenobjektes
+ *	Die Klasse MySqlNoteDAO enthält sämtliche Funktionen zur Datenbankanbindung des Notenobjektes
+ *	Die Methoden insert update delete werden nicht benötigt, da Noten feststehen und mit der 
+ *	Generierung der DB mitgeneriert werden
  */
 public class MySqlNoteDAO implements StandardDAO<Note>{
 	
@@ -30,19 +32,16 @@ public class MySqlNoteDAO implements StandardDAO<Note>{
 
 	@Override
 	public boolean update(Note t) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean delete(Note t) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public ArrayList<Note> getAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

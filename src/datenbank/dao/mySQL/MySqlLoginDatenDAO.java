@@ -10,7 +10,7 @@ import datenbank.dao.StandardDAO;
 /**
  * 
  * @author mertmann.justin
- *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Login_Datenobjektes
+ *	Die Klasse MySqlLoginDatenDAO enthält sämtliche Funktionen zur Datenbankanbindung des Login_Datenobjektes
  */
 public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	

@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import objects.Betrieb;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlBetriebDAO enthält sämtliche Funktionen zur Datenbankanbindung des Betriebsobjektes
+ */
 public class SqliteBetriebDAO implements StandardDAO<Betrieb>{
 
 private static final String DAO_NAME= Betrieb.class.getName();

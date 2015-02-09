@@ -7,7 +7,13 @@ import java.util.ArrayList;
 import objects.Note;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlNoteDAO enthält sämtliche Funktionen zur Datenbankanbindung des Notenobjektes
+ *	Die Methoden insert update delete werden nicht benötigt, da Noten feststehen und mit der 
+ *	Generierung der DB mitgeneriert werden
+ */
 public class SqliteNoteDAO implements StandardDAO<Note>{
 private static final String DAO_NAME= Note.class.getName();
 	

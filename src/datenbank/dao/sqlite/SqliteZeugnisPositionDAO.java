@@ -11,7 +11,11 @@ import datenbank.dao.StandardDAO;
 import datenbank.dao.sqlite.SqliteFachDAO;
 import datenbank.dao.sqlite.SqliteNoteDAO;
 import datenbank.dao.sqlite.SqliteZeugnisDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlZeugnispositionDAO enthält sämtliche Funktionen zur Datenbankanbindung des ZeugnisPositionsobjektes
+ */
 public class SqliteZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 private static final String DAO_NAME= Zeugnisposition.class.getName();
 	

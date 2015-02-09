@@ -10,7 +10,7 @@ import datenbank.dao.StandardDAO;
 /**
  * 
  * @author mertmann.justin
- *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Fachobjektes
+ *	Die Klasse MySqlFachDAO enthält sämtliche Funktionen zur Datenbankanbindung des Fachobjektes
  */
 public class MySqlFachDAO implements StandardDAO<Fach>{
 	
