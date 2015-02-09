@@ -8,7 +8,7 @@ package objects;
  *         zuzugreifen.
  */
 
-public class Fach {
+public class Fach implements StandardValueObject{
 
 	private String ID;
 	private String Bezeichnung;

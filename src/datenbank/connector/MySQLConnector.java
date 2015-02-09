@@ -12,8 +12,9 @@ import java.util.UUID;
 import org.apache.commons.io.FileUtils;
 
 public class MySQLConnector implements StandardSqlConnector {
+	
+	private static final String FILE_SKRIPT = "W:\\git\\Azubiverwaltung\\src\\Erstellung_DB_mySQL.sql";
 	String sql = "";
-
 	String url = "mysql://localhost:3306/Azubiverwaltung";
 
 	private static Connection con = null;
@@ -24,7 +25,9 @@ public class MySQLConnector implements StandardSqlConnector {
 	private static String dbPass = "user"; // Datenbankpasswort
 	private static MySQLConnector connector;
 	
-	
+	/**
+	 * Stellt die Verbindung zur MySQL DB her.
+	 */
 	private void getConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); // Datenbanktreiber für JDBC
@@ -62,7 +65,7 @@ public class MySQLConnector implements StandardSqlConnector {
 	 */
 	private void executeInitSkript() {
 		try {
-			File f = new File("W:\\git\\Azubiverwaltung\\src\\Erstellung_DB.sql");
+			File f = new File(FILE_SKRIPT);
 			List<String> sqlList = FileUtils.readLines(f);
 
 			Class.forName("com.mysql.jdbc.Driver"); // Datenbanktreiber für JDBC
@@ -96,7 +99,7 @@ public class MySQLConnector implements StandardSqlConnector {
 		return connector;
 	}
 	
-
+	@Override
 	public boolean statementExecute(String sql) {
 		if (con == null) {
 			getConnection();
@@ -120,6 +123,7 @@ public class MySQLConnector implements StandardSqlConnector {
 
 	}
 
+	@Override
 	public ResultSet executeQuery(String sql){
 		if (con == null) {
 			getConnection();
@@ -140,6 +144,7 @@ public class MySQLConnector implements StandardSqlConnector {
 
 	}
 
+	@Override
 	public String getNewGUID() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();

@@ -8,7 +8,7 @@ package objects;
  *         zuzugreifen.
  */
 
-public class Azubi {
+public class Azubi implements StandardValueObject{
 
 	private String ID;
 	private String name;

@@ -8,7 +8,7 @@ package objects;
  *         zuzugreifen.
  */
 
-public class Login {
+public class Login implements StandardValueObject{
 
 	private String ID;
 	private String loginName;

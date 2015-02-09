@@ -16,6 +16,8 @@ import org.apache.commons.io.FileUtils;
  */
 public class SqliteConnector implements StandardSqlConnector {
 	
+	private static final String FILE_SKRIPT = "W:\\git\\Azubiverwaltung\\src\\Erstellung_DB_SqLite.sql";
+	
 	private static SqliteConnector connector;
 	private static Connection con;
 
@@ -28,7 +30,7 @@ public class SqliteConnector implements StandardSqlConnector {
 	/**
 	 * Liefert die Instanz des {@link SqliteConnector}s.
 	 * 
-	 * @return
+	 * @return Connector
 	 */
 	public static SqliteConnector getInstance() {
 		if(connector == null) {
@@ -38,12 +40,19 @@ public class SqliteConnector implements StandardSqlConnector {
 		return connector;
 	}
 	
+	/**
+	 * Prüft ob die DB bereits vorhanden ist. Ansonsten wird dies neu erstellt.
+	 * Öffnet anschließend eine Verbindung.
+	 */
 	private void initDB(){
-		try{
+		File f = new File("azubiverwaltung.db");
+		if(f.exists()) {
+			// Gibts die db schon? -> Connection aufbauen.
 			getConnection();
-		}catch(Exception e){
-			executeInitSkript();
+			return;
 		}
+		// Db nicht vorhanden -> Initialisieren.
+		executeInitSkript();
 	}
 	
 	/**
@@ -67,7 +76,7 @@ public class SqliteConnector implements StandardSqlConnector {
 	 */
 	private void executeInitSkript() {
 		try {
-			File f = new File("W:\\git\\Azubiverwaltung\\src\\Erstellung_DB_SqLite.sql");
+			File f = new File(FILE_SKRIPT);
 			List<String> sqlList = FileUtils.readLines(f);
 
 			 Class.forName("org.sqlite.JDBC"); // Datenbanktreiber für JDBC
@@ -93,6 +102,7 @@ public class SqliteConnector implements StandardSqlConnector {
 	 * @param sql String
 	 * @return {@link ResultSet} Ergebnisse.
 	 */
+	@Override
 	public ResultSet executeQuery(String sql) {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -113,6 +123,7 @@ public class SqliteConnector implements StandardSqlConnector {
 	 * @param sql String
 	 * @return true wenn erfolgreich.
 	 */
+	@Override
 	public boolean statementExecute(String sql) {
 	    Statement stmt = null;
 	    try {
@@ -124,7 +135,6 @@ public class SqliteConnector implements StandardSqlConnector {
 	      if(stmt.executeUpdate(sql) > 0) {
 	    	  con.commit();
 		      stmt.close();
-		      con.close();
 	    	  return true;
 	      }
 	    } catch ( Exception e ) {
@@ -132,6 +142,8 @@ public class SqliteConnector implements StandardSqlConnector {
 	    }
 		return false;
 	}
+	
+	@Override
 	public String getNewGUID() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
