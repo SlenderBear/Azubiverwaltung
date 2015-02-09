@@ -69,13 +69,13 @@ public class AzubiVerwaltungPanel extends JPanel {
 	private StandardDataProvider sdp;
 	private int zugangsStufe;
 	public AzubiVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Klasse> klasseList,
-			ArrayList<Ausbilder> ausbilderList,ArrayList<Azubi> azubiList, GUITools tools) {
+			ArrayList<Ausbilder> ausbilderList,GUITools tools) {
 		this.zugangsStufe = zugangsStufe;
 		this.sdp = sdp;
 		this.klasseList = klasseList;
 		this.ausbilderList = ausbilderList;
 		this.tools = tools;
-		this.azubiList = azubiList;
+		this.azubiList = new ArrayList<>();
 		
 		innerAzubiPanel = new JTabbedPane();
 		innerAzubiPanelStamm = new JPanel(new GridBagLayout());

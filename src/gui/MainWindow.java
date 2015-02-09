@@ -51,7 +51,6 @@ public class MainWindow {
 	private ArrayList<Klasse> klasseList;
 	private ArrayList<Betrieb> betriebList;
 	private ArrayList<Ausbilder> ausbilderList;
-	private ArrayList<Azubi> azubiList;
 	private ArrayList<Lehrer> lehrerList;
 	private ArrayList<Fach> fachList;
 	private ArrayList<Zeugnis> zeugnisList;
@@ -183,7 +182,7 @@ public class MainWindow {
 	 */
 	private void createAzubiVerwaltung() {
 		azubiPanel = new AzubiVerwaltungPanel(zugangsStufe, sdp, klasseList,
-				ausbilderList, azubiList, tools);
+				ausbilderList, tools);
 	}
 	/**
 	 * Methode createMenuePanel()
@@ -341,7 +340,6 @@ public class MainWindow {
 		klasseList = sdp.gibAlleKlassen();
 		betriebList = sdp.gibAlleBetriebe();
 		ausbilderList = sdp.gibAlleAusbilder();
-		azubiList = new ArrayList<Azubi>();
 		lehrerList = sdp.gibAlleLehrer();
 		fachList = sdp.gibAlleFaecher();
 		zeugnisList = sdp.gibAlleZeugnisse();

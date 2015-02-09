@@ -90,6 +90,10 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 		btZeugDruck = tools.createButton("Schueler", 150, 25);
 		btZeugKlasseDruck = tools.createButton("Gesamte Klasse", 150, 25);
 		fillFachList();
+		if(dcbmKlasse.getSelectedItem() != null){
+			fillAzubiList((Klasse)dcbmKlasse.getSelectedItem());
+		}
+		
 		initialize();
 	}
 
@@ -233,6 +237,7 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 	 * @param fach Fach
 	 */
 	private void fillTable(Fach fach) {
+		
 		dtmNoten.setRowCount(0);
 		for (int i = 0; i < azubiList.size(); i++) {
 			try {
