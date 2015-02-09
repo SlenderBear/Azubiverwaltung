@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import objects.Fach;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlFachDAO enthält sämtliche Funktionen zur Datenbankanbindung des Fachobjektes
+ */
 public class SqliteFachDAO implements StandardDAO<Fach>{
 private static final String DAO_NAME= Fach.class.getName();
 	

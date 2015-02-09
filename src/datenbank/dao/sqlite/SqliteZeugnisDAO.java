@@ -8,7 +8,11 @@ import objects.Zeugnis;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
 import datenbank.dao.sqlite.SqliteAzubiDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlZeugnisDAO enthält sämtliche Funktionen zur Datenbankanbindung des Zeugnisobjektes
+ */
 public class SqliteZeugnisDAO implements StandardDAO<Zeugnis>{
 private static final String DAO_NAME= Zeugnis.class.getName();
 	

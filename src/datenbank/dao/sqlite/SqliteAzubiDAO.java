@@ -8,7 +8,11 @@ import objects.Azubi;
 import objects.Klasse;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlAzubiDAO enthält sämtliche Funktionen zur Datenbankanbindung des Azubiobjektes
+ */
 public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 	private SqliteKlasseDAO daoKlasse= new SqliteKlasseDAO();
 	private SqliteBetriebDAO daoBetrieb = new SqliteBetriebDAO();

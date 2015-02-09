@@ -10,7 +10,7 @@ import datenbank.dao.StandardDAO;
 /**
  * 
  * @author mertmann.justin
- *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Zeugnisobjektes
+ *	Die Klasse MySqlZeugnisDAO enthält sämtliche Funktionen zur Datenbankanbindung des Zeugnisobjektes
  */
 public class MySqlZeugnisDAO implements StandardDAO<Zeugnis>{
 	

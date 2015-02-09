@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import objects.Login;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlLoginDatenDAO enthält sämtliche Funktionen zur Datenbankanbindung des Login_Datenobjektes
+ */
 public class SqliteLoginDatenDAO implements StandardDAO<Login> {
 	private static final String DAO_NAME= Login.class.getName();
 	

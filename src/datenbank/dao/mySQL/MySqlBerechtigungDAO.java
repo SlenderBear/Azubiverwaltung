@@ -10,7 +10,7 @@ import datenbank.dao.StandardDAO;
 /**
  * 
  * @author mertmann.justin
-  *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Berechtigungsobjektes
+  *	Die Klasse MySqlBerechtigungDAO enthält sämtliche Funktionen zur Datenbankanbindung des Berechtigungsobjektes
  */
 public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
 	

@@ -10,7 +10,7 @@ import datenbank.dao.StandardDAO;
 /**
  * 
  * @author mertmann.justin
- *	Die Klasse MySqlAusbilderDAO enthält sämtliche Funktionen zur Datenbankanbindung des Betriebsobjektes
+ *	Die Klasse MySqlBetriebDAO enthält sämtliche Funktionen zur Datenbankanbindung des Betriebsobjektes
  */
 public class MySqlBetriebDAO implements StandardDAO<Betrieb> {
 	

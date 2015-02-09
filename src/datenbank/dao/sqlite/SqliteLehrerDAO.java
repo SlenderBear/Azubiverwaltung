@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import objects.Lehrer;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
-
+/**
+ * 
+ * @author mertmann.justin
+ *	Die Klasse MySqlLehrerDAO enthält sämtliche Funktionen zur Datenbankanbindung des Lehrerobjektes
+ */
 public class SqliteLehrerDAO implements StandardDAO<Lehrer>{
 private static final String DAO_NAME= Lehrer.class.getName();
 	
