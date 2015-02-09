@@ -33,6 +33,8 @@ import javax.swing.event.ListSelectionListener;
 import org.jdatepicker.DateModel;
 import org.jdatepicker.impl.JDatePickerImpl;
 
+import businesslogik.dataprovider.StandardDataProvider;
+
 import com.toedter.calendar.JYearChooser;
 
 import objects.Ausbilder;
@@ -58,9 +60,10 @@ public class AzubiVerwaltungPanel extends JPanel {
 	private ArrayList<Klasse> klasseList;
 	private ArrayList<Ausbilder> ausbilderList;
 	private ArrayList<Azubi> azubiList;
-
-	public AzubiVerwaltungPanel(ArrayList<Klasse> klasseList,
+	private StandardDataProvider sdp;
+	public AzubiVerwaltungPanel(StandardDataProvider sdp, ArrayList<Klasse> klasseList,
 			ArrayList<Ausbilder> ausbilderList,ArrayList<Azubi> azubiList, GUITools tools) {
+		this.sdp = sdp;
 		this.klasseList = klasseList;
 		this.ausbilderList = ausbilderList;
 		this.tools = tools;
@@ -504,6 +507,15 @@ public class AzubiVerwaltungPanel extends JPanel {
 
 			
 		});
+		//
+		cmbKlasse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fillAzubi((Klasse)dcbmKlasse.getElementAt(cmbKlasse.getSelectedIndex()));
+				
+			}
+		});
 	}
 	
 	private void setFieldsofAzubi() {
@@ -710,6 +722,14 @@ public class AzubiVerwaltungPanel extends JPanel {
 			}
 		}
 		return found;
+	}
+	
+	private void fillAzubi(Klasse klasse){
+		azubiListModel.removeAllElements();
+		azubiList = sdp.gibAzubiVon(klasse);
+		for(int i = 0; i < azubiList.size(); i++){
+			azubiListModel.addElement(azubiList.get(i));
+		}
 	}
 
 }

@@ -20,6 +20,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import businesslogik.dataprovider.StandardDataProvider;
+
 import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
 
 import objects.Ausbilder;
@@ -36,8 +38,9 @@ public class AusbilderVerwaltungPanel extends JPanel{
 	private ArrayList<Betrieb> betriebList;
 	private ArrayList<Ausbilder> ausbilderList;
 	private GUITools tools;
-	
-	public AusbilderVerwaltungPanel(ArrayList<Betrieb> betriebList,ArrayList<Ausbilder> ausbilderList, GUITools tools) {
+	private StandardDataProvider sdp;
+	public AusbilderVerwaltungPanel(StandardDataProvider sdp, ArrayList<Betrieb> betriebList,ArrayList<Ausbilder> ausbilderList, GUITools tools) {
+		this.sdp = sdp;
 		this.betriebList = betriebList;
 		this.ausbilderList = ausbilderList;
 		this.tools=tools;

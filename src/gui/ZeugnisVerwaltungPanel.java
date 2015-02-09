@@ -31,6 +31,8 @@ import objects.Zeugnisposition;
 
 import org.jdatepicker.impl.JDatePickerImpl;
 
+import businesslogik.dataprovider.StandardDataProvider;
+
 import com.toedter.calendar.JYearChooser;
 
 public class ZeugnisVerwaltungPanel extends JPanel {
@@ -46,8 +48,10 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 	private ArrayList<Fach> fachList;
 	private ArrayList<Azubi> azubiList;
 	private ArrayList<Zeugnis> zeugnisList;
+	private StandardDataProvider sdp;
 
-	public ZeugnisVerwaltungPanel(ArrayList<Klasse> klasseList, GUITools tools) {
+	public ZeugnisVerwaltungPanel(StandardDataProvider sdp, ArrayList<Klasse> klasseList, GUITools tools) {
+		this.sdp = sdp;
 		this.klasseList = klasseList;
 		this.tools = tools;
 		innerZeugnisPanel = new JPanel(new GridBagLayout());

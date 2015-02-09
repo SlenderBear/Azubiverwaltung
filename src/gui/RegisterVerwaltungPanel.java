@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import businesslogik.dataprovider.StandardDataProvider;
 import objects.Berechtigung;
 import objects.Lehrer;
 import objects.Login;
@@ -36,8 +37,9 @@ public class RegisterVerwaltungPanel extends JPanel{
 	
 	private GUITools tools;
 	private ArrayList<Lehrer> userList;
-
-	public RegisterVerwaltungPanel(ArrayList<Lehrer> userList,GUITools tools) {
+	private StandardDataProvider sdp;
+	public RegisterVerwaltungPanel(StandardDataProvider sdp, ArrayList<Lehrer> userList,GUITools tools) {
+		this.sdp = sdp;
 		this.userList = userList;
 		this.tools = tools;
 		innerRegisterPanel = new JPanel(new GridBagLayout());

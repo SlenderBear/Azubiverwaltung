@@ -68,6 +68,8 @@ public class MainWindow {
 	private int zugangsStufe;
 	private GUITools tools;
 	
+	private Login user;
+	
 	
 	private GridBagConstraints c;
 	
@@ -75,7 +77,7 @@ public class MainWindow {
 	private ArrayList<Betrieb> betriebList;
 	private ArrayList<Ausbilder> ausbilderList;
 	private ArrayList<Azubi> azubiList;
-	private ArrayList<Lehrer> userList;
+	private ArrayList<Lehrer> lehrerList;
 	private StandardDataProvider sdp;
 	
 	
@@ -83,9 +85,10 @@ public class MainWindow {
 	public MainWindow(StandardDataProvider sdp) {
 		c = new GridBagConstraints();
 		tools = new GUITools();
-		setLists();
 		this.sdp = sdp;
-		initialize();
+		this.user = null;
+		setLists();
+		start();
 	}
 
 	public void initialize() {
@@ -131,34 +134,27 @@ public class MainWindow {
 	}
 
 	private void createZeugnisVerwaltung() {
-		zeugnisPanel = new ZeugnisVerwaltungPanel(klasseList,tools);
+		zeugnisPanel = new ZeugnisVerwaltungPanel(sdp,klasseList,tools);
 	}
 
 	private void createKlassenVerwaltung() {
-		klassenPanel = new KlassenVerwaltungPanel(klasseList,userList,tools);
+		klassenPanel = new KlassenVerwaltungPanel(sdp,klasseList,lehrerList,tools);
 	}
 
 	private void createBetriebVerwaltung() {
-		betriebsPanel = new BetriebeVerwaltungPanel(betriebList,tools);
+		betriebsPanel = new BetriebeVerwaltungPanel(sdp,betriebList,tools);
 	}
-
-	
 
 	private void createRegisterVerwaltung() {
-		registerPanel = new RegisterVerwaltungPanel(userList, tools);
-
+		registerPanel = new RegisterVerwaltungPanel(sdp,lehrerList, tools);
 	}
 
-	
-
 	private void createAusbilderVerwaltung() {
-		ausbilderPanel = new AusbilderVerwaltungPanel(betriebList, ausbilderList, tools);
-
+		ausbilderPanel = new AusbilderVerwaltungPanel(sdp,betriebList, ausbilderList, tools);
 	}
 
 	private void createAzubiVerwaltung() {
-		azubiPanel = new AzubiVerwaltungPanel(klasseList, ausbilderList,azubiList, tools);
-
+		azubiPanel = new AzubiVerwaltungPanel(sdp,klasseList, ausbilderList,azubiList, tools);
 	}
 	
 	
@@ -196,11 +192,16 @@ public class MainWindow {
 	private void addUserPanel() {
 		JLabel label = new JLabel("Benutzer: ");
 		JButton btLogout = tools.createButton("Logout", 150, 25);
-		JButton closeButton = tools.createButton("Schlie–Øen", 150, 25);
+		JButton closeButton = tools.createButton("Schliessen", 150, 25);
 		userPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		userPanel.add(label);
-		label = new JLabel("Hier Kommt benutzername");
+		if(user != null){
+		label = new JLabel(user.getLoginName());
+		}
+		else{
+			label = new JLabel("leeres Login");
+		}
 		userPanel.add(label);
 
 		btLogout.addActionListener(new ActionListener() {
@@ -246,12 +247,12 @@ public class MainWindow {
 		c.gridx = 0;
 		c.gridy = 2;
 		loginPanel.add(new JLabel("Passwort"), c);
-		JTextField lognameFeld = new JTextField(15);
+		final JTextField lognameFeld = new JTextField(15);
 		c.gridx = 3;
 		c.gridy = 1;
 		c.gridwidth = 1;
 		loginPanel.add(lognameFeld, c);
-		JPasswordField passwordField = new JPasswordField(15);
+		final JPasswordField passwordField = new JPasswordField(15);
 		c.gridx = 3;
 		c.gridy = 2;
 		loginPanel.add(passwordField, c);
@@ -261,10 +262,11 @@ public class MainWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO getZugangsStufe
-				zugangsStufe = 0;
-				addUserPanel();
-				setShownMenue();
+				if(setUser(lognameFeld.getText(), passwordField.getText())){
+					addUserPanel();
+					setShownMenue();
+				}
+				
 			}
 		});
 		c.gridx = 0;
@@ -287,11 +289,86 @@ public class MainWindow {
 	}
 	
 	private void setLists(){
-		klasseList = new ArrayList<Klasse>();
-		betriebList = new ArrayList<Betrieb>();
-		ausbilderList = new ArrayList<Ausbilder>();
+//		klasseList = new ArrayList<Klasse>();
+//		betriebList = new ArrayList<Betrieb>();
+//		ausbilderList = new ArrayList<Ausbilder>();
+//		azubiList = new ArrayList<Azubi>();
+//		lehrerList = new ArrayList<Lehrer>();
+		klasseList = sdp.gibAlleKlassen();
+		betriebList = sdp.gibAlleBetriebe();
+		ausbilderList = sdp.gibAlleAusbilder();
 		azubiList = new ArrayList<Azubi>();
-		userList = new ArrayList<Lehrer>();
+		lehrerList = sdp.gibAlleLehrer();
+	}
+	
+	private void start(){
+		final JFrame firstFrame = new JFrame("Auswahl Datenbank");
+		JPanel firstpanel = new JPanel(new GridBagLayout());
+		
+		firstFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		firstFrame.setSize(400, 400);
+		tools.setConstraintsDefault(c);
+		c.gridwidth = 2;
+		firstpanel.add(tools.createTitlePanel("Datenbank W‰hlen"));
+		c.gridwidth = 1;
+		
+		final JRadioButton rbMYSQL = new JRadioButton("MySQL");
+		rbMYSQL.setSelected(true);
+		JRadioButton rbSQLite = new JRadioButton("SQLite");
+		
+		ButtonGroup dbButtonGroup = new ButtonGroup();
+		dbButtonGroup.add(rbMYSQL);
+		dbButtonGroup.add(rbSQLite);
+		
+		
+		JButton okButton = tools.createButton("OK", 150, 25);
+		JButton closeButton = tools.createButton("Abbruch", 150, 25);
+		
+		okButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(rbMYSQL.isSelected()){
+					sdp.changeDataProvider(StandardDataProvider.db_optionen.MYSQL.toString());
+				}else{
+					
+					sdp.changeDataProvider(StandardDataProvider.db_optionen.SQLITE.toString());
+				}
+				initialize();
+				firstFrame.dispose();
+			}
+		});
+		
+		closeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				firstFrame.dispose();
+				
+			}
+		});
+		
+		tools.addComponentNextLine(firstpanel, rbMYSQL, c);
+		tools.addComponentNextLine(firstpanel, rbSQLite, c);
+		tools.addComponentNextLine(firstpanel, okButton, c);
+		tools.addComponentNextLine(firstpanel, closeButton, c);
+		
+		firstFrame.add(firstpanel);
+		firstFrame.setVisible(true);
+	}
+	
+	private boolean setUser(String login, String passwd){
+		
+			Login logDat = sdp.getLoginByLoginDaten(new Login(login, passwd));
+			if(logDat != null){
+				
+				zugangsStufe = logDat.getBerechtigung().getID();
+				return true;
+			}else{
+				
+				return false;
+			}
+		
 	}
 
 	

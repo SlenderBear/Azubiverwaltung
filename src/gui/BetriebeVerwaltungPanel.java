@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import businesslogik.dataprovider.StandardDataProvider;
+
 import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
 
 import objects.Betrieb;
@@ -30,7 +32,9 @@ public class BetriebeVerwaltungPanel extends JPanel{
 
 	private GUITools tools;
 	private ArrayList<Betrieb> betriebList;
-	public BetriebeVerwaltungPanel(ArrayList<Betrieb> betriebList,GUITools tools) {
+	private StandardDataProvider sdp;
+	public BetriebeVerwaltungPanel(StandardDataProvider sdp, ArrayList<Betrieb> betriebList,GUITools tools) {
+		this.sdp = sdp;
 		this.tools = tools;
 		this.betriebList = betriebList;
 		innerBetriebsPanel = new JPanel(new GridBagLayout());

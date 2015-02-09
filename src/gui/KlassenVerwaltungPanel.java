@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import businesslogik.dataprovider.StandardDataProvider;
 import objects.Klasse;
 import objects.Lehrer;
 
@@ -31,7 +32,10 @@ public class KlassenVerwaltungPanel extends JPanel{
 	private GUITools tools;
 	private ArrayList<Klasse> klasseList;
 	private ArrayList<Lehrer> userList;
-	public KlassenVerwaltungPanel(ArrayList<Klasse> klasseList, ArrayList<Lehrer> userList, GUITools tools) {
+	private StandardDataProvider sdp;
+	
+	public KlassenVerwaltungPanel(StandardDataProvider sdp, ArrayList<Klasse> klasseList, ArrayList<Lehrer> userList, GUITools tools) {
+		this.sdp = sdp;
 		this.klasseList = klasseList;
 		this.userList = userList;
 		this.tools = tools;
