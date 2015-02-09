@@ -50,7 +50,7 @@ public class ZeugnisVerwaltungPanel extends JPanel{
 		druckPanel = new JPanel(new GridLayout(0, 1, 0, 25));
 		
 		dcbmKlasse = new DefaultComboBoxModel(this.klasseList.toArray());
-		cmbKlasse = new JComboBox();
+		cmbKlasse = new JComboBox(dcbmKlasse);
 		cmbKlasse.setPreferredSize(new Dimension(200, 25));
 		
 		jahrAusbildung = new JYearChooser();
@@ -159,11 +159,22 @@ public class ZeugnisVerwaltungPanel extends JPanel{
 			}
 		});
 		
-		
+		cmbKlasse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
 	}
 	
-	private void fillTable(){
+	private void fillFachList(Klasse klasse){
+		
+	}
+	
+	private void fillTable(Klasse klasse){
 		/////////////////////////////////////
 		azubiList = new ArrayList<Azubi>();
 		////////////////////////////////////

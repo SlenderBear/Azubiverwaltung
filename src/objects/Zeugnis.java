@@ -12,7 +12,6 @@ public class Zeugnis implements StandardValueObject{
 
 	private String ID;
 	private Azubi azubi;
-	private Fach fach;
 	private int jahr;
 	private String zeugnisKonferenz;
 
@@ -32,13 +31,6 @@ public class Zeugnis implements StandardValueObject{
 		this.azubi = azubi;
 	}
 
-	public Fach getFach() {
-		return fach;
-	}
-
-	public void setFach(Fach fach) {
-		this.fach = fach;
-	}
 
 	public int getJahr() {
 		return jahr;
