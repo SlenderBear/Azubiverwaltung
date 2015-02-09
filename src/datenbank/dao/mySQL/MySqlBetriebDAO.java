@@ -65,7 +65,7 @@ public class MySqlBetriebDAO implements StandardDAO<Betrieb> {
 
 	@Override
 	public ArrayList<Betrieb> getAll() {
-		String sql = "select * from betrieb'";
+		String sql = "select * from betrieb";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Betrieb> betriebsListe = new ArrayList<Betrieb>();
 		try {

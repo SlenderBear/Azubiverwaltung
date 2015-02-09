@@ -21,8 +21,7 @@ public class MySQLConnector implements StandardSqlConnector {
 	private static String dbHost = "localhost"; // Hostname
 	private static String dbPort = "3306"; // Port -- Standard: 3306
 	private static String dbName = "azubiverwaltung"; // Datenbankname
-	private static String dbUser = "user"; // Datenbankuser
-	private static String dbPass = "user"; // Datenbankpasswort
+	private static String dbUser = "root"; // Datenbankuser
 	private static MySQLConnector connector;
 	
 	/**
@@ -35,8 +34,7 @@ public class MySQLConnector implements StandardSqlConnector {
 
 			// Verbindung zur JDBC-Datenbank herstellen.
 			con = DriverManager.getConnection("jdbc:mysql://" + dbHost + ":"
-					+ dbPort + "/" + dbName + "?" + "user=" + dbUser + "&"
-					+ "password=" + dbPass);
+					+ dbPort + "/" + dbName + "?" + "user=" + dbUser);
 		} catch (ClassNotFoundException e) {
 			System.out.println("Treiber nicht gefunden");
 		} catch (SQLException e) {

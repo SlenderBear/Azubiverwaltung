@@ -46,8 +46,8 @@ public class MySqlNoteDAO implements StandardDAO<Note>{
 	}
 
 	@Override
-	public Note getByGuid(String beschreibung) {
-		String sql = "select * from note where beschreibung='"+beschreibung+"';";
+	public Note getByGuid(String noteid) {
+		String sql = "select * from note where noteid='"+noteid+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Note b = new Note();
 		try {

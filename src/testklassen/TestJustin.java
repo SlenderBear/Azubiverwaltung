@@ -8,6 +8,7 @@ import objects.Betrieb;
 import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
+import objects.Login;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
 import businesslogik.dataprovider.StandardDataProvider;
@@ -15,9 +16,9 @@ import businesslogik.dataprovider.StandardDataProvider;
 public class TestJustin {
 
 	public static void main(String[] args) {
-		StandardDataProvider.changeDataProvider(StandardDataProvider.db_optionen.SQLITE.toString());
+		StandardDataProvider.changeDataProvider(StandardDataProvider.db_optionen.MYSQL.toString());
 		StandardDataProvider provider = StandardDataProvider.getInstance();
-		System.out.println("--------------Ausbilderliste------------------");
+				System.out.println("--------------Ausbilderliste------------------");
 		ArrayList<Ausbilder> ausbilderliste =provider.gibAlleAusbilder();
 		for (Ausbilder ausbilder : ausbilderliste) {
 			System.out.println(ausbilder.getID());
@@ -55,7 +56,7 @@ public class TestJustin {
 			System.out.println("------------- Positionen ----------------");
 			
 			for (Zeugnisposition zeugnis : provider.gibPositionenZuZeugnis(z)) {
-				System.out.println(zeugnis.getNote());
+				System.out.println(zeugnis.getNote().getBeschreibung());
 			}
 		}
 		

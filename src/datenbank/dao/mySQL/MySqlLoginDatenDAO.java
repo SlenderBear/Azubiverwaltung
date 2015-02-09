@@ -82,8 +82,8 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	}
 
 	@Override
-	public Login getByGuid(String loginname) {
-		String sql = "select * from login_daten where benutzername='"+loginname+"';";
+	public Login getByGuid(String loginid) {
+		String sql = "select * from login_daten where loginid='"+loginid+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Login l = new Login();
 		try {
@@ -91,7 +91,7 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	        l.setID(rs.getString("loginid"));
 	        l.setLoginName(rs.getString("benutzername"));
 	        l.setLoginPasswort(entschluesseln(rs.getString("passwort")));
-	        l.setBerechtigung(dao.getByGuid(rs.getString("berechtigungid"))); 
+	        l.setBerechtigung(dao.getByBerechtigungID(rs.getInt("berechtigungid"))); 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -139,7 +139,7 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	        l.setID(rs.getString("loginid"));
 	        l.setLoginName(rs.getString("benutzername"));
 	        l.setLoginPasswort(entschluesseln(rs.getString("passwort")));
-	        l.setBerechtigung(dao.getByGuid(rs.getString("berechtigungid"))); 
+			l.setBerechtigung(dao.getByBerechtigungID(rs.getInt("berechtigungid")));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

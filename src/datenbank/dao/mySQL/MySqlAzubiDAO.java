@@ -259,7 +259,7 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	 * @return Rückgabe aller Azubis, die sich in dieser Klasse befinden
 	 */
 	public ArrayList<Azubi> gibAzubisZuKlasse(Klasse k){
-		String sql = "select * from azubi where klasseid='"
+		String sql = "select * from azubi where klassenid='"
 				+ k.getID() + "';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		ArrayList<Azubi> azubiListe = new ArrayList<Azubi>(); 

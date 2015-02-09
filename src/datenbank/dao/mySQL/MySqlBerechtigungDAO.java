@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import objects.Berechtigung;
 import datenbank.connector.MySQLConnector;
+import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
 /**
  * 
@@ -61,6 +62,20 @@ public class MySqlBerechtigungDAO implements StandardDAO<Berechtigung>{
 	public Berechtigung getByGuid(String bezeichnung) {
 		String sql = "select * from berechtigung where bezeichnung='"+bezeichnung+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		Berechtigung b = new Berechtigung();
+		try {
+			rs.next();
+	        b.setID(rs.getInt("berechtigungid"));
+	        b.setBezeichnung(rs.getString("bezeichnung"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	public Berechtigung getByBerechtigungID(int berechtigungId){
+		String sql = "select * from berechtigung where berechtigungid="+berechtigungId+";";
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		Berechtigung b = new Berechtigung();
 		try {
 			rs.next();
