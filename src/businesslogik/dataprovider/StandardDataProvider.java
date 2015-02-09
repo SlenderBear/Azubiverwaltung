@@ -111,6 +111,8 @@ public abstract class StandardDataProvider {
 	 * @return
 	 */
 	public abstract boolean checkLogin(Login login);
+	
+	public abstract Login getLoginByLoginDaten(Login login);
 
 	/**
 	 * Prüft ob Azubi bereits vorhanden.
@@ -158,10 +160,10 @@ public abstract class StandardDataProvider {
 	private static StandardDataProvider getDataProvider(String db) {
 		if (db.compareToIgnoreCase(db_optionen.MYSQL.toString()) == 0) {
 			akt_db = db_optionen.MYSQL.toString();
-			return new MySqlDataProvider();
+			return MySqlDataProvider.getInstance();
 		} else if (db.compareToIgnoreCase(db_optionen.SQLITE.toString()) == 0) {
 			akt_db = db_optionen.SQLITE.toString();
-			return new SqliteDataProvider();
+			return SqliteDataProvider.getInstance();
 		}
 		return null;
 	}

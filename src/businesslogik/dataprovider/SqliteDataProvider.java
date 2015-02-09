@@ -31,20 +31,21 @@ import objects.Zeugnisposition;
  */
 public class SqliteDataProvider extends StandardDataProvider{
 	//Erstellung der DAO-Objekte zur Verwendung der Sqlite-Methoden
-		SqliteAusbilderDAO ausbilderDAO = new SqliteAusbilderDAO();
-		SqliteAzubiDAO azubiDAO = new SqliteAzubiDAO();
-		SqliteBerechtigungDAO berechtigungDAO = new SqliteBerechtigungDAO();
-		SqliteBetriebDAO betriebDAO = new SqliteBetriebDAO();
-		SqliteFachDAO fachDAO = new SqliteFachDAO();
-		SqliteKlasseDAO klasseDAO = new SqliteKlasseDAO();
-		SqliteLehrerDAO lehrerDAO = new SqliteLehrerDAO();
-		SqliteLoginDatenDAO loginDatenDAO = new SqliteLoginDatenDAO();
-		SqliteNoteDAO noteDAO = new SqliteNoteDAO();
-		SqliteZeugnisDAO zeugnisDAO = new SqliteZeugnisDAO();
-		SqliteZeugnisPositionDAO zeugnisPositionDAO = new SqliteZeugnisPositionDAO();
-		@SuppressWarnings("rawtypes")
-		ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
-		
+	private SqliteAusbilderDAO ausbilderDAO = new SqliteAusbilderDAO();
+	private SqliteAzubiDAO azubiDAO = new SqliteAzubiDAO();
+	private SqliteBerechtigungDAO berechtigungDAO = new SqliteBerechtigungDAO();
+	private SqliteBetriebDAO betriebDAO = new SqliteBetriebDAO();
+	private SqliteFachDAO fachDAO = new SqliteFachDAO();
+	private SqliteKlasseDAO klasseDAO = new SqliteKlasseDAO();
+	private SqliteLehrerDAO lehrerDAO = new SqliteLehrerDAO();
+	private SqliteLoginDatenDAO loginDatenDAO = new SqliteLoginDatenDAO();
+	private SqliteNoteDAO noteDAO = new SqliteNoteDAO();
+	private SqliteZeugnisDAO zeugnisDAO = new SqliteZeugnisDAO();
+	private SqliteZeugnisPositionDAO zeugnisPositionDAO = new SqliteZeugnisPositionDAO();
+	@SuppressWarnings("rawtypes")
+	private ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
+
+	private static SqliteDataProvider provider = null;
 		/**
 		 * Konstruktor fügt alle Sqlite Daos in eine Liste ein.
 		 */
@@ -60,6 +61,17 @@ public class SqliteDataProvider extends StandardDataProvider{
 			daoListe.add(noteDAO);
 			daoListe.add(zeugnisDAO);
 			daoListe.add(zeugnisPositionDAO);
+		}
+		
+		/**
+		 * Singleton.
+		 * @return provider
+		 */
+		public static SqliteDataProvider getInstance() {
+			if(provider == null) {
+				provider = new SqliteDataProvider();
+			}
+			return provider;
 		}
 		
 		@Override
@@ -190,5 +202,10 @@ public class SqliteDataProvider extends StandardDataProvider{
 				// Datenbankfehler -> Fehlermeldung zurückgeben.
 				return false;
 			}
+		}
+
+		@Override
+		public Login getLoginByLoginDaten(Login login) {
+			return loginDatenDAO.getLoginByLoginDaten(login);
 		}
 }

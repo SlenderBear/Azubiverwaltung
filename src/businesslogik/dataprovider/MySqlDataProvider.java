@@ -46,6 +46,7 @@ public class MySqlDataProvider extends StandardDataProvider{
 	MySqlZeugnisPositionDAO zeugnisPositionDAO = new MySqlZeugnisPositionDAO();
 	@SuppressWarnings("rawtypes")
 	ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
+	static MySqlDataProvider provider = null;
 	/**
 	 * Der Konstruktor von MySqlDataProvider erstellt eine Liste, in der sämtliche DAOS gespeichert werden
 	 */
@@ -61,6 +62,13 @@ public class MySqlDataProvider extends StandardDataProvider{
 		daoListe.add(noteDAO);
 		daoListe.add(zeugnisDAO);
 		daoListe.add(zeugnisPositionDAO);
+	}
+	
+	public static MySqlDataProvider getInstance() {
+		if(provider == null) {
+			provider = new MySqlDataProvider();
+		}
+		return provider;
 	}
 	
 	@Override
@@ -194,6 +202,11 @@ public class MySqlDataProvider extends StandardDataProvider{
 	@Override
 	public ArrayList<Zeugnis> gibAlleZeugnisse() {
 		return zeugnisDAO.getAll();
+	}
+	
+	@Override
+	public Login getLoginByLoginDaten(Login login) {
+		return loginDatenDAO.getLoginByLoginDaten(login);
 	}
 
 }
