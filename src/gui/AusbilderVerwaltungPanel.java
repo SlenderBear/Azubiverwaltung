@@ -49,7 +49,7 @@ public class AusbilderVerwaltungPanel extends JPanel{
 		cmbBetrieb.setPreferredSize(new Dimension(200, 25));
 
 		ausbilderDLM = new DefaultListModel();
-		ausbilderJList = new JList();
+		ausbilderJList = new JList(ausbilderDLM);
 		ausbilderScrollPane = new JScrollPane(ausbilderJList);
 		ausbilderScrollPane.setPreferredSize(new Dimension(200, 300));
 

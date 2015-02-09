@@ -25,34 +25,38 @@ import javax.swing.table.DefaultTableModel;
 import objects.Azubi;
 import objects.Fach;
 import objects.Klasse;
+import objects.Note;
+import objects.Zeugnis;
+import objects.Zeugnisposition;
 
 import org.jdatepicker.impl.JDatePickerImpl;
 
 import com.toedter.calendar.JYearChooser;
 
-public class ZeugnisVerwaltungPanel extends JPanel{
+public class ZeugnisVerwaltungPanel extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private GUITools tools;
 	private String[] tHeads = { "Azubi", "Note" };
 	private ArrayList<Klasse> klasseList;
 	private ArrayList<Fach> fachList;
 	private ArrayList<Azubi> azubiList;
+	private ArrayList<Zeugnis> zeugnisList;
 
 	public ZeugnisVerwaltungPanel(ArrayList<Klasse> klasseList, GUITools tools) {
 		this.klasseList = klasseList;
 		this.tools = tools;
 		innerZeugnisPanel = new JPanel(new GridBagLayout());
 		druckPanel = new JPanel(new GridLayout(0, 1, 0, 25));
-		
+
 		dcbmKlasse = new DefaultComboBoxModel(this.klasseList.toArray());
 		cmbKlasse = new JComboBox(dcbmKlasse);
 		cmbKlasse.setPreferredSize(new Dimension(200, 25));
-		
+
 		jahrAusbildung = new JYearChooser();
 
 		dlmFach = new DefaultListModel();
@@ -74,12 +78,12 @@ public class ZeugnisVerwaltungPanel extends JPanel{
 		btZeugKlasseDruck = tools.createButton("Gesamte Klasse", 150, 25);
 		initialize();
 	}
-	
-	private JPanel innerZeugnisPanel,druckPanel;
-	
+
+	private JPanel innerZeugnisPanel, druckPanel;
+
 	private DefaultComboBoxModel dcbmKlasse;
 	private JComboBox cmbKlasse;
-	
+
 	private JYearChooser jahrAusbildung;
 
 	private DefaultListModel dlmFach;
@@ -96,17 +100,17 @@ public class ZeugnisVerwaltungPanel extends JPanel{
 
 	private JButton btZeugDruck;
 	private JButton btZeugKlasseDruck;
-	
-	private void initialize(){
+
+	private void initialize() {
 		this.setLayout(new BorderLayout());
-		
-		
+
 		GridBagConstraints c = new GridBagConstraints();
 		tools.setConstraintsDefault(c);
 		c.gridy = 0;
 		c.gridx = 0;
 		c.gridwidth = 1;
-		innerZeugnisPanel.add(tools.createTiteledPanel("Klassenwahl", cmbKlasse), c);
+		innerZeugnisPanel.add(
+				tools.createTiteledPanel("Klassenwahl", cmbKlasse), c);
 		c.gridheight = 3;
 		tools.addComponentNextLine(innerZeugnisPanel,
 				tools.createTiteledPanel("Faecher", azubiScrollPane), c);
@@ -114,10 +118,11 @@ public class ZeugnisVerwaltungPanel extends JPanel{
 		c.gridx = 1;
 		c.gridy = 0;
 		c.gridheight = 1;
-		innerZeugnisPanel.add(tools.createTiteledPanel("Jahr", jahrAusbildung), c);
+		innerZeugnisPanel.add(tools.createTiteledPanel("Jahr", jahrAusbildung),
+				c);
 		c.gridheight = 3;
 		tools.addComponentNextLine(innerZeugnisPanel,
-				tools.createTiteledPanel("Noten", tableScrollPane),c);
+				tools.createTiteledPanel("Noten", tableScrollPane), c);
 		// ***************************************//
 
 		c.gridx = 2;
@@ -140,46 +145,83 @@ public class ZeugnisVerwaltungPanel extends JPanel{
 		this.add(tools.createTitlePanel("Zeugnisverwaltung"),
 				BorderLayout.NORTH);
 		this.add(innerZeugnisPanel, BorderLayout.CENTER);
-		
+
 		btZeugDruck.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		btZeugKlasseDruck.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		cmbKlasse.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
 	}
-	
-	private void fillFachList(Klasse klasse){
-		
+
+	private void fillFachList() {
+
+	}
+
+	private void fillAzubiList(Klasse klasse) {
+		azubiList = new ArrayList<Azubi>();
+	}
+
+	private void fillTable(Fach fach) {
+		// ///////////////////////////////////
+
+		// //////////////////////////////////
+		for (int i = 0; i < azubiList.size(); i++) {
+			dtmNoten.addRow(new Object[] {
+					azubiList.get(i),
+					getNote((Fach) dlmFach.getElementAt(faecherList
+							.getSelectedIndex()),
+							findZeugnis(azubiList.get(i),
+									jahrAusbildung.getYear())) });
+		}
+	}
+
+	private Zeugnis findZeugnis(Azubi azubi, int jahr) {
+		for (int i = 0; i < zeugnisList.size(); i++) {
+			if (zeugnisList.get(i).getAzubi() == azubi
+					&& zeugnisList.get(i).getJahr() == jahr) {
+				return zeugnisList.get(i);
+			}
+		}
+		return null;
+	}
+
+	private Note getNote(Fach fach, Zeugnis zeugnis) {
+		ArrayList<Zeugnisposition> zpList = zeugnis.getPositionen();
+		for (int i = 0; i < zpList.size(); i++) {
+			if (zpList.get(i).getFach() == fach) {
+				return zpList.get(i).getNote();
+			}
+		}
+		return null;
 	}
 	
-	private void fillTable(Klasse klasse){
-		/////////////////////////////////////
-		azubiList = new ArrayList<Azubi>();
-		////////////////////////////////////
-		for(int i = 0; i < azubiList.size(); i++) {
-			dtmNoten.addRow(new Object[]{azubiList.get(i),"Note"});
+	private void getFachList(){
+		dlmFach.removeAllElements();
+		fachList = new ArrayList<Fach>();
+		for(int i = 0; i < fachList.size(); i++){
+			dlmFach.addElement(fachList.get(i));
 		}
 	}
 
