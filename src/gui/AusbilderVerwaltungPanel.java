@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import businesslogik.dataprovider.StandardDataProvider;
 
@@ -58,7 +60,7 @@ public class AusbilderVerwaltungPanel extends JPanel{
 		innerAusbilderPanel = new JPanel(new GridBagLayout());
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		dcbmBetrieb = new DefaultComboBoxModel(this.betriebList.toArray());
-		cmbBetrieb = new JComboBox();
+		cmbBetrieb = new JComboBox(dcbmBetrieb);
 		cmbBetrieb.setPreferredSize(new Dimension(200, 25));
 
 		ausbilderDLM = new DefaultListModel();
@@ -188,8 +190,45 @@ public class AusbilderVerwaltungPanel extends JPanel{
 				
 			}
 		});
+		
+		ausbilderJList.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(ausbilderJList.getSelectedIndex() != -1)
+				{
+					Ausbilder selectedAusbilder = (Ausbilder) ausbilderDLM.getElementAt(ausbilderJList.getSelectedIndex());
+					vorField.setText(selectedAusbilder.getVorname());
+					nachField.setText(selectedAusbilder.getName());
+					eMailField.setText(selectedAusbilder.getEmail());
+					tNummerField.setText(selectedAusbilder.getTelefon());
+				}
+				
+			}
+		});
+		
+		cmbBetrieb.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fillAusbilderJList((Betrieb)dcbmBetrieb.getSelectedItem());
+				
+			}
+		});
+		
 	}
-	
+	/**
+	 * Methode fillAusbilderJList
+	 * fuellt die JList mit Ausbildern von einem Betrieb
+	 */
+		private void fillAusbilderJList(Betrieb betrieb){
+			ausbilderDLM.removeAllElements();
+			for(int i = 0; i < ausbilderList.size(); i++){
+				if(ausbilderList.get(i).getBetrieb().getFirmenbezeichnung().equals(betrieb.getFirmenbezeichnung())){
+					ausbilderDLM.addElement(ausbilderList.get(i));
+				}
+			}
+		}
 	
 
 }

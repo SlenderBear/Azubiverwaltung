@@ -355,7 +355,7 @@ public class MainWindow {
 		firstFrame.setResizable(false);
 		tools.setConstraintsDefault(c);
 		c.gridwidth = 2;
-		firstpanel.add(tools.createTitlePanel("Datenbank Wдhlen"));
+		firstpanel.add(tools.createTitlePanel("Datenbank Waehlen"));
 		c.gridwidth = 1;
 
 		final JRadioButton rbMYSQL = new JRadioButton("MySQL");

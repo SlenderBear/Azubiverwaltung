@@ -193,7 +193,10 @@ public class BetriebeVerwaltungPanel extends JPanel{
 			}
 		});
 	}
-	
+	/**
+	 * Methode fillBetriebeJList()
+	 * fuellt die JList mit betrieben
+	 */
 	private void fillBetriebeJList(){
 		dlmBetriebsList.removeAllElements();
 		for(int i = 0; i < betriebList.size(); i++){

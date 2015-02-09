@@ -17,6 +17,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import businesslogik.dataprovider.StandardDataProvider;
 import objects.Klasse;
@@ -65,7 +67,7 @@ public class KlassenVerwaltungPanel extends JPanel{
 		addButton = tools.createButton("Erstellen", 150, 25);
 		editButton = tools.createButton("Aendern", 150, 25);
 		eraseButton = tools.createButton("Loeschen", 150, 25);
-		
+		fillKlassenJList();
 		initialize();
 	}
 	
@@ -139,9 +141,9 @@ public class KlassenVerwaltungPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(klassenJList.getSelectedIndex()!= -1){
-					Klasse newKlasse = (Klasse) dlmKlasseList.getElementAt(klassenJList.getSelectedIndex());
-					newKlasse.setBezeichnung(bezField.getText());
-					newKlasse.setLehrer((Lehrer)dcbmLehrer.getSelectedItem());
+					Klasse selectedKlasse = (Klasse) dlmKlasseList.getElementAt(klassenJList.getSelectedIndex());
+					selectedKlasse.setBezeichnung(bezField.getText());
+					selectedKlasse.setLehrer((Lehrer)dcbmLehrer.getSelectedItem());
 					klassenJList.setModel(dlmKlasseList);
 				}
 				
@@ -158,6 +160,26 @@ public class KlassenVerwaltungPanel extends JPanel{
 				
 			}
 		});
+		
+		klassenJList.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(klassenJList.getSelectedIndex()!= -1){
+					Klasse selectedKlasse = (Klasse) dlmKlasseList.getElementAt(klassenJList.getSelectedIndex());
+					bezField.setText(selectedKlasse.getBezeichnung());
+					dcbmLehrer.setSelectedItem(selectedKlasse.getLehrer());
+				}
+				
+			}
+		});
+	}
+	
+	private void fillKlassenJList(){
+		dlmKlasseList.removeAllElements();
+		for(int i = 0; i < klasseList.size(); i++){
+			dlmKlasseList.addElement(klasseList.get(i));
+		}
 	}
 	
 }
