@@ -249,10 +249,9 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 			ArrayList<Zeugnisposition> zpList = sdp.gibPositionenZuZeugnis(zeugnis);
 			for (int i = 0; i < zpList.size(); i++) {
 				if (zpList.get(i).getFach().getID().compareTo(fach.getID()) == 0) {
-					foundNote = zpList.get(i).getNote();
+					return zpList.get(i).getNote();
 				}
 			}
-			
 		}
 		return foundNote;
 		
