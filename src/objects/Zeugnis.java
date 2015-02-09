@@ -1,5 +1,7 @@
 package objects;
 
+import java.util.ArrayList;
+
 /**
  * @author backs.kristin-anna
  * 
@@ -14,7 +16,8 @@ public class Zeugnis implements StandardValueObject{
 	private Azubi azubi;
 	private int jahr;
 	private String zeugnisKonferenz;
-
+	private ArrayList<Zeugnisposition> positionen;
+	
 	public String getID() {
 		return ID;
 	}
@@ -46,6 +49,14 @@ public class Zeugnis implements StandardValueObject{
 
 	public void setZeugnisKonferenz(String zeugnisKonferenz) {
 		this.zeugnisKonferenz = zeugnisKonferenz;
+	}
+
+	public ArrayList<Zeugnisposition> getPositionen() {
+		return positionen;
+	}
+
+	public void setPositionen(ArrayList<Zeugnisposition> positionen) {
+		this.positionen = positionen;
 	}
 
 }
