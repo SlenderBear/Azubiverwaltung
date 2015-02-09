@@ -10,7 +10,8 @@ import objects.Zeugnisposition;
 
 /**
  * @author backs.kristin-anna
- *
+ * Diese Klasse dient dem Handling von  Noten und allem was
+ * damit zu tun hat in Bezug auf das Schreiben der Zeugnisse als PDF-Datei.
  */
 
 public class NotenFuerPdf {
@@ -98,7 +99,7 @@ public class NotenFuerPdf {
 		}
 	}
 	
-	public String[][] gibFachStrings(Short format) {
+	public String[][] gibFachNotenStrings(Short format) {
 		String[][] strings = new String[2][8];
 		if (format == 3) {
 			strings[0][0] = "Deutsch / Kommunikation\u00B2\u207E";

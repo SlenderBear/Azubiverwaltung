@@ -11,7 +11,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  * @author backs.kristin-anna
- *
+ *Diese Klasse dient dem Schreiben der  Fächer- und Notenübersicht in den Zeugnis-PDFs
  */
 
 public class NotenTabelle {

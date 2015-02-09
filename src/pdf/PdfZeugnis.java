@@ -19,7 +19,8 @@ import objects.Zeugnis;
 
 /**
  * @author backs.kristin-anna
- *
+ *Diese Klasse dient dem Erstellen von Zeugnissen als PDF-Datein entweder 
+ *als Zwischenzeugnis im DIN A4  Format oder als Abschlusszeugnis im DIN A3 Format.
  */
 
 public class PdfZeugnis {
@@ -73,14 +74,23 @@ public class PdfZeugnis {
 			}
 		}
 	}
-
+/**
+ * Die Methode doHeader generiert den Titel des PDF Dokuments
+ * @throws Exception
+ */
 	public void doHeader() throws Exception {
 		Paragraph title = new Paragraph();
 		title.add(new Paragraph("Zeugnis der Berufsschule", fTitle));
 
 		document.add(title);
 	}
-
+/**
+ * Die Methode schreibeAzubi generiert den Abschnitt des PDF Dokuments mit den Azubidaten
+ * @param azubi Azubi Objekt
+ * @param konfDatum Datum der Zeugniskonferent
+ * @param format Schriftformat
+ * @throws Exception 
+ */
 	private void schreibeAzubi(Azubi azubi, String konfDatum, Short format)
 			throws Exception {
 		Paragraph azubiDaten = new Paragraph();
@@ -153,7 +163,13 @@ public class PdfZeugnis {
 
 		document.add(azubiDaten);
 	}
-	
+	/**
+	 * Die Methode schreibeKlasseDetail fügt in das PDF Dokument den 
+	 * Teil mit den Azubispezifischen Klassendetails ein
+	 * @param azubi Azubi-Objekt
+	 * @param konfDatum Datum der Zeugniskonferenz
+	 * @return
+	 */
 	private Phrase schreibeKlasseDetail(Azubi azubi, String konfDatum){
 		Phrase klasse = new Phrase();
 		klasse.add(new Chunk("Fachklasse:", fSmall));
@@ -172,7 +188,11 @@ public class PdfZeugnis {
 		
 		return klasse;
 	}
-	
+	/**
+	 * Die Methode schreibeZeitraum ergänzt die Zeiträume verschiedener Attribute eines Azubis 
+	 * @param azubi
+	 * @return
+	 */
 	private Phrase schreibeZeitraum(Azubi azubi){
 		Phrase zeitraum = new Phrase();
 		zeitraum.add(new Chunk("war vom", fSmall));
@@ -195,7 +215,13 @@ public class PdfZeugnis {
 		zeitraum.add(Chunk.NEWLINE);
 		return zeitraum;
 	}
-
+/**
+ * Die Methode schreibeLeistungen Ergänzt die Anmerkungen und sonstige Leistungen in dem PDF Dokument
+ * @param azubi Azubi-Objekt
+ * @param konfDatum Datum der Zeugniskonferenz
+ * @param format Zeichenformat 
+ * @throws Exception
+ */
 	private void schreibeLeistungen(Azubi azubi, String konfDatum, Short format)
 			throws Exception {
 		Paragraph leistung = new Paragraph();
@@ -221,7 +247,7 @@ public class PdfZeugnis {
 		Phrase bereich1 = new Phrase("I. Berufsübergreifender Bereich", fSmaBo);
 		leistung.add(bereich1);
 
-		String[][] faecher = noten.gibFachStrings(format);
+		String[][] faecher = noten.gibFachNotenStrings(format);
 		leistung.add(table.doTabelle(faecher, 0, 4));
 
 		Phrase bereich2 = new Phrase();
@@ -242,7 +268,12 @@ public class PdfZeugnis {
 
 		document.add(leistung);
 	}
-	
+	/**
+	 * Die Methode schreibeZweiteSeite generiert die zweite Seite des PDF Dokuments
+	 * @param azubi Azubi-Objekt
+	 * @param zeugnis Zeugnis-Objekt
+	 * @throws Exception
+	 */
 	private void schreibeZweiteSeite(Azubi azubi, Zeugnis zeugnis)
 			throws Exception {
 		document.add(Chunk.NEXTPAGE);
@@ -310,7 +341,12 @@ public class PdfZeugnis {
 		document.add(schreibeFooter((short)3));
 
 	}
-
+/**
+ * Die Methode schreibeFooter erstellt eine Fußzeile und gibt diese zurück
+ * @param format zeichenformat
+ * @return gibt die Fußzeile zurück
+ * @throws Exception
+ */
 	private Paragraph schreibeFooter(Short format) throws Exception {
 		Paragraph footer = new Paragraph();
 
@@ -333,7 +369,12 @@ public class PdfZeugnis {
 
 		return footer;
 	}
-
+	//TODO kommentzare
+/**
+ * 
+ * @param value
+ * @return
+ */
 	private Phrase footerElement(String value) {
 		Phrase elem = new Phrase("4)", fTiny);
 		elem.add(Chunk.TABBING);

@@ -15,7 +15,11 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-
+/**
+ * 
+ * @author mertmann.justin
+ * Diese Klasse dient dem  Erstellen einer Zeugnisnotenliste als PDF-Datei
+ */
 public class Zeugnisnotenliste {
 
 	private Font fNorm = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL);
@@ -24,7 +28,11 @@ public class Zeugnisnotenliste {
 
 	private Document document = null;
 	private PdfPTable table = null;
-
+/**
+ * 
+ * @param die Variable filepath gibt an, wo das PDF Dokument gespeichert werden soll
+ * @param das Objekt azubi bestimmt von welchem Azubi das PDF erstellt werden soll
+ */
 	public void doTabelle(String filepath, Azubi azubi) {
 		try {
 			document = new Document();
@@ -47,7 +55,11 @@ public class Zeugnisnotenliste {
 		}
 
 	}
-
+/**
+ * 
+ * @param azubi
+ * @return Die Methode PdfPTable generiert eine PDFTable und gibt diese zurück
+ */
 	private PdfPTable createTabelle(Azubi azubi) {
 		table = new PdfPTable(24);
 		table.setWidthPercentage(100);
@@ -59,7 +71,10 @@ public class Zeugnisnotenliste {
 		
 		return table;
 	}
-
+/**
+ * Die Methode createHeader erstellt einen PDF Header
+ * @param azubi
+ */
 	private void createHeader(Azubi azubi) {
 		Paragraph datum = new Paragraph();
 		datum.add(new Chunk("Datum Zeugniskonferenz:", fNorm));
@@ -98,7 +113,9 @@ public class Zeugnisnotenliste {
 		createCell(new Paragraph(""), 1, false, 30, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE);
 		
 	}
-	
+	/**
+	 * Die Methode createFaecher erstellt die Felder für die Fächer aller Azubis
+	 */
 	private void createFaecher(){
 	    createCell(new Paragraph("Nr.", fNorm), 1, false, 100, Element.ALIGN_CENTER, Element.ALIGN_BOTTOM);
 	    createCell(new Paragraph("Name", fNorm), 6, false, 100, Element.ALIGN_CENTER, Element.ALIGN_BOTTOM);
@@ -118,7 +135,9 @@ public class Zeugnisnotenliste {
 	    createCell(new Paragraph("Anforderungen erfüllt(e) Anford. nicht erfüllt(ne)", fSmall), 1, true, 100, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE);
             createCell(new Paragraph("Durchschnittsnote Abschlusszeugnis", fSmall), 1, true, 100, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE);
 	}
-	
+	/**
+	 * Die Methode createListe erstellt eine Liste 
+	 */
 	private void createListe(){
 	    for(int i = 0; i < 30; i++){
 	        createCell(new Paragraph(String.valueOf(i+1), fSmall), 1, false, 15, Element.ALIGN_CENTER, Element.ALIGN_CENTER);
@@ -131,7 +150,15 @@ public class Zeugnisnotenliste {
 	    }
 	}
 
-
+/**
+ * 
+ * @param value Zellenbreite
+ * @param colspan Spaltenbreite
+ * @param gekippt Horizontale/Vertikale schreibweise
+ * @param height Zellhöhe
+ * @param horiAlignment horizontale Ausrichtung
+ * @param vertiAlignment vertikale Ausrichtung
+ */
 	private void createCell(Paragraph value, int colspan,
 			Boolean gekippt, float height, int horiAlignment, int vertiAlignment) {
 		PdfPCell cell = new PdfPCell(value);
