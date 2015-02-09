@@ -18,7 +18,7 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	private static final String DAO_NAME= Login.class.getName();
 	
 	private MySqlBerechtigungDAO dao = new MySqlBerechtigungDAO();
-	private final int verschlüsselungsverschiebung = 26;
+	private final int verschluesselungsverschiebung = 26;
 	
 	@Override
 	public String getClassName() {
@@ -98,10 +98,10 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 		return l;
 	}
 	private String verschluesseln(String passwort){
-	    return encode(passwort, verschlüsselungsverschiebung);
+	    return encode(passwort, verschluesselungsverschiebung);
 	}
 	private String entschluesseln(String passwort){
-		    return encode(passwort, 26-verschlüsselungsverschiebung);
+		    return encode(passwort, 26-verschluesselungsverschiebung);
 		}
 
 	@Override
