@@ -300,7 +300,7 @@ public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 		        azubiListe.add(a);
 		      }
 			}catch(Exception e){
-				System.out.println("Fehler in MySQLAzubiDAO");
+				System.out.println("Fehler in SQLiteAzubiDAO");
 			}
 		return azubiListe;
 	}
