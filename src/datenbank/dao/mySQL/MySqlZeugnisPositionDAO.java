@@ -38,7 +38,7 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 
 	@Override
 	public boolean update(Zeugnisposition t) {
-		String sql = "UPDATE zeugnisposition" + "SET "
+		String sql = "UPDATE zeugnisposition" + " SET "
 				+ "',noteid='" + t.getNote().getNoteID()
 				+ "',fachid='" + t.getFach().getID()
 				+ "' WHERE zeugnispositionid='" + t.getID() + "';";

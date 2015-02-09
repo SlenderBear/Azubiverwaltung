@@ -43,7 +43,7 @@ public class MySqlZeugnisDAO implements StandardDAO<Zeugnis>{
 	@Override
 	public boolean update(Zeugnis t) {
 		String sql = "UPDATE zeugnis"+
-				"SET "
+				" SET "
 				+ "jahr="+t.getJahr()
 				+",zeugniskonferenz='"+t.getZeugnisKonferenz()
 				+"',azubiid='"+t.getAzubi().getID()+

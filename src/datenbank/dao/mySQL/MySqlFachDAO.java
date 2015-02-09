@@ -36,7 +36,7 @@ public class MySqlFachDAO implements StandardDAO<Fach>{
 	@Override
 	public boolean update(Fach t) {
 		String sql = "UPDATE fach"+
-				"SET bezeichnung='"+t.getBezeichnung()+
+				" SET bezeichnung='"+t.getBezeichnung()+
 				"' WHERE fachid='"+t.getID()+"';";
 		return MySQLConnector.getInstance().statementExecute(sql);
 	}

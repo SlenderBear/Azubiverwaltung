@@ -40,7 +40,7 @@ public class MySqlKlasseDAO implements StandardDAO<Klasse>{
 	@Override
 	public boolean update(Klasse t) {
 		String sql = "UPDATE klasse"+
-				"SET "
+				" SET "
 				+ "bezeichnung='"+t.getBezeichnung()
 				+"',jahr="+t.getJahr()
 				+",lehrerid='"+t.getLehrer().getID()

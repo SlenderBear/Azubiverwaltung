@@ -64,16 +64,16 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 	@Override
 	public boolean update(Azubi t) {
 		String sql = "UPDATE azubi"+
-				"SET "
+				" SET "
 				+ "name='"+t.getName()
 				+"',vorname='"+t.getVorname()
 				+"',telefonnummer='"+t.getTelefon()
 				+"',mobiltelefon='"+t.getMobiltelefon()
 				+"',email='"+t.getEmail()
-				+"',strasse='"+t.getEmail()
-				+"',plz='"+t.getEmail()
-				+"',ort='"+t.getEmail()
-				+"',geburtsdatum='"+t.getEmail()
+				+"',strasse='"+t.getStrasse()
+				+"',plz='"+t.getPlz()
+				+"',ort='"+t.getOrt()
+				+"',geburtsdatum='"+t.getGeburtsdatum()
 				+"',volljaehrigkeit='"+t.getVolljaehrigkeit()
 				+"',inklusionsberatung='"+t.getInklusionsberatung()
 				+"',geburtsort='"+t.getGeburtsort()
@@ -213,10 +213,10 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 				+"',telefonnummer='"+t.getTelefon()
 				+"',mobiltelefon='"+t.getMobiltelefon()
 				+"',email='"+t.getEmail()
-				+"',strasse='"+t.getEmail()
-				+"',plz='"+t.getEmail()
-				+"',ort='"+t.getEmail()
-				+"',geburtsdatum='"+t.getEmail()
+				+"',strasse='"+t.getStrasse()
+				+"',plz='"+t.getPlz()
+				+"',ort='"+t.getOrt()
+				+"',geburtsdatum='"+t.getGeburtsdatum()
 				+"',volljaehrigkeit='"+t.getVolljaehrigkeit()
 				+"',inklusionsberatung='"+t.getInklusionsberatung()
 				+"',geburtsort='"+t.getGeburtsort()
