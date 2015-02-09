@@ -16,6 +16,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import businesslogik.dataprovider.StandardDataProvider;
 
@@ -67,6 +69,7 @@ public class BetriebeVerwaltungPanel extends JPanel{
 		addButton = tools.createButton("Erstellen", 150, 25);
 		editButton = tools.createButton("Aendern", 150, 25);
 		eraseButton = tools.createButton("Loeschen", 150, 25);
+		fillBetriebeJList();
 		initialize();
 	}
 	
@@ -171,5 +174,30 @@ public class BetriebeVerwaltungPanel extends JPanel{
 				
 			}
 		});
+		
+		betriebJList.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(betriebJList.getSelectedIndex() != -1){
+					Betrieb selectedBetrieb = (Betrieb) dlmBetriebsList.getElementAt(betriebJList.getSelectedIndex());
+					bezField.setText(selectedBetrieb.getFirmenbezeichnung());
+					plzField.setText(selectedBetrieb.getPlz());
+					ortField.setText(selectedBetrieb.getOrt());
+					adresseField.setText(selectedBetrieb.getStrasse());
+					eMailField.setText(selectedBetrieb.geteMail());
+					teleField.setText(selectedBetrieb.getTelefon());
+					faxField.setText(selectedBetrieb.getFax());
+				}
+				
+			}
+		});
+	}
+	
+	private void fillBetriebeJList(){
+		dlmBetriebsList.removeAllElements();
+		for(int i = 0; i < betriebList.size(); i++){
+			dlmBetriebsList.addElement(betriebList.get(i));
+		}
 	}
 }
