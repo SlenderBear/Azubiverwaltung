@@ -123,6 +123,9 @@ public class SqliteLoginDatenDAO implements StandardDAO<Login> {
 				+ l.getLoginName() + "' AND passwort='"+l.getLoginPasswort()+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		try {
+			if(rs.isClosed()) {
+				return false;
+			}
 			return rs.first();
 		} catch (SQLException e) {
 			e.printStackTrace();
