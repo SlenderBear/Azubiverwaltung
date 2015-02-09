@@ -130,6 +130,22 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 		return false;
 	}
 	
+	public Login getLoginByLoginDaten(Login l){
+		String sql = "select * from login_daten where " + "benutzername='"
+				+ l.getLoginName() + "' AND passwort='"+l.getLoginPasswort()+"';";
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
+		try {
+			rs.next();
+	        l.setID(rs.getString("loginid"));
+	        l.setLoginName(rs.getString("benutzername"));
+	        l.setLoginPasswort(entschluesseln(rs.getString("passwort")));
+	        l.setBerechtigung(dao.getByGuid(rs.getString("berechtigungid"))); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return l;
+	}
+	
 	/**
 	 * 
 	 * @param Übergabe einer Zeichenkette die Verschlüsselt werden soll
