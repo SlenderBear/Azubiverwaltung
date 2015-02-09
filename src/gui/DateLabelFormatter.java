@@ -4,14 +4,21 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.swing.JFormattedTextField.AbstractFormatter;
-
+/**
+ * Klasse DateLabelFormatter
+ * erweitert AbstractFormatter
+ * definiert den Pattern für
+ * den Date Strings für den JDatePicker
+ * @author Maksim Imaev
+ *
+ */
 public class DateLabelFormatter extends AbstractFormatter {
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String datePattern = "dd-MM-yyyy";
+	private String datePattern = "dd.MM.yyyy";
     private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 
     @Override

@@ -35,7 +35,13 @@ import businesslogik.dataprovider.StandardDataProvider;
 
 import com.itextpdf.text.pdf.internal.ZugferdChecker;
 import com.toedter.calendar.JYearChooser;
-
+/**
+ * 
+ * @author Maksim Imaev
+ * Klasse ZeugnisVerwaltungPanel erweitert JPanel
+ * erstellt ein JPanel zur Verwaltung von Zeugnissen
+ *
+ */
 public class ZeugnisVerwaltungPanel extends JPanel {
 
 	/**
@@ -81,7 +87,7 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 
 		dpZeug = tools.createNewDatePicker();
 
-		btZeugDruck = tools.createButton("Schüler", 150, 25);
+		btZeugDruck = tools.createButton("Schï¿½ler", 150, 25);
 		btZeugKlasseDruck = tools.createButton("Gesamte Klasse", 150, 25);
 		initialize();
 	}
@@ -107,7 +113,10 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 
 	private JButton btZeugDruck;
 	private JButton btZeugKlasseDruck;
-
+	/**
+	 * Methode initialize
+	 * erstellt den JPanel
+	 */
 	private void initialize() {
 		this.setLayout(new BorderLayout());
 
@@ -138,7 +147,7 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 		innerZeugnisPanel.add(
 				tools.createTiteledPanel("Zeugniskonferenz am:", dpZeug), c);
 
-		JLabel label = new JLabel("Zeugnis drucken für:");
+		JLabel label = new JLabel("Zeugnis drucken fï¿½r:");
 
 		c.gridy++;
 		innerZeugnisPanel.add(label, c);

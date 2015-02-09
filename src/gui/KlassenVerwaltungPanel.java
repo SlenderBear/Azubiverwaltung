@@ -21,7 +21,13 @@ import javax.swing.JTextField;
 import businesslogik.dataprovider.StandardDataProvider;
 import objects.Klasse;
 import objects.Lehrer;
-
+/**
+ * 
+ * @author Maksim Imaev
+ * Klasse KlassenVerwaltungPanel erweitert JPanel
+ * erstellt ein JPanel zur Verwaltung von Klassen
+ *
+ */
 public class KlassenVerwaltungPanel extends JPanel{
 
 	/**
@@ -57,8 +63,8 @@ public class KlassenVerwaltungPanel extends JPanel{
 		cmbLehrer.setPreferredSize(new Dimension(200, 25));
 
 		addButton = tools.createButton("Erstellen", 150, 25);
-		editButton = tools.createButton("Ändern", 150, 25);
-		eraseButton = tools.createButton("Löschen", 150, 25);
+		editButton = tools.createButton("ï¿½ndern", 150, 25);
+		eraseButton = tools.createButton("Lï¿½schen", 150, 25);
 		
 		initialize();
 	}
@@ -75,7 +81,10 @@ public class KlassenVerwaltungPanel extends JPanel{
 	private JComboBox cmbLehrer;
 
 	private JButton addButton,editButton,eraseButton;
-	
+	/**
+	 * Methode initialize
+	 * erstellt den JPanel
+	 */
 	private void initialize(){
 		this.setLayout(new BorderLayout());
 		

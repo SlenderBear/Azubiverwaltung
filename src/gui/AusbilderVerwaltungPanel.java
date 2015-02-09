@@ -27,6 +27,14 @@ import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
 import objects.Ausbilder;
 import objects.Betrieb;
 
+/**
+ * 
+ * @author Maksim Imaev
+ * AusbilderVerwaltungPanel
+ * erweiter JPanel
+ * erstellt den JPanel zur Verwaltung
+ * von Ausbildern
+ */
 public class AusbilderVerwaltungPanel extends JPanel{
 
 	/**
@@ -66,8 +74,8 @@ public class AusbilderVerwaltungPanel extends JPanel{
 
 
 		addButton = tools.createButton("Erstellen", 150, 25);
-		editButton = tools.createButton("Ändern", 150, 25);
-		eraseButton = tools.createButton("Löschen", 150, 25);
+		editButton = tools.createButton("ï¿½ndern", 150, 25);
+		eraseButton = tools.createButton("Lï¿½schen", 150, 25);
 		
 		if(zugangsStufe < 2)addButton.setEnabled(false);
 		if(zugangsStufe < 2)eraseButton.setEnabled(false);
@@ -97,6 +105,10 @@ public class AusbilderVerwaltungPanel extends JPanel{
 	private JButton editButton;
 	private JButton eraseButton;
 	
+	/**
+	 * Methode initialize
+	 * erstellt den JPanel
+	 */
 	private void initialize(){
 		this.setLayout(new BorderLayout());
 		GridBagConstraints c = new GridBagConstraints();

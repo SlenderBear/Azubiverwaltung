@@ -26,7 +26,13 @@ import businesslogik.dataprovider.StandardDataProvider;
 import objects.Berechtigung;
 import objects.Lehrer;
 import objects.Login;
-
+/**
+ * 
+ * @author Maksim Imaev
+ * Klasse RegisterVerwaltungPanel erweitert JPanel
+ * erstellt ein JPanel zur Verwaltung von User-Daten
+ *
+ */
 public class RegisterVerwaltungPanel extends JPanel{
 	
 
@@ -67,8 +73,8 @@ public class RegisterVerwaltungPanel extends JPanel{
 
 
 		addButton = tools.createButton("Erstellen", 150, 25);
-		editButton = tools.createButton("Ändern", 150, 25);
-		eraseButton = tools.createButton("Löschen", 150, 25);
+		editButton = tools.createButton("ï¿½ndern", 150, 25);
+		eraseButton = tools.createButton("Lï¿½schen", 150, 25);
 		initialize();
 	}
 	
@@ -85,7 +91,10 @@ public class RegisterVerwaltungPanel extends JPanel{
 	private JRadioButton rbLehrer,rbLeitung;
 
 	private JButton addButton,editButton,eraseButton;
-	
+	/**
+	 * Methode initialize
+	 * erstellt den JPanel
+	 */
 	private void initialize(){
 		 this.setLayout(new BorderLayout());
 			
@@ -177,7 +186,7 @@ public class RegisterVerwaltungPanel extends JPanel{
 								passField);
 					} else {
 						JOptionPane.showMessageDialog(addButton.getParent(),
-								"Felder falsch gefüllt", "Fehler",
+								"Felder falsch gefï¿½llt", "Fehler",
 								JOptionPane.ERROR_MESSAGE);
 					}
 

@@ -40,7 +40,13 @@ import com.toedter.calendar.JYearChooser;
 import objects.Ausbilder;
 import objects.Azubi;
 import objects.Klasse;
-
+/**
+ * Klasse AzubiVerwaltungPanel
+ * erweiter JPanel
+ * Erstellt den JPanel zur Verwaltung von Azubi-Daten
+ * @author Maksim Imaev
+ *
+ */
 public class AzubiVerwaltungPanel extends JPanel {
 
 	/**
@@ -49,13 +55,13 @@ public class AzubiVerwaltungPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private String[] fRichtungen = { "Anwendungsentwickler", "Systemintegrator" };
 	private String[] lSFormStrings = { "Hauptschule", "Realschule",
-			"Gymnasium", "Gesamtschule", "Berufskoleg", "Förderschule",
+			"Gymnasium", "Gesamtschule", "Berufskoleg", "Fï¿½rderschule",
 			"sonstige" };
 	private String[] lAbsStrings = { "HS9", "H10A", "FOR", "FOR Q", "FHR",
 			"AHR", "sonstiger" };
-	private String[] konfessStrings = { "römisch katholisch",
+	private String[] konfessStrings = { "rï¿½misch katholisch",
 			"evangelisch-reformierte", "griechisch-orthodox", "islamisch",
-			"alevitisch", "jüdisch", "jüdisch", "ohne", "sonstige" };
+			"alevitisch", "jï¿½disch", "jï¿½disch", "ohne", "sonstige" };
 	private GUITools tools;
 	private ArrayList<Klasse> klasseList;
 	private ArrayList<Ausbilder> ausbilderList;
@@ -113,7 +119,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 		dpAusEnde = tools.createNewDatePicker();
 		rbAdult = new JRadioButton("Ja");
 		rbTeen = new JRadioButton("Nein");
-		rbMann = new JRadioButton("Männlich");
+		rbMann = new JRadioButton("Mï¿½nnlich");
 		rbFrau = new JRadioButton("Weiblich");
 		rbBraucht = new JRadioButton("Ja");
 		rbNBraucht = new JRadioButton("Nein");
@@ -166,15 +172,17 @@ public class AzubiVerwaltungPanel extends JPanel {
 	
 	private Azubi selectedAzubi;
 
+	/**
+	 * Methode initialize
+	 * erstellt den JPanel
+	 */
 	private void initialize() {
 		this.setLayout(new BorderLayout());
 		
-
 		GridBagConstraints c = new GridBagConstraints();
 		
 		setDefaultLand();
 
-		// ///////////////////////////////////////////////////////////
 		sonstReliField.setEnabled(false);
 		sonstAbschlusField.setEnabled(false);
 		sonstSchulformField.setEnabled(false);
@@ -218,11 +226,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 		
 		zuzugPanel.add(cbZuzug);
 		zuzugPanel.add(zuzugYC);
-
 		//
-
-		//
-
 		cmbAusbilder.setPreferredSize(new Dimension(200, 20));
 		//
 		cmbFachrichtung.setPreferredSize(new Dimension(200, 20));
@@ -238,11 +242,10 @@ public class AzubiVerwaltungPanel extends JPanel {
 		azubiScrollPane.setPreferredSize(new Dimension(200, 250));
 		//
 		JButton addButton = tools.createButton("Erstellen", 150, 25);
-		JButton editButton = tools.createButton("Ändern", 150, 25);
-		JButton eraseButton = tools.createButton("Löschen", 150, 25);
+		JButton editButton = tools.createButton("ï¿½ndern", 150, 25);
+		JButton eraseButton = tools.createButton("Lï¿½schen", 150, 25);
 		if(zugangsStufe < 2)addButton.setEnabled(false);
 		if(zugangsStufe < 2)eraseButton.setEnabled(false);
-		// //////////////////////////
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
@@ -251,7 +254,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 		if(zugangsStufe < 2)eraseButton.setEnabled(false);
 
 		innerAzubiPanel.addTab("Stammdaten", innerAzubiPanelStamm);
-		innerAzubiPanel.addTab("Ergänzung", innerAzubiPanelZusatz);
+		innerAzubiPanel.addTab("Ergï¿½nzung", innerAzubiPanelZusatz);
 		this.add(tools.createTitlePanel("Ausbilderverwaltung"),
 				BorderLayout.NORTH);
 		this.add(innerAzubiPanel, BorderLayout.CENTER);
@@ -262,14 +265,12 @@ public class AzubiVerwaltungPanel extends JPanel {
 		c.gridy = 0;
 		innerAzubiPanelStamm.add(
 				tools.createTiteledPanel("Fachrichtung", cmbFachrichtung), c);
-		// innerAzubiPanel.add(createTiteledPanel("Klassenwahl", cmbKlasse), c);
 		tools.addComponentNextLine(innerAzubiPanelStamm,
 				tools.createTiteledPanel("Klassenwahl", cmbKlasse), c);
 		c.gridheight = 5;
 		tools.addComponentNextLine(innerAzubiPanelStamm,
 				tools.createTiteledPanel("Azubis", azubiScrollPane), c);
 		// ////************/////////
-		// ////***StammDatenfüllen**/////////
 		// ////************/////////
 		c.gridy = 0;
 		c.gridx = 1;
@@ -281,9 +282,9 @@ public class AzubiVerwaltungPanel extends JPanel {
 		tools.addComponentNextLine(innerAzubiPanelStamm,
 				tools.createTiteledPanel("Geburtsdatum", dpGebTag), c);
 		tools.addComponentNextLine(innerAzubiPanelStamm,
-				tools.createTiteledPanel("Straße / HausNr", strField), c);
+				tools.createTiteledPanel("Straï¿½e / HausNr", strField), c);
 		tools.addComponentNextLine(innerAzubiPanelStamm,
-				tools.createTiteledPanel("Volljährig", rbVolljahrPanel), c);
+				tools.createTiteledPanel("Volljï¿½hrig", rbVolljahrPanel), c);
 
 		// ////************/////////
 		c.gridy = 0;
@@ -312,20 +313,14 @@ public class AzubiVerwaltungPanel extends JPanel {
 				tools.createTiteledPanel("AusbildungsJahr", ausbYC), c);
 		tools.addComponentNextLine(innerAzubiPanelStamm, tools
 				.createTiteledPanel("Inklusionsberatung", rbInklusionPanel), c);
-
 		// ////************/////////
-		// c.gridy = 0;
-		// c.gridx = 4;
-
-		// ////************/////////
-		// ////****ZusatzDatenFüllen*****/////////
 		tools.setConstraintsDefault(c);
 		c.gridx = 0;
 		c.gridy = -1;
 		tools.addComponentNextLine(innerAzubiPanelZusatz, tools
-				.createTiteledPanel("1.Staatsangehörigkeit", staatAng1Field), c);
+				.createTiteledPanel("1.Staatsangehï¿½rigkeit", staatAng1Field), c);
 		tools.addComponentNextLine(innerAzubiPanelZusatz, tools
-				.createTiteledPanel("2.Staatsangehörigkeit", staatAng2Field), c);
+				.createTiteledPanel("2.Staatsangehï¿½rigkeit", staatAng2Field), c);
 		tools.addComponentNextLine(innerAzubiPanelZusatz, tools
 				.createTiteledPanel("Geburtsland Vater", gebLandVaterField), c);
 		tools.addComponentNextLine(innerAzubiPanelZusatz, tools
@@ -363,7 +358,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 				tools.createTiteledPanel("Schulabschluss", cmbletzterAbschluss),
 				c);
 		tools.addComponentNextLine(innerAzubiPanelZusatz, tools
-				.createTiteledPanel("sonstiger Schulabschluß",
+				.createTiteledPanel("sonstiger Schulabschluï¿½",
 						sonstAbschlusField), c);
 		c.gridy++;
 		tools.addComponentNextLine(innerAzubiPanelZusatz,
@@ -372,11 +367,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 				tools.createTiteledPanel("Ausbilder", cmbAusbilder), c);
 		tools.addComponentNextLine(innerAzubiPanelZusatz,
 				tools.createTiteledPanel("FehlTage", fehlTageField), c);
-
 		// ////************/////////
-		// ////************/////////
-		//
-
 		cmbKonfession.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (cmbKonfession.getSelectedIndex() == konfessStrings.length - 1) {
@@ -514,7 +505,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 				if(azubiJList.getSelectedIndex() != -1){
 					selectedAzubi = (Azubi) azubiListModel.getElementAt(azubiJList.getSelectedIndex());
 					if(selectedAzubi != null){
-						setFieldsofAzubi();
+						setFieldsOfAzubi();
 					}
 					
 				}
@@ -533,7 +524,11 @@ public class AzubiVerwaltungPanel extends JPanel {
 		});
 	}
 	
-	private void setFieldsofAzubi() {
+	/**
+	 * Methode setFieldsOfAzubi()
+	 * fuellt die Felder mit den daten von dem Ausgewaehltem Azubi
+	 */
+	private void setFieldsOfAzubi() {
 		vorField.setText(selectedAzubi.getVorname());
 		nachField.setText(selectedAzubi.getName());
 		gebNameField.setText(selectedAzubi.getGeburtsname());
@@ -601,7 +596,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 			zuzugYC.setYear(selectedAzubi.getZuzugsjahr());
 		}
 		
-		if(checkStringInArray(selectedAzubi.getKonfession(), konfessStrings)){
+		if(tools.checkStringInArray(selectedAzubi.getKonfession(), konfessStrings)){
 			cmbKonfession.setSelectedItem(selectedAzubi.getKonfession());
 		}
 		else{
@@ -609,7 +604,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 			sonstReliField.setText(selectedAzubi.getKonfession());
 		}
 		
-		if(checkStringInArray(selectedAzubi.getLetzte_Schulform(), lSFormStrings)){
+		if(tools.checkStringInArray(selectedAzubi.getLetzte_Schulform(), lSFormStrings)){
 			cmbletzteSchule.setSelectedItem(selectedAzubi.getLetzte_Schulform());
 		}
 		else{
@@ -617,7 +612,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 			sonstSchulformField.setText(selectedAzubi.getLetzte_Schulform());
 		}
 		
-		if(checkStringInArray(selectedAzubi.getSchulabschluss(), lAbsStrings)){
+		if(tools.checkStringInArray(selectedAzubi.getSchulabschluss(), lAbsStrings)){
 			cmbletzterAbschluss.setSelectedItem(selectedAzubi.getSchulabschluss());
 		}
 		else{
@@ -630,7 +625,13 @@ public class AzubiVerwaltungPanel extends JPanel {
 		cmbAusbilder.setSelectedItem(selectedAzubi.getAusbilder());
 		
 	}
-
+	
+	/**
+	 * Methode changeAzubi
+	 * andert den uebergebenen Azubi
+	 * entsprechend der Feldbelegung
+	 * @param selectedAzubi
+	 */
 	private void changeAzubi(Azubi selectedAzubi) {
 		selectedAzubi.setVorname(vorField.getText());
 		selectedAzubi.setName(nachField.getText());
@@ -725,21 +726,21 @@ public class AzubiVerwaltungPanel extends JPanel {
 
 	}
 	
+	/**
+	 * Methode setDefaultLand()
+	 * setzt JTextFields auf "default"
+	 */
 	private void setDefaultLand(){
 		gebLandField.setText("Deutschland");
 		staatAng1Field.setText("deutsch");
 	}
 	
-	private boolean checkStringInArray(String checkString, String[]stringArray){
-		boolean found = false;
-		for(int i = 0; i< stringArray.length-1; i++){
-			if(checkString.equals(stringArray[i])){
-				found = true;
-			}
-		}
-		return found;
-	}
 	
+	/**
+	 * Methode fillAzubi
+	 * fuellt das DefaultListModel mit den Azubis aus der Klasse
+	 * @param klasse
+	 */
 	private void fillAzubi(Klasse klasse){
 		azubiJList.setSelectedIndex(-1);
 		azubiListModel.removeAllElements();

@@ -23,6 +23,13 @@ import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
 
 import objects.Betrieb;
 
+/**
+ * 
+ * @author Maksim Imaev
+ * Klasse BetriebeVerwaltungPanel erweiter JPanel
+ * erstellt den JPanel zur Verwaltung von Betrieben
+ *
+ */
 public class BetriebeVerwaltungPanel extends JPanel{
 
 	/**
@@ -58,14 +65,13 @@ public class BetriebeVerwaltungPanel extends JPanel{
 		betriebsScrollPane.setPreferredSize(new Dimension(200, 300));
 
 		addButton = tools.createButton("Erstellen", 150, 25);
-		editButton = tools.createButton("Ändern", 150, 25);
-		eraseButton = tools.createButton("Löschen", 150, 25);
+		editButton = tools.createButton("ï¿½ndern", 150, 25);
+		eraseButton = tools.createButton("Lï¿½schen", 150, 25);
 		initialize();
 	}
 	
 	private JPanel innerBetriebsPanel,ortPanel,buttonPanel;
 	
-	// /////////////////////////////////////////////////////////////
 	private JTextField bezField,plzField,ortField,adresseField,teleField,eMailField,faxField;
 
 	private DefaultListModel dlmBetriebsList;
@@ -73,7 +79,10 @@ public class BetriebeVerwaltungPanel extends JPanel{
 	private JScrollPane betriebsScrollPane;
 
 	private JButton addButton,editButton,eraseButton;
-	
+	/**
+	 * Methode initialize
+	 * erstellt den JPanel
+	 */
 	private void initialize(){
 		this.setLayout(new BorderLayout());
 		
@@ -84,7 +93,6 @@ public class BetriebeVerwaltungPanel extends JPanel{
 		ortPanel.add(plzField);
 		ortPanel.add(new JLabel(" / "));
 		ortPanel.add(ortField);
-		// //////////////////////////////////////////////////////////////
 		c.gridy = 0;
 		c.gridx = 0;
 		c.gridwidth = 1;
