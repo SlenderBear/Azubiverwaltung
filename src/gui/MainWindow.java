@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,13 +19,15 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+
 import objects.Ausbilder;
 import objects.Azubi;
 import objects.Betrieb;
+import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
 import objects.Login;
-
+import objects.Zeugnis;
 import businesslogik.dataprovider.StandardDataProvider;
 
 /**
@@ -50,6 +53,8 @@ public class MainWindow {
 	private ArrayList<Ausbilder> ausbilderList;
 	private ArrayList<Azubi> azubiList;
 	private ArrayList<Lehrer> lehrerList;
+	private ArrayList<Fach> fachList;
+	private ArrayList<Zeugnis> zeugnisList;
 	private StandardDataProvider sdp;
 
 	/**
@@ -133,7 +138,7 @@ public class MainWindow {
 	 */
 	private void createZeugnisVerwaltung() {
 		zeugnisPanel = new ZeugnisVerwaltungPanel(zugangsStufe, sdp,
-				klasseList, tools);
+				klasseList,fachList,zeugnisList, tools);
 	}
 
 	/**
@@ -338,6 +343,8 @@ public class MainWindow {
 		ausbilderList = sdp.gibAlleAusbilder();
 		azubiList = new ArrayList<Azubi>();
 		lehrerList = sdp.gibAlleLehrer();
+		fachList = sdp.gibAlleFaecher();
+		zeugnisList = sdp.gibAlleZeugnisse();
 	}
 	
 

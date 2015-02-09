@@ -20,6 +20,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import objects.Azubi;
@@ -58,11 +62,13 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 	private StandardDataProvider sdp;
 	private int zugangsStufe;
 
-	public ZeugnisVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Klasse> klasseList, GUITools tools) {
+	public ZeugnisVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Klasse> klasseList, ArrayList<Fach> fachList, ArrayList<Zeugnis> zeugnisList, GUITools tools) {
 		this.zugangsStufe = zugangsStufe;
 		this.sdp = sdp;
 		this.klasseList = klasseList;
 		this.tools = tools;
+		this.fachList = fachList;
+		this.zeugnisList = zeugnisList;
 		innerZeugnisPanel = new JPanel(new GridBagLayout());
 		druckPanel = new JPanel(new GridLayout(0, 1, 0, 25));
 
@@ -75,7 +81,7 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 		dlmFach = new DefaultListModel();
 		faecherList = new JList(dlmFach);
 		azubiScrollPane = new JScrollPane(faecherList);
-		azubiScrollPane.setPreferredSize(new Dimension(200, 150));
+		azubiScrollPane.setPreferredSize(new Dimension(300, 250));
 
 		dtmNoten = new MyTable(8, 2);
 		dtmNoten.setColumnIdentifiers(tHeads);
@@ -83,12 +89,13 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 		notenTable = new JTable(dtmNoten);
 
 		tableScrollPane = new JScrollPane(notenTable);
-		tableScrollPane.setPreferredSize(new Dimension(250, 148));
+		tableScrollPane.setPreferredSize(new Dimension(300, 150));
 
 		dpZeug = tools.createNewDatePicker();
 
 		btZeugDruck = tools.createButton("Schueler", 150, 25);
 		btZeugKlasseDruck = tools.createButton("Gesamte Klasse", 150, 25);
+		fillFachList();
 		initialize();
 	}
 
@@ -147,7 +154,7 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 		innerZeugnisPanel.add(
 				tools.createTiteledPanel("Zeugniskonferenz am:", dpZeug), c);
 
-		JLabel label = new JLabel("Zeugnis drucken f�r:");
+		JLabel label = new JLabel("Zeugnis drucken fuer:");
 
 		c.gridy++;
 		innerZeugnisPanel.add(label, c);
@@ -184,25 +191,38 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				fillAzubiList((Klasse)dcbmKlasse.getSelectedItem());
 
+			}
+		});
+		
+		faecherList.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(faecherList.getSelectedIndex()!=-1){
+					fillTable((Fach) dlmFach.getElementAt(faecherList.getSelectedIndex()));
+				}
+				
+				
 			}
 		});
 
 	}
 
 	private void fillFachList() {
-
+		dlmFach.removeAllElements();
+		for(int i = 0; i < fachList.size(); i++){
+			dlmFach.addElement(fachList.get(i));
+		}
 	}
 
 	private void fillAzubiList(Klasse klasse) {
-		azubiList = new ArrayList<Azubi>();
+		azubiList = sdp.gibAzubiVon(klasse);
 	}
 
 	private void fillTable(Fach fach) {
-		// ///////////////////////////////////
-
-		// //////////////////////////////////
+		dtmNoten.setRowCount(0);
 		for (int i = 0; i < azubiList.size(); i++) {
 			dtmNoten.addRow(new Object[] {
 					azubiList.get(i),
@@ -224,21 +244,24 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 	}
 
 	private Note getNote(Fach fach, Zeugnis zeugnis) {
-		ArrayList<Zeugnisposition> zpList = zeugnis.getPositionen();
-		for (int i = 0; i < zpList.size(); i++) {
-			if (zpList.get(i).getFach() == fach) {
-				return zpList.get(i).getNote();
+		Note foundNote = null;
+		if(zeugnis != null){
+			ArrayList<Zeugnisposition> zpList = sdp.gibPositionenZuZeugnis(zeugnis);
+			for (int i = 0; i < zpList.size(); i++) {
+				if (zpList.get(i).getFach() == fach) {
+					foundNote = zpList.get(i).getNote();
+				}
 			}
+			
 		}
-		return null;
-	}
-	
-	private void getFachList(){
-		dlmFach.removeAllElements();
-		fachList = new ArrayList<Fach>();
-		for(int i = 0; i < fachList.size(); i++){
-			dlmFach.addElement(fachList.get(i));
-		}
+		return foundNote;
+		
 	}
 
+	private int getPunkte(Note note){
+		if(note != null){
+			return Integer.parseInt(note.getNoteID());
+		}
+		else return 0;
+	}
 }
