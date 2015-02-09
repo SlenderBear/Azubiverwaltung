@@ -369,9 +369,8 @@ public class PdfZeugnis {
 
 		return footer;
 	}
-	//TODO kommentzare
 /**
- * 
+ * Die Methode footerElement erstellt ein Fußzeilen Element und gibt dieses zurück
  * @param value
  * @return
  */
@@ -383,7 +382,11 @@ public class PdfZeugnis {
 
 		return elem;
 	}
-
+/**
+ * Die Methode schreibeZeugnisDatum ergänzt die Signatur am ende des PDF Dokuments
+ * @param zeugDatum Datum des Zeugnisses
+ * @return
+ */
 	private Phrase schreibeZeugnisDatum(String zeugDatum){
 		Phrase datum = new Phrase();
 		datum.add(new Chunk("Düsseldorf, den ", fSmall));
@@ -392,7 +395,13 @@ public class PdfZeugnis {
 		datum.add(Chunk.NEWLINE);
 		return datum;
 	}
-	
+	/**
+	 * Die MEthode schreibeSignaturen ergänzt die Signaturen unter dem PDF Dokument
+	 * @param azubi Azubi-Objekt
+	 * @param zeugDatum Datum des Zeugnisses
+	 * @param format zeichenformat
+	 * @throws Exception 
+	 */
 	private void schreibeSignaturen(Azubi azubi, String zeugDatum, Short format)
 			throws Exception {
 		Paragraph signatur = new Paragraph();
@@ -442,7 +451,11 @@ public class PdfZeugnis {
 		document.add(signatur);
 
 	}
-
+/**
+ * Die Methode getHalbjahr ermittelt anhand der Zeugniskonferenz, ob das Zeugnis ein Halbjahr zeugnis ist oder nicht
+ * @param konfDatum datum der Zeugniskonferenz
+ * @return
+ */
 	private String getHalbjahr(String konfDatum) {
 		String monat = konfDatum.substring(3, 5);
 		if (Integer.parseInt(monat) < 2 || Integer.parseInt(monat) > 9) {

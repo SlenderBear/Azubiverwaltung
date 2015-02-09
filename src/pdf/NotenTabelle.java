@@ -32,7 +32,11 @@ public class NotenTabelle {
 		}
 		return tableB1;
 	}
-	
+	/**
+	 * Die Methode doTabelleDiff unterscheidet zwischen A3 und A4 Dokument
+	 * @param format
+	 * @return
+	 */
 	public PdfPTable doTabelleDiff(Short format){
 		PdfPTable tableB3 = new PdfPTable(3);
 		tableB3.setWidthPercentage(100);
@@ -58,7 +62,14 @@ public class NotenTabelle {
 		}
 		return tableB3;
 	}
-
+/**
+ * Die Methode createCell erstellt eine Zelle der tabelle
+ * @param table Table Objekt
+ * @param value Anzahl der Chunks
+ * @param colspan Spaltenbreite
+ * @param grey graues Feld 
+ * @param height Höhe einer Zelle
+ */
 	private void createCell(PdfPTable table, Chunk value, int colspan, Boolean grey, float height) {
 		PdfPCell cell = new PdfPCell(new Paragraph(value));
 		cell.setBorder(Rectangle.NO_BORDER);
@@ -73,7 +84,11 @@ public class NotenTabelle {
 		cell.setColspan(colspan);
 		table.addCell(cell);
 	}
-
+/**
+ * Die Methode emptyTableLine erstellt eine Leere Tabellenzeile
+ * @param table Table Objekt
+ * @param height Die Höhe der Zeile
+ */
 	private void emptyTableLine(PdfPTable table, float height) {
 		PdfPCell cellNote = new PdfPCell(new Paragraph(""));
 		cellNote.setBorder(Rectangle.NO_BORDER);

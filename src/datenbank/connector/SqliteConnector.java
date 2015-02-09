@@ -129,7 +129,6 @@ public class SqliteConnector implements StandardSqlConnector {
 	    try {
 	      Class.forName("org.sqlite.JDBC");
 	      con.setAutoCommit(false);
-	      System.out.println("Opened database successfully");
 
 	      stmt = con.createStatement();
 	      if(stmt.executeUpdate(sql) > 0) {
