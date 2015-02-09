@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.itextpdf.text.log.SysoCounter;
-
 import objects.Lehrer;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;

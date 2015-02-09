@@ -15,7 +15,6 @@ import datenbank.dao.StandardDAO;
  */
 public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 	private SqliteKlasseDAO daoKlasse= new SqliteKlasseDAO();
-	private SqliteBetriebDAO daoBetrieb = new SqliteBetriebDAO();
 	private SqliteAusbilderDAO daoAusbilder = new SqliteAusbilderDAO();
 	
 	private static final String DAO_NAME= Azubi.class.getName();

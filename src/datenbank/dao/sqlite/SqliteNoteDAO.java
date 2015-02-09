@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Note;
-import objects.Zeugnisposition;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
 /**
