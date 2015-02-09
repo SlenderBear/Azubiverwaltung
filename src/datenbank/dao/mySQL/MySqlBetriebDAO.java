@@ -8,7 +8,7 @@ import objects.Betrieb;
 import datenbank.connector.MySQLConnector;
 import datenbank.dao.StandardDAO;
 /**
- * 
+ *  
  * @author mertmann.justin
  *	Die Klasse MySqlBetriebDAO enthält sämtliche Funktionen zur Datenbankanbindung des Betriebsobjektes
  */

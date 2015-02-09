@@ -2,6 +2,7 @@
 create database AzubiVerwaltung;
 use AzubiVerwaltung;
 
+
 -- Anlegen der Tabelle Betrieb
 create table Betrieb(BetriebID varchar(50),Firmenbezeichnung varchar(50) NOT NULL,Strasse varchar(50),Plz varchar(5),Ort varchar(20),EMail varchar(50),Telefonnummer varchar(20),Faxnummer varchar(20),primary key(BetriebID));
 -- Tabelle Ausbilder erstellen

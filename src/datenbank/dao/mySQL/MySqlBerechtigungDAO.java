@@ -9,7 +9,7 @@ import datenbank.connector.MySQLConnector;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
 /**
- * 
+ * Richtiger Kommentar
  * @author mertmann.justin
   *	Die Klasse MySqlBerechtigungDAO enthält sämtliche Funktionen zur Datenbankanbindung des Berechtigungsobjektes
  */

@@ -8,7 +8,7 @@ import objects.Note;
 import datenbank.connector.MySQLConnector;
 import datenbank.dao.StandardDAO;
 /**
- * 
+ *  
  * @author mertmann.justin
  *	Die Klasse MySqlNoteDAO enthält sämtliche Funktionen zur Datenbankanbindung des Notenobjektes
  *	Die Methoden insert update delete werden nicht benötigt, da Noten feststehen und mit der 

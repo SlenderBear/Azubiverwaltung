@@ -21,6 +21,7 @@ create table Login_Daten(LoginID varchar(50),Benutzername varchar(50),Passwort v
 -- Tabelle Zeugnisposition erstellen
 create table Zeugnisposition(ZeugnispositionID varchar(50),ZeugnisID varchar(50),NoteID varchar(50),FachID varchar(50),primary key(ZeugnispositionID));
 
+
 INSERT INTO NOTE values(1,'Sehr gut');
 INSERT INTO NOTE values(2,'Gut');
 INSERT INTO NOTE values(3,'Befriedigend');

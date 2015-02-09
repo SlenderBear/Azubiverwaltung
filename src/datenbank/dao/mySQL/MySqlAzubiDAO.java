@@ -254,7 +254,7 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 		return DAO_NAME;
 	}
 	/**
-	 * 
+	 *Richtiger Kommentar
 	 * @param Übergabe eines Klassenobjektes
 	 * @return Rückgabe aller Azubis, die sich in dieser Klasse befinden
 	 */

@@ -23,6 +23,7 @@ public class TestJustin {
 		for (Ausbilder ausbilder : ausbilderliste) {
 			System.out.println(ausbilder.getID());
 		}
+		
 		System.out.println("--------------Betriebsliste------------------");
 		ArrayList<Betrieb> abetriebliste =provider.gibAlleBetriebe();
 		for (Betrieb betrieb : abetriebliste) {

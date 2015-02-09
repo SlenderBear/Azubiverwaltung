@@ -9,7 +9,7 @@ import datenbank.connector.MySQLConnector;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
 /**
- * 
+ *  
  * @author mertmann.justin
  *	Die Klasse MySqlLoginDatenDAO enthält sämtliche Funktionen zur Datenbankanbindung des Login_Datenobjektes
  */
