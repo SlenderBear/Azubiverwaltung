@@ -7,6 +7,7 @@ import objects.Azubi;
 import objects.Betrieb;
 import objects.Fach;
 import objects.Klasse;
+import objects.Lehrer;
 import businesslogik.dataprovider.StandardDataProvider;
 
 public class TestJustin {
@@ -29,8 +30,14 @@ public class TestJustin {
 		for (Fach f : fl) {
 			System.out.println(f.getBezeichnung());
 		}
-		System.out.println("--------------Klassenliste------------------");
+		System.out.println("--------------Lehrerliste------------------");
+		ArrayList<Lehrer> ll =provider.gibAlleLehrer();
+		for (Lehrer l : ll) {
+			System.out.println(l.getName());
+		}
 		ArrayList<Klasse> kl =provider.gibAlleKlassen();
+		kl.get(0).setLehrer(ll.get(0));
+		System.out.println("--------------Klassenliste------------------");
 		for (Klasse  k : kl) {
 			System.out.println(k.getBezeichnung());
 		}
