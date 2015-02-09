@@ -4,7 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import objects.Azubi;
 import objects.Zeugnis;
+import datenbank.connector.MySQLConnector;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
 import datenbank.dao.sqlite.SqliteAzubiDAO;
@@ -113,6 +115,22 @@ private static final String DAO_NAME= Zeugnis.class.getName();
 				e.printStackTrace();
 			}
 			return false;
+	}
+
+	public Zeugnis getZeugnisByAzubi(Azubi a, int jahr) {
+		String sql = "select * from zeugnis where azubiid='"+a.getID()+"' and jahr = "+String.valueOf(jahr)+";";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		Zeugnis z = new Zeugnis();
+		try {
+			rs.next();
+			z.setID(rs.getString("zeugnisid"));
+	        z.setJahr(rs.getInt("jahr"));
+	        z.setZeugnisKonferenz(rs.getString("zeugniskonferenz"));
+	        z.setAzubi(dao.getByGuid(rs.getString("azubiid"))); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return z;
 	}
 
 }

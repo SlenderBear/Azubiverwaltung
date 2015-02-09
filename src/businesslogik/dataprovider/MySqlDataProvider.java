@@ -209,4 +209,9 @@ public class MySqlDataProvider extends StandardDataProvider{
 		return loginDatenDAO.getLoginByLoginDaten(login);
 	}
 
+	@Override
+	public Zeugnis gibZeugnisByAzubi(Azubi a, int jahr) {
+		return zeugnisDAO.getZeugnisByAzubi(a, jahr);
+	}
+
 }

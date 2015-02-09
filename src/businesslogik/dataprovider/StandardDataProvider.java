@@ -83,6 +83,13 @@ public abstract class StandardDataProvider {
 	public abstract ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z);
 	
 	/**
+	 * Liefert das Zeugnis zum Azubi.
+	 * @param a {@link Azubi}
+	 * @return {@link Zeugnis}
+	 */
+	public abstract Zeugnis gibZeugnisByAzubi(Azubi a, int jahr);
+	
+	/**
 	 * Führt den Insert des {@link StandardValueObject} durch.
 	 * @param o {@link Object}
 	 * @return

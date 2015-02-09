@@ -136,7 +136,7 @@ public class NotenFuerPdf {
 			if (noten.get(i).getFach().getBezeichnung().startsWith("D")) {
 				strings[1][0] = "- " + noten.get(i).getNote().getBeschreibung()
 						+ " -";
-			} else if (noten.get(i).getFach().getBezeichnung().startsWith("P")) {
+			} else if (noten.get(i).getFach().getBezeichnung().startsWith("G")) {
 				strings[1][1] = "- " + noten.get(i).getNote().getBeschreibung()
 						+ " -";
 			} else if (noten.get(i).getFach().getBezeichnung().startsWith("R")) {

@@ -30,12 +30,14 @@ import objects.Zeugnisposition;
 
 import org.jdatepicker.impl.JDatePickerImpl;
 
+import pdf.PdfZeugnis;
 import businesslogik.dataprovider.StandardDataProvider;
 
 import com.toedter.calendar.JYearChooser;
 /**
  * 
  * @author Maksim Imaev
+ * 
  * Klasse ZeugnisVerwaltungPanel erweitert JPanel
  * erstellt ein JPanel zur Verwaltung von Zeugnissen
  *
@@ -171,8 +173,12 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				Azubi a = getSelectedAzubi();
+				Zeugnis z = sdp.gibZeugnisByAzubi(a, jahrAusbildung.getYear());
+				if(z != null) {
+					@SuppressWarnings("unused")
+					PdfZeugnis zeugnis = new PdfZeugnis(a, "src", z, String.valueOf(jahrAusbildung.getYear()), Short.valueOf("4"));
+				}
 			}
 		});
 
@@ -180,7 +186,7 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -206,6 +212,18 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 			}
 		});
 
+	}
+	
+	/**
+	 * Liefert den selektierten Azubi aus der Notenliste.
+	 * @return {@link Azubi}
+	 */
+	private Azubi getSelectedAzubi() {
+		Azubi a = null;
+		if(notenTable.getSelectedColumn() >= 0) {
+			a = (Azubi)notenTable.getValueAt(notenTable.getSelectedRow(), 0);
+		}
+		return a;
 	}
 
 	/**
@@ -249,7 +267,7 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 				}
 				dtmNoten.addRow(new Object[] { azubiList.get(i), n.toString() });
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				
 			}
 		}
 	}

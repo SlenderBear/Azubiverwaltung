@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import objects.Azubi;
 import objects.Zeugnis;
 import datenbank.connector.MySQLConnector;
 import datenbank.dao.StandardDAO;
@@ -84,6 +85,22 @@ public class MySqlZeugnisDAO implements StandardDAO<Zeugnis>{
 	@Override
 	public Zeugnis getByGuid(String guid) {
 		String sql = "select * from zeugnis where zeugnisid='"+guid+"';";
+		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
+		Zeugnis z = new Zeugnis();
+		try {
+			rs.next();
+			z.setID(rs.getString("zeugnisid"));
+	        z.setJahr(rs.getInt("jahr"));
+	        z.setZeugnisKonferenz(rs.getString("zeugniskonferenz"));
+	        z.setAzubi(azubiDao.getByGuid(rs.getString("azubiid"))); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return z;
+	}
+	
+	public Zeugnis getZeugnisByAzubi(Azubi a, int jahr) {
+		String sql = "select * from zeugnis where azubiid='"+a.getID()+"' and jahr = "+String.valueOf(jahr)+";";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Zeugnis z = new Zeugnis();
 		try {

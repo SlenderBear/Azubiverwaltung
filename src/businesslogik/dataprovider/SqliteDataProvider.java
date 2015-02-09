@@ -208,4 +208,9 @@ public class SqliteDataProvider extends StandardDataProvider{
 		public Login getLoginByLoginDaten(Login login) {
 			return loginDatenDAO.getLoginByLoginDaten(login);
 		}
+
+		@Override
+		public Zeugnis gibZeugnisByAzubi(Azubi a, int jahr) {
+			return zeugnisDAO.getZeugnisByAzubi(a, jahr);
+		}
 }
