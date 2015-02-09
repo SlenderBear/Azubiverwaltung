@@ -71,6 +71,20 @@ private static final String DAO_NAME= Berechtigung.class.getName();
 		}
 		return b;
 	}
+	
+	public Berechtigung getByBerechtigungID(int berechtigungId){
+		String sql = "select * from berechtigung where berechtigungid="+berechtigungId+";";
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
+		Berechtigung b = new Berechtigung();
+		try {
+			rs.next();
+	        b.setID(rs.getInt("berechtigungid"));
+	        b.setBezeichnung(rs.getString("bezeichnung"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
 
 	@Override
 	public boolean isVorhanden(Berechtigung t) {

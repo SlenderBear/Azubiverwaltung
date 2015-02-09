@@ -99,6 +99,11 @@ public class SqliteDataProvider extends StandardDataProvider{
 			loginObject.setLoginName(login);
 		return loginDatenDAO.isVorhanden(loginObject);
 		}
+		
+		@Override
+		public boolean checkLogin(Login login){
+			return loginDatenDAO.checkLogin(login);
+		}
 
 		@Override
 		public boolean gibtAzubi(Azubi azubi) {

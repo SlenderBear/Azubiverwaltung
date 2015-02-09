@@ -119,6 +119,11 @@ public class MySqlDataProvider extends StandardDataProvider{
 	public boolean gibtBetrieb(Betrieb betrieb) {
 		return betriebDAO.isVorhanden(betrieb);
 	}
+	
+	@Override
+	public boolean checkLogin(Login login){
+		return loginDatenDAO.checkLogin(login);
+	}
 
 	@Override
 	public boolean gibtKlasse(Klasse klasse) {

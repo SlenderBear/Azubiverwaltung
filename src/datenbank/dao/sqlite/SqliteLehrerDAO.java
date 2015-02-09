@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.itextpdf.text.log.SysoCounter;
+
 import objects.Lehrer;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
@@ -74,6 +76,7 @@ private static final String DAO_NAME= Lehrer.class.getName();
 	        lehrerListe.add(l);
 	      }
 		}catch(Exception e){
+			System.out.println(e.getMessage() );
 			System.out.println("Fehler in MySQLLehrerDAO");
 		}
 		return lehrerListe;

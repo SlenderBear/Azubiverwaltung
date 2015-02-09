@@ -8,6 +8,7 @@ import objects.Betrieb;
 import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
+import objects.Login;
 import objects.StandardValueObject;
 import objects.Zeugnis;
 import objects.Zeugnisposition;
@@ -102,6 +103,8 @@ public abstract class StandardDataProvider {
 	 * @return true wenn vorhanden.
 	 */
 	public abstract boolean gibtLogin(String login);
+	
+	public abstract boolean checkLogin(Login login);
 
 	/**
 	 * Prüft ob Azubi bereits vorhanden.

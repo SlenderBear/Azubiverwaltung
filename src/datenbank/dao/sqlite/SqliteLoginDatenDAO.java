@@ -87,7 +87,7 @@ public class SqliteLoginDatenDAO implements StandardDAO<Login> {
 			l.setID(rs.getString("loginid"));
 			l.setLoginName(rs.getString("benutzername"));
 			l.setLoginPasswort(entschluesseln(rs.getString("passwort")));
-			l.setBerechtigung(dao.getByGuid(rs.getString("berechtigungid")));
+			l.setBerechtigung(dao.getByBerechtigungID(rs.getInt("berechtigungid")));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -109,6 +109,18 @@ public class SqliteLoginDatenDAO implements StandardDAO<Login> {
 	public boolean isVorhanden(Login t) {
 		String sql = "select * from login_daten where " + "benutzername='"
 				+ t.getLoginName() + "';";
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
+		try {
+			return rs.first();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean checkLogin(Login l){
+		String sql = "select * from login_daten where " + "benutzername='"
+				+ l.getLoginName() + "' AND passwort='"+l.getLoginPasswort()+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		try {
 			return rs.first();

@@ -64,9 +64,9 @@ INSERT INTO Azubi VALUES ('2628d636-adec-41b8-96ff-74e9d002b641', 'Bonn', 'Julia
 INSERT INTO Azubi VALUES ('e6985eb6-0c9e-45e1-bcc1-5d472c12642a', 'Siegen', 'Gerit', '02119783366', '017181115321', 'gerit.siegen@provinzial.com', 'Am Goldteich 2', '40822', 'Mettmann', '23.12.1991', 'j', 'n', 'Mettmann', '', 'Deutschland', 'Deutsch', '',  '', 'Deutschland', 'Deutschland',  'm',  'ev', 'Anwendungsentwickler', '1', '01.08.2015', '01.08.2017', 'Gymnasium', 'FHR', '', 0, '6b5cf080-5911-4654-810f-c6360e3cea90', 'da2b0f99-2dbe-4735-bf0c-8b5cdde0059e');
 INSERT INTO Azubi VALUES ('a2e35b39-6562-4457-906e-1605355493c4', 'Neuss', 'Sascha', '02119785522', '017187886331', 'sascha.neuss@provinzial.com', 'Duesseldorfer Straﬂe 54', '41564', 'Kaarst', '19.09.1989', 'j', 'n', 'Dresden', '', 'Deutschland', 'Deutsch', '',  '', 'Deutschland', 'Deutschland',  'm',   'juedisch', 'Anwendungsentwickler', '1', '01.08.2015', '01.08.2017', 'Realschule', 'FOR', '', 0,'6b5cf080-5911-4654-810f-c6360e3cea90', 'c4579e85-23a4-4960-9260-b12cd35836f8');
 
-INSERT INTO Login_Daten VALUES ('588b2bde-812b-40e7-bf72-eda754d92f9c', 'germ', 'A1234', 1);
-INSERT INTO Login_Daten VALUES ('96db4cc7-9f02-4470-8c13-15cededba5d7', 'klim', 'B5678', 2);
-INSERT INTO Login_Daten VALUES ('49e36777-1ef3-4f4e-8e26-ec5b591e823c', 'mard', 'C1337', 3);
+INSERT INTO Login_Daten VALUES ('588b2bde-812b-40e7-bf72-eda754d92f9c', 'germ', 'A1234', 0);
+INSERT INTO Login_Daten VALUES ('96db4cc7-9f02-4470-8c13-15cededba5d7', 'klim', 'B5678', 1);
+INSERT INTO Login_Daten VALUES ('49e36777-1ef3-4f4e-8e26-ec5b591e823c', 'mard', 'C1337', 2);
 
 INSERT INTO Lehrer VALUES ('abc39ab0-d438-46d5-a4f4-fa1458fe4ad7', 'Germani', 'Irena', '02114326665', '588b2bde-812b-40e7-bf72-eda754d92f9c');
 INSERT INTO Lehrer VALUES ('171a930a-d827-4063-9229-b1769cec839f', 'Klimpera', 'Else', '02114327879', '96db4cc7-9f02-4470-8c13-15cededba5d7');

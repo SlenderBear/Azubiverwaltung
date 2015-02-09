@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import objects.Login;
 import datenbank.connector.MySQLConnector;
+import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
 /**
  * 
@@ -115,6 +116,18 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 				e.printStackTrace();
 			}
 			return false;
+	}
+	
+	public boolean checkLogin(Login l){
+		String sql = "select * from login_daten where " + "benutzername='"
+				+ l.getLoginName() + "' AND passwort='"+l.getLoginPasswort()+"';";
+		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
+		try {
+			return rs.first();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	/**
