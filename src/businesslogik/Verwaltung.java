@@ -2,10 +2,15 @@ package businesslogik;
 
 import gui.MainWindow;
 
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import objects.Azubi;
 import objects.StandardValueObject;
+import objects.Zeugnis;
+import pdf.PdfZeugnis;
 import businesslogik.dataprovider.StandardDataProvider;
 
 /**
@@ -41,8 +46,30 @@ public class Verwaltung {
 		} 
 		
 		@SuppressWarnings("unused")
-		MainWindow window = new MainWindow(dbRef);
+		MainWindow window = new MainWindow(dbRef, this);
 
+	}
+	
+	/**
+	 * Druck alle Zeugnisse einer Klasse.
+	 * @param azubis {@link Azubi}
+	 * @param jahr int
+	 */
+	public void druckePdf(ArrayList<Azubi> azubis, int jahr) {
+		for (Azubi azubi : azubis) {
+			Zeugnis zeugnis = dbRef.gibZeugnisByAzubi(azubi, jahr);
+			new PdfZeugnis(azubi, "", zeugnis, String.valueOf(jahr), Short.valueOf("4"));
+		}
+	}
+	
+	/**
+	 * Druckt ein Zeugnis des Azubis.
+	 * @param a {@link Azubi}
+	 * @param jahr int
+	 */
+	public void druckePdf(Azubi a, int jahr) {
+		Zeugnis zeugnis = dbRef.gibZeugnisByAzubi(a, jahr);
+		new PdfZeugnis(a, "", zeugnis, String.valueOf(jahr), Short.valueOf("4"));
 	}
 	
 	/**

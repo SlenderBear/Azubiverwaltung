@@ -28,6 +28,7 @@ import objects.Klasse;
 import objects.Lehrer;
 import objects.Login;
 import objects.Zeugnis;
+import businesslogik.Verwaltung;
 import businesslogik.dataprovider.StandardDataProvider;
 
 /**
@@ -55,6 +56,7 @@ public class MainWindow {
 	private ArrayList<Fach> fachList;
 	private ArrayList<Zeugnis> zeugnisList;
 	private StandardDataProvider sdp;
+	private Verwaltung verw;
 
 	/**
 	 * Constructor der Klasse. Als Uebergabeparameter kriegt den StandartDataProvider.
@@ -63,12 +65,14 @@ public class MainWindow {
 	 * ruft die Methoden setLists()
 	 * und start() auf
 	 * @param sdp
+	 * @param verwaltung 
 	 */
-	public MainWindow(StandardDataProvider sdp) {
+	public MainWindow(StandardDataProvider sdp, Verwaltung verwaltung) {
 		c = new GridBagConstraints();
 		tools = new GUITools();
 		this.sdp = sdp;
 		this.user = null;
+		this.verw = verwaltung;
 		setLists();
 		start();
 	}
@@ -137,7 +141,7 @@ public class MainWindow {
 	 */
 	private void createZeugnisVerwaltung() {
 		zeugnisPanel = new ZeugnisVerwaltungPanel(zugangsStufe, sdp,
-				klasseList,fachList,zeugnisList, tools);
+				klasseList,fachList,zeugnisList, tools, verw);
 	}
 
 	/**

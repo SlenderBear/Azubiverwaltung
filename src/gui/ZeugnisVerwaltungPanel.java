@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -31,6 +32,7 @@ import objects.Zeugnisposition;
 import org.jdatepicker.impl.JDatePickerImpl;
 
 import pdf.PdfZeugnis;
+import businesslogik.Verwaltung;
 import businesslogik.dataprovider.StandardDataProvider;
 
 import com.toedter.calendar.JYearChooser;
@@ -57,8 +59,10 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 	private ArrayList<Zeugnis> zeugnisList;
 	private StandardDataProvider sdp;
 	private int zugangsStufe;
+	private Verwaltung verw;
 
-	public ZeugnisVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Klasse> klasseList, ArrayList<Fach> fachList, ArrayList<Zeugnis> zeugnisList, GUITools tools) {
+	public ZeugnisVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Klasse> klasseList, ArrayList<Fach> fachList, ArrayList<Zeugnis> zeugnisList, GUITools tools, Verwaltung verw) {
+		this.verw = verw;
 		this.zugangsStufe = zugangsStufe;
 		this.sdp = sdp;
 		this.klasseList = klasseList;
@@ -176,8 +180,7 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 				Azubi a = getSelectedAzubi();
 				Zeugnis z = sdp.gibZeugnisByAzubi(a, jahrAusbildung.getYear());
 				if(z != null) {
-					@SuppressWarnings("unused")
-					PdfZeugnis zeugnis = new PdfZeugnis(a, "src", z, String.valueOf(jahrAusbildung.getYear()), Short.valueOf("4"));
+					verw.druckePdf(a, jahrAusbildung.getYear());
 				}
 			}
 		});
@@ -186,7 +189,12 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				ArrayList<Azubi> azubis = new ArrayList<Azubi>();
+				int sizeFaecher = dlmFach.getSize()-1;
+				for (int i = 0; i < sizeFaecher; i++) {
+					azubis.add((Azubi)notenTable.getValueAt(i, 0));
+				}
+				verw.druckePdf(azubis, jahrAusbildung.getYear());
 
 			}
 		});
