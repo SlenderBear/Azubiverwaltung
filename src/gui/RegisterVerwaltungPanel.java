@@ -40,44 +40,59 @@ public class RegisterVerwaltungPanel extends JPanel{
 	public RegisterVerwaltungPanel(ArrayList<Lehrer> userList,GUITools tools) {
 		this.userList = userList;
 		this.tools = tools;
+		innerRegisterPanel = new JPanel(new GridBagLayout());
+		buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		berPanel = new JPanel(new GridLayout(0, 1));
+		
+		userListModel = new DefaultListModel();
+		userJList = new JList(userListModel);
+		userScrollPane = new JScrollPane(userJList);
+		userScrollPane.setPreferredSize(new Dimension(200, 350));
+
+		vorField = new JTextField(20);
+		nameField = new JTextField(20);
+		userField = new JTextField(20);
+		passField = new JTextField(20);
+		teleField = new JTextField(20);
+
+		btgr = new ButtonGroup();
+
+		rbLehrer = new JRadioButton("Klassenlehrer");
+		rbLeitung = new JRadioButton("Bereichsleitung");
+
+
+
+		addButton = tools.createButton("Erstellen", 150, 25);
+		editButton = tools.createButton("Ändern", 150, 25);
+		eraseButton = tools.createButton("Löschen", 150, 25);
 		initialize();
 	}
 	
-	public void initialize(){
+	private JPanel innerRegisterPanel,buttonPanel,berPanel;
+	// *************************
+	private DefaultListModel userListModel;
+	private JList userJList;
+	private JScrollPane userScrollPane;
+
+	private JTextField vorField ,nameField,userField,passField,teleField;
+
+	private ButtonGroup btgr;
+
+	private JRadioButton rbLehrer,rbLeitung;
+
+	private JButton addButton,editButton,eraseButton;
+	
+	private void initialize(){
 		 this.setLayout(new BorderLayout());
-			JPanel innerRegisterPanel = new JPanel(new GridBagLayout());
+			
 			GridBagConstraints c = new GridBagConstraints();
 			tools.setConstraintsDefault(c);
-			JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			JPanel berPanel = new JPanel(new GridLayout(0, 1));
-			// *************************
-			final DefaultListModel userListModel = new DefaultListModel();
-			final JList userList = new JList(userListModel);
-			JScrollPane userScrollPane = new JScrollPane(userList);
-			userScrollPane.setPreferredSize(new Dimension(200, 350));
-
-			final JTextField vorField = new JTextField(20);
-			final JTextField nameField = new JTextField(20);
-			final JTextField userField = new JTextField(20);
-			final JTextField passField = new JTextField(20);
-			final JTextField teleField = new JTextField(20);
-
-			ButtonGroup btgr = new ButtonGroup();
-
-			final JRadioButton rbLehrer = new JRadioButton("Klassenlehrer");
-			final JRadioButton rbLeitung = new JRadioButton("Bereichsleitung");
-
 			btgr.add(rbLeitung);
 			btgr.add(rbLehrer);
-
+			
 			berPanel.add(rbLehrer);
 			berPanel.add(rbLeitung);
-
 			rbLehrer.setSelected(true);
-
-			final JButton addButton = tools.createButton("Erstellen", 150, 25);
-			JButton editButton = tools.createButton("Ändern", 150, 25);
-			JButton eraseButton = tools.createButton("Löschen", 150, 25);
 			// ***********************//
 			c.gridy = 0;
 			c.gridx = 0;
@@ -111,12 +126,12 @@ public class RegisterVerwaltungPanel extends JPanel{
 			this.add(buttonPanel, BorderLayout.SOUTH);
 			// ***************Listeners******************///
 
-			userList.addListSelectionListener(new ListSelectionListener() {
+			userJList.addListSelectionListener(new ListSelectionListener() {
 
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
-					if (userList.getSelectedIndex() != -1) {
-						Lehrer selectedLehrer = (Lehrer) userListModel.get(userList
+					if (userJList.getSelectedIndex() != -1) {
+						Lehrer selectedLehrer = (Lehrer) userListModel.get(userJList
 								.getSelectedIndex());
 						Login selectedLogin = selectedLehrer.getLogin();
 						Berechtigung selectedBer = selectedLogin.getBerechtigung();
@@ -169,10 +184,10 @@ public class RegisterVerwaltungPanel extends JPanel{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (userList.getSelectedIndex() != -1) {
+					if (userJList.getSelectedIndex() != -1) {
 						if (tools.checkTFNamenLength(1,50, nameField, vorField)) {
 							Lehrer selectedLehrer = (Lehrer) userListModel
-									.get(userList.getSelectedIndex());
+									.get(userJList.getSelectedIndex());
 							selectedLehrer.setName(nameField.getText());
 							selectedLehrer.setVorname(vorField.getText());
 							selectedLehrer.setTelefon(teleField.getText());
@@ -192,7 +207,7 @@ public class RegisterVerwaltungPanel extends JPanel{
 
 					tools.clearTextFields(nameField, vorField, teleField, userField,
 							passField);
-					userList.setModel(userListModel);
+					userJList.setModel(userListModel);
 				}
 			});
 			// *******************************************
@@ -200,8 +215,8 @@ public class RegisterVerwaltungPanel extends JPanel{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (userList.getSelectedIndex() != -1)
-						userListModel.remove(userList.getSelectedIndex());
+					if (userJList.getSelectedIndex() != -1)
+						userListModel.remove(userJList.getSelectedIndex());
 					tools.clearTextFields(nameField, vorField, teleField, userField,
 							passField);
 

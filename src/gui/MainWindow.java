@@ -85,6 +85,7 @@ public class MainWindow {
 		tools = new GUITools();
 		setLists();
 		this.sdp = sdp;
+		initialize();
 	}
 
 	public void initialize() {
@@ -130,11 +131,11 @@ public class MainWindow {
 	}
 
 	private void createZeugnisVerwaltung() {
-		zeugnisPanel = new ZeugnisVerwaltungPanel(tools);
+		zeugnisPanel = new ZeugnisVerwaltungPanel(klasseList,tools);
 	}
 
 	private void createKlassenVerwaltung() {
-		klassenPanel = new KlassenVerwaltungPanel(tools);
+		klassenPanel = new KlassenVerwaltungPanel(klasseList,userList,tools);
 	}
 
 	private void createBetriebVerwaltung() {
@@ -290,6 +291,7 @@ public class MainWindow {
 		betriebList = new ArrayList<Betrieb>();
 		ausbilderList = new ArrayList<Ausbilder>();
 		azubiList = new ArrayList<Azubi>();
+		userList = new ArrayList<Lehrer>();
 	}
 
 	
