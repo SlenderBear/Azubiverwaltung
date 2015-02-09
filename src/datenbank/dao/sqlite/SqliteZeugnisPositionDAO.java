@@ -41,7 +41,7 @@ private static final String DAO_NAME= Zeugnisposition.class.getName();
 
 	@Override
 	public boolean update(Zeugnisposition t) {
-		String sql = "UPDATE zeugnisposition" + "SET "
+		String sql = "UPDATE zeugnisposition" + " SET "
 				+ "',noteid='" + t.getNote().getNoteID()
 				+ "',fachid='" + t.getFach().getID()
 				+ "' WHERE zeugnispositionid='" + t.getID() + "';";

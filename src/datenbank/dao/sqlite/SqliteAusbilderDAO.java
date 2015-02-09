@@ -37,7 +37,7 @@ public class SqliteAusbilderDAO implements StandardDAO<Ausbilder>{
 	@Override
 	public boolean update(Ausbilder t) {
 		String sql = "UPDATE ausbilder"+
-				"SET name='"+t.getName()
+				" SET name='"+t.getName()
 				+"',vorname='"+t.getVorname()
 				+"',telefonnummer='"+t.getTelefon()
 				+"',email='"+t.getEmail()

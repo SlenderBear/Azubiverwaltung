@@ -38,7 +38,7 @@ public class SqliteLoginDatenDAO implements StandardDAO<Login> {
 
 	@Override
 	public boolean update(Login t) {
-		String sql = "UPDATE login_daten" + "SET " + "benutzername='"
+		String sql = "UPDATE login_daten" + " SET " + "benutzername='"
 				+ t.getLoginName() + "',passwort='"
 				+ verschluesseln(t.getLoginPasswort()) + "',berechtigungid='"
 				+ t.getBerechtigung().getID() + "' WHERE loginid='" + t.getID()

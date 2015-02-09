@@ -40,7 +40,7 @@ private static final String DAO_NAME= Lehrer.class.getName();
 	@Override
 	public boolean update(Lehrer t) {
 		String sql = "UPDATE lehrer"+
-				"SET "
+				" SET "
 				+ "name='"+t.getName()
 				+"',vorname='"+t.getVorname()
 				+"',telefonnummer='"+t.getTelefon()

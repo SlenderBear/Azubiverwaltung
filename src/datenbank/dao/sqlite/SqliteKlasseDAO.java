@@ -39,7 +39,7 @@ private static final String DAO_NAME= Klasse.class.getName();
 	@Override
 	public boolean update(Klasse t) {
 		String sql = "UPDATE klasse"+
-				"SET "
+				" SET "
 				+ "bezeichnung='"+t.getBezeichnung()
 				+"',jahr="+t.getJahr()
 				+",lehrerid='"+t.getLehrer().getID()
