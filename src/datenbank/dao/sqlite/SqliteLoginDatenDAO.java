@@ -79,8 +79,8 @@ public class SqliteLoginDatenDAO implements StandardDAO<Login> {
 	}
 
 	@Override
-	public Login getByGuid(String loginname) {
-		String sql = "select * from login_daten where benutzername='"+loginname+"';";
+	public Login getByGuid(String loginid) {
+		String sql = "select * from login_daten where loginid='"+loginid+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		Login l = new Login();
 		try {

@@ -95,7 +95,7 @@ public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 				+"',schulabschluss='"+t.getSchulabschluss()
 				+"',anmerkung_schulabschluss='"+t.getAnmerkung_Schulabschluss()
 				+"',fehltage="+t.getFehltage()
-				+",klasseid='"+t.getKlasse().getID()
+				+",klassenid='"+t.getKlasse().getID()
 				+"',ausbilderid='"+t.getAusbilder().getID()
 				+"' WHERE azubiid='"+t.getID()+"';";
 		return SqliteConnector.getInstance().statementExecute(sql);
@@ -238,7 +238,7 @@ public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 				+"',schulabschluss='"+t.getSchulabschluss()
 				+"',anmerkung_schulabschluss='"+t.getAnmerkung_Schulabschluss()
 				+"',fehltage="+t.getFehltage()
-				+",klasseid='"+t.getKlasse().getID()
+				+",klassenid='"+t.getKlasse().getID()
 				+"',ausbilderid='"+t.getAusbilder().getID()
 				+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
@@ -256,7 +256,7 @@ public class SqliteAzubiDAO implements StandardDAO<Azubi>{
 	}
 	
 	public ArrayList<Azubi> gibAzubisZuKlasse(Klasse k){
-		String sql = "select * from azubi where klasseid='"
+		String sql = "select * from azubi where klassenid='"
 				+ k.getID() + "';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		ArrayList<Azubi> azubiListe = new ArrayList<Azubi>(); 
