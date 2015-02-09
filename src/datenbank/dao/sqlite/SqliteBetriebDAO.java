@@ -73,9 +73,9 @@ private static final String DAO_NAME= Betrieb.class.getName();
 				b.setStrasse(rs.getString("strasse"));
 				b.setPlz(rs.getString("plz"));
 				b.setOrt(rs.getString("ort"));
-				b.setOrt(rs.getString("email"));
-				b.setOrt(rs.getString("telefonnummer"));
-				b.setOrt(rs.getString("faxnummer"));
+				b.seteMail(rs.getString("email"));
+				b.setTelefon(rs.getString("telefonnummer"));
+				b.setFax(rs.getString("faxnummer"));
 
 				betriebsListe.add(b);
 			}
@@ -96,9 +96,9 @@ private static final String DAO_NAME= Betrieb.class.getName();
 			b.setStrasse(rs.getString("strasse"));
 			b.setPlz(rs.getString("plz"));
 			b.setOrt(rs.getString("ort"));
-			b.setOrt(rs.getString("email"));
-			b.setOrt(rs.getString("telefonnummer"));
-			b.setOrt(rs.getString("faxnummer"));
+			b.seteMail(rs.getString("email"));
+			b.setTelefon(rs.getString("telefonnummer"));
+			b.setFax(rs.getString("faxnummer"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
