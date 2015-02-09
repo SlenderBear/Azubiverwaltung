@@ -54,6 +54,8 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import businesslogik.dataprovider.StandardDataProvider;
+
 
 //import datenbank.provider.StandardDataProvider;
 
@@ -74,19 +76,15 @@ public class MainWindow {
 	private ArrayList<Ausbilder> ausbilderList;
 	private ArrayList<Azubi> azubiList;
 	private ArrayList<Lehrer> userList;
-//	private StandardDataProvider sdp;
+	private StandardDataProvider sdp;
 	
 	
 
-//	public MainWindow(StandardDataProvider sdp) {
-//		c = new GridBagConstraints();
-//		this.sdp = sdp;
-//	}
-	public MainWindow() {
+	public MainWindow(StandardDataProvider sdp) {
 		c = new GridBagConstraints();
 		tools = new GUITools();
 		setLists();
-//		this.sdp = sdp;
+		this.sdp = sdp;
 	}
 
 	public void initialize() {
