@@ -123,9 +123,6 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 				+ l.getLoginName() + "' AND passwort='"+l.getLoginPasswort()+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		try {
-			if(rs.isClosed()) {
-				return false;
-			}
 			return rs.first();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -138,10 +135,10 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 				+ l.getLoginName() + "' AND passwort='"+l.getLoginPasswort()+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		try {
-			if(rs.isClosed()) {
+			rs.next();
+			if(rs.isAfterLast()) {
 				return null;
 			}
-			rs.next();
 	        l.setID(rs.getString("loginid"));
 	        l.setLoginName(rs.getString("benutzername"));
 	        l.setLoginPasswort(entschluesseln(rs.getString("passwort")));
