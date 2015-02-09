@@ -1,39 +1,45 @@
 package testklassen;
 
-import businesslogik.dataprovider.StandardDataProvider;
+import java.util.ArrayList;
+
 import objects.Ausbilder;
+import objects.Azubi;
 import objects.Betrieb;
+import objects.Fach;
+import objects.Klasse;
+import businesslogik.dataprovider.StandardDataProvider;
 
 public class TestJustin {
 
 	public static void main(String[] args) {
 		StandardDataProvider.changeDataProvider(StandardDataProvider.db_optionen.SQLITE.toString());
 		StandardDataProvider provider = StandardDataProvider.getInstance();
-		 
-		provider.gibAlleAusbilder();
-		
-		Betrieb b = new Betrieb();
-		b.setFirmenbezeichnung("LAchsnackenFirm");
-		b.seteMail("adj@aol.de");
-		b.setFax("dfjskdfj");
-		b.setOrt("haltern");
-		b.setPlz("42357");
-		b.setStrasse("lembecker Straöe 43");
-		b.setTelefon("02360642");
-		provider.insert(b);
-//		
-//		Ausbilder a = new Ausbilder();
-//		a.setEmail("shjdfh@aol.de");
-//		a.setName("hford");
-//		a.setVorname("henry");
-//		a.setTelefon("02360643");
-//		a.setBetrieb(b);
-//		provider.insert(new String(""));
-//		
-//		provider.delete(a);
-//		
-//		b.seteMail("Beispielemail");
-//		provider.update(b);
+		System.out.println("--------------Ausbilderliste------------------");
+		ArrayList<Ausbilder> ausbilderliste =provider.gibAlleAusbilder();
+		for (Ausbilder ausbilder : ausbilderliste) {
+			System.out.println(ausbilder.getID());
+		}
+		System.out.println("--------------Betriebsliste------------------");
+		ArrayList<Betrieb> abetriebliste =provider.gibAlleBetriebe();
+		for (Betrieb betrieb : abetriebliste) {
+			System.out.println(betrieb.getID());
+		}
+		System.out.println("--------------Fachliste------------------");
+		ArrayList<Fach> fl =provider.gibAlleFaecher();
+		for (Fach f : fl) {
+			System.out.println(f.getBezeichnung());
+		}
+		System.out.println("--------------Klassenliste------------------");
+		ArrayList<Klasse> kl =provider.gibAlleKlassen();
+		for (Klasse  k : kl) {
+			System.out.println(k.getBezeichnung());
+		}
+		System.out.println("--------------Azubiliste------------------");
+		ArrayList<Azubi> al =provider.gibAzubiVon(kl.get(0));
+		for (Azubi  a : al) {
+			System.out.println(a.getName());
+		}
+
 	}
 
 }

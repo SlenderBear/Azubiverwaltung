@@ -174,7 +174,8 @@ public class NotenFuerPdf {
 			throw new Exception("Keine Noten vorhanden.");
 		}
 
-	}
+	} 
+	
 
 
 }
