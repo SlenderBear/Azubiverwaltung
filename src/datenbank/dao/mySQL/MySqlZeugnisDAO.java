@@ -18,7 +18,8 @@ public class MySqlZeugnisDAO implements StandardDAO<Zeugnis>{
 	
 	
 	
-	MySqlAzubiDAO dao = new MySqlAzubiDAO();
+	MySqlAzubiDAO azubiDao = new MySqlAzubiDAO();
+	MySqlZeugnisPositionDAO zeugnispositionDao = new MySqlZeugnisPositionDAO();
 	
 	@Override
 	public String getClassName() {
@@ -70,8 +71,8 @@ public class MySqlZeugnisDAO implements StandardDAO<Zeugnis>{
 	        z.setID(rs.getString("lehrerid"));
 	        z.setJahr(rs.getInt("jahr"));
 	        z.setZeugnisKonferenz(rs.getString("zeugniskonferenz"));
-	        z.setAzubi(dao.getByGuid(rs.getString("azubiid")));
-	        
+	        z.setAzubi(azubiDao.getByGuid(rs.getString("azubiid")));
+	        z.setPositionen(zeugnispositionDao.gibPositionenZuZeugnis(z));
 	        zeugnisListe.add(z);
 	      }
 		}catch(Exception e){
@@ -90,7 +91,7 @@ public class MySqlZeugnisDAO implements StandardDAO<Zeugnis>{
 			z.setID(rs.getString("lehrerid"));
 	        z.setJahr(rs.getInt("jahr"));
 	        z.setZeugnisKonferenz(rs.getString("zeugniskonferenz"));
-	        z.setAzubi(dao.getByGuid(rs.getString("azubiid"))); 
+	        z.setAzubi(azubiDao.getByGuid(rs.getString("azubiid"))); 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

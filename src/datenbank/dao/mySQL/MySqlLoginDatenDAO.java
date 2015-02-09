@@ -70,7 +70,7 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	        l.setID(rs.getString("loginid"));
 	        l.setLoginName(rs.getString("benutzername"));
 	        l.setLoginPasswort(entschluesseln(rs.getString("passwort")));
-	        l.setBerechtigung(dao.getByGuid(rs.getString("bezeichnung")));  
+	        l.setBerechtigung(dao.getByGuid(rs.getString("berechtigungid")));  
 	        
 	        loginListe.add(l);
 	      }
@@ -90,7 +90,7 @@ public class MySqlLoginDatenDAO implements StandardDAO<Login> {
 	        l.setID(rs.getString("loginid"));
 	        l.setLoginName(rs.getString("benutzername"));
 	        l.setLoginPasswort(entschluesseln(rs.getString("passwort")));
-	        l.setBerechtigung(dao.getByGuid(rs.getString("bezeichnung"))); 
+	        l.setBerechtigung(dao.getByGuid(rs.getString("berechtigungid"))); 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
