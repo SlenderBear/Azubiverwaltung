@@ -44,14 +44,14 @@ public class MySqlKlasseDAO implements StandardDAO<Klasse>{
 				+ "bezeichnung='"+t.getBezeichnung()
 				+"',jahr="+t.getJahr()
 				+",lehrerid='"+t.getLehrer().getID()
-				+"' WHERE klasseid='"+t.getID()+"';";
+				+"' WHERE klassenid='"+t.getID()+"';";
 		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public boolean delete(Klasse t) {
 		String sql = "delete from klasse"+
-				" WHERE klasseid='"+t.getID()+"';";
+				" WHERE klassenid='"+t.getID()+"';";
 		return MySQLConnector.getInstance().statementExecute(sql);
 	}
 
@@ -64,7 +64,7 @@ public class MySqlKlasseDAO implements StandardDAO<Klasse>{
 		 while (rs.next())
 	      {
 			 Klasse k = new Klasse();
-	        k.setID(rs.getString("klasseid"));
+	        k.setID(rs.getString("klassenid"));
 	        k.setBezeichnung(rs.getString("bezeichnung"));
 	        k.setJahr(rs.getInt("jahr"));
 	        k.setLehrer(dao.getByGuid(rs.getString("lehrerid")));  
@@ -79,12 +79,12 @@ public class MySqlKlasseDAO implements StandardDAO<Klasse>{
 
 	@Override
 	public Klasse getByGuid(String guid) {
-		String sql = "select * from klasse where klasseid='"+guid+"';";
+		String sql = "select * from klasse where klassenid='"+guid+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);
 		Klasse k = new Klasse();
 		try {
 			rs.next();
-	        k.setID(rs.getString("klasseid"));
+	        k.setID(rs.getString("klassenid"));
 	        k.setBezeichnung(rs.getString("bezeichnung"));
 	        k.setJahr(rs.getInt("jahr"));
 	        k.setLehrer(dao.getByGuid(rs.getString("lehrerid"))); 

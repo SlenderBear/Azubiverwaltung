@@ -94,7 +94,7 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 				+"',schulabschluss='"+t.getSchulabschluss()
 				+"',anmerkung_schulabschluss='"+t.getAnmerkung_Schulabschluss()
 				+"',fehltage="+t.getFehltage()
-				+",klasseid='"+t.getKlasse().getID()
+				+",klassenid='"+t.getKlasse().getID()
 				+"',ausbilderid='"+t.getAusbilder().getID()
 				+"' WHERE azubiid='"+t.getID()+"';";
 		return MySQLConnector.getInstance().statementExecute(sql);
@@ -237,7 +237,7 @@ public class MySqlAzubiDAO implements StandardDAO<Azubi>{
 				+"',schulabschluss='"+t.getSchulabschluss()
 				+"',anmerkung_schulabschluss='"+t.getAnmerkung_Schulabschluss()
 				+"',fehltage="+t.getFehltage()
-				+",klasseid='"+t.getKlasse().getID()
+				+",klassenid='"+t.getKlasse().getID()
 				+"',ausbilderid='"+t.getAusbilder().getID()
 				+"';";
 		ResultSet rs = MySQLConnector.getInstance().executeQuery(sql);

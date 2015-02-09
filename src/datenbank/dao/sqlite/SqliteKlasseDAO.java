@@ -43,14 +43,14 @@ private static final String DAO_NAME= Klasse.class.getName();
 				+ "bezeichnung='"+t.getBezeichnung()
 				+"',jahr="+t.getJahr()
 				+",lehrerid='"+t.getLehrer().getID()
-				+"' WHERE klasseid='"+t.getID()+"';";
+				+"' WHERE klassenid='"+t.getID()+"';";
 		return SqliteConnector.getInstance().statementExecute(sql);
 	}
 
 	@Override
 	public boolean delete(Klasse t) {
 		String sql = "delete from klasse"+
-				" WHERE klasseid='"+t.getID()+"';";
+				" WHERE klassenid='"+t.getID()+"';";
 		return SqliteConnector.getInstance().statementExecute(sql);
 	}
 
@@ -63,7 +63,7 @@ private static final String DAO_NAME= Klasse.class.getName();
 		 while (rs.next())
 	      {
 			 Klasse k = new Klasse();
-	        k.setID(rs.getString("klasseid"));
+	        k.setID(rs.getString("klassenid"));
 	        k.setBezeichnung(rs.getString("bezeichnung"));
 	        k.setJahr(rs.getInt("jahr"));
 	        k.setLehrer(dao.getByGuid(rs.getString("lehrerid")));  
@@ -78,12 +78,12 @@ private static final String DAO_NAME= Klasse.class.getName();
 
 	@Override
 	public Klasse getByGuid(String guid) {
-		String sql = "select * from klasse where klasseid='"+guid+"';";
+		String sql = "select * from klasse where klassenid='"+guid+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		Klasse k = new Klasse();
 		try {
 			rs.next();
-	        k.setID(rs.getString("klasseid"));
+	        k.setID(rs.getString("klassenid"));
 	        k.setBezeichnung(rs.getString("bezeichnung"));
 	        k.setJahr(rs.getInt("jahr"));
 	        k.setLehrer(dao.getByGuid(rs.getString("lehrerid"))); 
