@@ -38,6 +38,10 @@ public abstract class StandardDataProvider {
 	 */
 	public abstract ArrayList<Lehrer> gibAlleLehrer();
 	
+	/**
+	 * Liefert alle Zeugnisse.
+	 * @return {@link ArrayList}
+	 */
 	public abstract ArrayList<Zeugnis> gibAlleZeugnisse();
 
 	/**
@@ -112,6 +116,11 @@ public abstract class StandardDataProvider {
 	 */
 	public abstract boolean checkLogin(Login login);
 	
+	/**
+	 * Ermittelt die Entität Login anhand der Benutzerdaten (Name, Passwort)
+	 * @param login {@link Login}
+	 * @return {@link Login}
+	 */
 	public abstract Login getLoginByLoginDaten(Login login);
 
 	/**
@@ -189,7 +198,6 @@ public abstract class StandardDataProvider {
 	public static StandardDataProvider initAndGetProvider() {
 		String db_property = propertieHandler.liesPropAus(DB_PROPERTY);
 		if (db_property.compareToIgnoreCase(PropertyHandling.PROP_EMPTY) == 0) {
-			//TODO Fehlerbehandlung
 			return null;
 		}
 		return getDataProvider(db_property);
