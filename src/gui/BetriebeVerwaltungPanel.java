@@ -33,7 +33,9 @@ public class BetriebeVerwaltungPanel extends JPanel{
 	private GUITools tools;
 	private ArrayList<Betrieb> betriebList;
 	private StandardDataProvider sdp;
-	public BetriebeVerwaltungPanel(StandardDataProvider sdp, ArrayList<Betrieb> betriebList,GUITools tools) {
+	private int zugangsStufe;
+	public BetriebeVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Betrieb> betriebList,GUITools tools) {
+		this.zugangsStufe = zugangsStufe;
 		this.sdp = sdp;
 		this.tools = tools;
 		this.betriebList = betriebList;
@@ -109,6 +111,8 @@ public class BetriebeVerwaltungPanel extends JPanel{
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
+		if(zugangsStufe < 2)addButton.setEnabled(false);
+		if(zugangsStufe < 2)eraseButton.setEnabled(false);
 		this.add(tools.createTitlePanel("Betriebeverwaltung"),
 				BorderLayout.NORTH);
 		this.add(innerBetriebsPanel, BorderLayout.CENTER);

@@ -33,6 +33,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 
 import businesslogik.dataprovider.StandardDataProvider;
 
+import com.itextpdf.text.pdf.internal.ZugferdChecker;
 import com.toedter.calendar.JYearChooser;
 
 public class ZeugnisVerwaltungPanel extends JPanel {
@@ -49,8 +50,10 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 	private ArrayList<Azubi> azubiList;
 	private ArrayList<Zeugnis> zeugnisList;
 	private StandardDataProvider sdp;
+	private int zugangsStufe;
 
-	public ZeugnisVerwaltungPanel(StandardDataProvider sdp, ArrayList<Klasse> klasseList, GUITools tools) {
+	public ZeugnisVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Klasse> klasseList, GUITools tools) {
+		this.zugangsStufe = zugangsStufe;
 		this.sdp = sdp;
 		this.klasseList = klasseList;
 		this.tools = tools;

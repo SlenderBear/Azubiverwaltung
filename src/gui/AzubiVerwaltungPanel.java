@@ -47,7 +47,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String[] fRichtungen = { "Fachinformatiker", "Systemintegrator" };
+	private String[] fRichtungen = { "Anwendungsentwickler", "Systemintegrator" };
 	private String[] lSFormStrings = { "Hauptschule", "Realschule",
 			"Gymnasium", "Gesamtschule", "Berufskoleg", "Förderschule",
 			"sonstige" };
@@ -61,13 +61,28 @@ public class AzubiVerwaltungPanel extends JPanel {
 	private ArrayList<Ausbilder> ausbilderList;
 	private ArrayList<Azubi> azubiList;
 	private StandardDataProvider sdp;
-	public AzubiVerwaltungPanel(StandardDataProvider sdp, ArrayList<Klasse> klasseList,
+	private int zugangsStufe;
+	public AzubiVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Klasse> klasseList,
 			ArrayList<Ausbilder> ausbilderList,ArrayList<Azubi> azubiList, GUITools tools) {
+		this.zugangsStufe = zugangsStufe;
 		this.sdp = sdp;
 		this.klasseList = klasseList;
 		this.ausbilderList = ausbilderList;
 		this.tools = tools;
 		this.azubiList = azubiList;
+		
+		innerAzubiPanel = new JTabbedPane();
+		innerAzubiPanelStamm = new JPanel(new GridBagLayout());
+		innerAzubiPanelZusatz = new JPanel(new GridBagLayout());
+		rbGeschlechtPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,
+				0, 0));
+		rbVolljahrPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,
+				0, 0));
+		rbInklusionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,
+				0, 0));
+		ortPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		zuzugPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
 		vorField = new JTextField(20);
 		nachField = new JTextField(20);
@@ -121,6 +136,9 @@ public class AzubiVerwaltungPanel extends JPanel {
 		initialize();
 
 	}
+	
+	private JTabbedPane innerAzubiPanel;
+	private JPanel innerAzubiPanelStamm,innerAzubiPanelZusatz,rbGeschlechtPanel,rbVolljahrPanel,rbInklusionPanel,ortPanel,buttonPanel,zuzugPanel;
 
 	private JTextField vorField, nachField, gebNameField, plzField, ortField,
 			gebOrtField, gebLandField, gebLandVaterField, gebLandMutterField,
@@ -150,18 +168,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 
 	private void initialize() {
 		this.setLayout(new BorderLayout());
-		JTabbedPane innerAzubiPanel = new JTabbedPane();
-		JPanel innerAzubiPanelStamm = new JPanel(new GridBagLayout());
-		JPanel innerAzubiPanelZusatz = new JPanel(new GridBagLayout());
-		JPanel rbGeschlechtPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,
-				0, 0));
-		JPanel rbVolljahrPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,
-				0, 0));
-		JPanel rbInklusionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,
-				0, 0));
-		JPanel ortPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		JPanel zuzugPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		
 
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -233,10 +240,15 @@ public class AzubiVerwaltungPanel extends JPanel {
 		JButton addButton = tools.createButton("Erstellen", 150, 25);
 		JButton editButton = tools.createButton("Ändern", 150, 25);
 		JButton eraseButton = tools.createButton("Löschen", 150, 25);
+		if(zugangsStufe < 2)addButton.setEnabled(false);
+		if(zugangsStufe < 2)eraseButton.setEnabled(false);
 		// //////////////////////////
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
+		
+		if(zugangsStufe < 2)addButton.setEnabled(false);
+		if(zugangsStufe < 2)eraseButton.setEnabled(false);
 
 		innerAzubiPanel.addTab("Stammdaten", innerAzubiPanelStamm);
 		innerAzubiPanel.addTab("Ergänzung", innerAzubiPanelZusatz);
@@ -499,9 +511,12 @@ public class AzubiVerwaltungPanel extends JPanel {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
-				selectedAzubi = (Azubi) azubiListModel.getElementAt(azubiJList.getSelectedIndex());
-				if(azubiJList.getSelectedIndex() != -1 && selectedAzubi != null){
-				setFieldsofAzubi();
+				if(azubiJList.getSelectedIndex() != -1){
+					selectedAzubi = (Azubi) azubiListModel.getElementAt(azubiJList.getSelectedIndex());
+					if(selectedAzubi != null){
+						setFieldsofAzubi();
+					}
+					
 				}
 			}
 
@@ -522,7 +537,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 		vorField.setText(selectedAzubi.getVorname());
 		nachField.setText(selectedAzubi.getName());
 		gebNameField.setText(selectedAzubi.getGeburtsname());
-		if(selectedAzubi.getFachrichtung() == 'f'){
+		if(selectedAzubi.getFachrichtung() == 'A'){
 			cmbFachrichtung.setSelectedItem(fRichtungen[0]);
 			
 		}else{
@@ -538,6 +553,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 			dpGebTag.getModel().setDay(date.getDay());
 			dpGebTag.getModel().setMonth(date.getMonth());
 			dpGebTag.getModel().setYear(date.getYear());
+			dpGebTag.getModel().setSelected(true);
 			date = format.parse(selectedAzubi.getAusbildungsbeginn());
 			dpAusBeg.getModel().setDay(date.getDay());
 			dpAusBeg.getModel().setMonth(date.getMonth());
@@ -678,7 +694,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 			selectedAzubi.setZuzugsjahr(zuzugYC.getValue());
 		}
 		if (cmbFachrichtung.getSelectedIndex() == 0) {
-			selectedAzubi.setFachrichtung('f');
+			selectedAzubi.setFachrichtung('a');
 		} else {
 			selectedAzubi.setFachrichtung('s');
 		}
@@ -725,6 +741,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 	}
 	
 	private void fillAzubi(Klasse klasse){
+		azubiJList.setSelectedIndex(-1);
 		azubiListModel.removeAllElements();
 		azubiList = sdp.gibAzubiVon(klasse);
 		for(int i = 0; i < azubiList.size(); i++){

@@ -39,7 +39,9 @@ public class AusbilderVerwaltungPanel extends JPanel{
 	private ArrayList<Ausbilder> ausbilderList;
 	private GUITools tools;
 	private StandardDataProvider sdp;
-	public AusbilderVerwaltungPanel(StandardDataProvider sdp, ArrayList<Betrieb> betriebList,ArrayList<Ausbilder> ausbilderList, GUITools tools) {
+	private int zugangsStufe;
+	public AusbilderVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Betrieb> betriebList,ArrayList<Ausbilder> ausbilderList, GUITools tools) {
+		this.zugangsStufe = zugangsStufe;
 		this.sdp = sdp;
 		this.betriebList = betriebList;
 		this.ausbilderList = ausbilderList;
@@ -66,6 +68,9 @@ public class AusbilderVerwaltungPanel extends JPanel{
 		addButton = tools.createButton("Erstellen", 150, 25);
 		editButton = tools.createButton("Ändern", 150, 25);
 		eraseButton = tools.createButton("Löschen", 150, 25);
+		
+		if(zugangsStufe < 2)addButton.setEnabled(false);
+		if(zugangsStufe < 2)eraseButton.setEnabled(false);
 		initialize();
 	}
 	

@@ -38,7 +38,9 @@ public class RegisterVerwaltungPanel extends JPanel{
 	private GUITools tools;
 	private ArrayList<Lehrer> userList;
 	private StandardDataProvider sdp;
-	public RegisterVerwaltungPanel(StandardDataProvider sdp, ArrayList<Lehrer> userList,GUITools tools) {
+	private int zugangsStufe;
+	public RegisterVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Lehrer> userList,GUITools tools) {
+		this.zugangsStufe = zugangsStufe;
 		this.sdp = sdp;
 		this.userList = userList;
 		this.tools = tools;

@@ -33,8 +33,10 @@ public class KlassenVerwaltungPanel extends JPanel{
 	private ArrayList<Klasse> klasseList;
 	private ArrayList<Lehrer> userList;
 	private StandardDataProvider sdp;
+	private int zugangsStufe;
 	
-	public KlassenVerwaltungPanel(StandardDataProvider sdp, ArrayList<Klasse> klasseList, ArrayList<Lehrer> userList, GUITools tools) {
+	public KlassenVerwaltungPanel(int zugangsStufe, StandardDataProvider sdp, ArrayList<Klasse> klasseList, ArrayList<Lehrer> userList, GUITools tools) {
+		this.zugangsStufe = zugangsStufe;
 		this.sdp = sdp;
 		this.klasseList = klasseList;
 		this.userList = userList;
@@ -103,6 +105,9 @@ public class KlassenVerwaltungPanel extends JPanel{
 		buttonPanel.add(addButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(eraseButton);
+		
+		if(zugangsStufe < 2)addButton.setEnabled(false);
+		if(zugangsStufe < 2)eraseButton.setEnabled(false);
 
 		this.add(tools.createTitlePanel("Klassenverwaltung"),
 				BorderLayout.NORTH);

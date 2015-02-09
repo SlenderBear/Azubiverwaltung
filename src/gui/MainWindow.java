@@ -134,27 +134,27 @@ public class MainWindow {
 	}
 
 	private void createZeugnisVerwaltung() {
-		zeugnisPanel = new ZeugnisVerwaltungPanel(sdp,klasseList,tools);
+		zeugnisPanel = new ZeugnisVerwaltungPanel(zugangsStufe,sdp,klasseList,tools);
 	}
 
 	private void createKlassenVerwaltung() {
-		klassenPanel = new KlassenVerwaltungPanel(sdp,klasseList,lehrerList,tools);
+		klassenPanel = new KlassenVerwaltungPanel(zugangsStufe,sdp,klasseList,lehrerList,tools);
 	}
 
 	private void createBetriebVerwaltung() {
-		betriebsPanel = new BetriebeVerwaltungPanel(sdp,betriebList,tools);
+		betriebsPanel = new BetriebeVerwaltungPanel(zugangsStufe,sdp,betriebList,tools);
 	}
 
 	private void createRegisterVerwaltung() {
-		registerPanel = new RegisterVerwaltungPanel(sdp,lehrerList, tools);
+		registerPanel = new RegisterVerwaltungPanel(zugangsStufe,sdp,lehrerList, tools);
 	}
 
 	private void createAusbilderVerwaltung() {
-		ausbilderPanel = new AusbilderVerwaltungPanel(sdp,betriebList, ausbilderList, tools);
+		ausbilderPanel = new AusbilderVerwaltungPanel(zugangsStufe,sdp,betriebList, ausbilderList, tools);
 	}
 
 	private void createAzubiVerwaltung() {
-		azubiPanel = new AzubiVerwaltungPanel(sdp,klasseList, ausbilderList,azubiList, tools);
+		azubiPanel = new AzubiVerwaltungPanel(zugangsStufe,sdp,klasseList, ausbilderList,azubiList, tools);
 	}
 	
 	
@@ -162,19 +162,19 @@ public class MainWindow {
 	private void createMenuePanel() {
 		// addUserPanel();
 		menuePanel = new JTabbedPane();
-		if (zugangsStufe == 0) {
+		if (zugangsStufe >= 0) {
 			createAzubiVerwaltung();
 			menuePanel.addTab("Azubiverwaltung", azubiPanel);
 		}
-		if (zugangsStufe == 0) {
+		if (zugangsStufe >= 0) {
 			createBetriebVerwaltung();
 			menuePanel.addTab("Betriebsverwaltung", betriebsPanel);
 		}
-		if (zugangsStufe == 0) {
+		if (zugangsStufe >= 0) {
 			createAusbilderVerwaltung();
 			menuePanel.addTab("Ausbilderverwaltung", ausbilderPanel);
 		}
-		if (zugangsStufe == 0) {
+		if (zugangsStufe >= 0) {
 			createKlassenVerwaltung();
 			menuePanel.addTab("Klassenverwaltung", klassenPanel);
 		}
@@ -182,7 +182,7 @@ public class MainWindow {
 			createRegisterVerwaltung();
 			menuePanel.addTab("Registrierung", registerPanel);
 		}
-		if (zugangsStufe == 0) {
+		if (zugangsStufe >= 0) {
 			createZeugnisVerwaltung();
 			menuePanel.addTab("Zeugnisverwaltung", zeugnisPanel);
 		}
@@ -359,10 +359,10 @@ public class MainWindow {
 	
 	private boolean setUser(String login, String passwd){
 		
-			Login logDat = sdp.getLoginByLoginDaten(new Login(login, passwd));
-			if(logDat != null){
+			user = sdp.getLoginByLoginDaten(new Login(login, passwd));
+			if(user != null){
 				
-				zugangsStufe = logDat.getBerechtigung().getID();
+				zugangsStufe = user.getBerechtigung().getID();
 				return true;
 			}else{
 				
