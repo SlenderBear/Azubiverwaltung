@@ -26,7 +26,11 @@ public class NotenFuerPdf {
 	public void setNoten(ArrayList<Zeugnisposition> noten) {
 		this.noten = noten;
 	}
-
+	/**
+	 * Die Methode getDurchschnitt erstellt den Durchschnitt aller Noten eines Azubis
+	 * @param azubi
+	 * @return
+	 */
 	public String[] getDurchschnitt(Azubi azubi) {
 		String[] durchschnitt = new String[2];
 		double summe = 0;
@@ -82,7 +86,11 @@ public class NotenFuerPdf {
 
 		return durchschnitt;
 	}
-	
+	/**
+	 * Die Methode mappeDurchschnitt ergänzt den Notentext zur Durchschnittsnote
+	 * @param durchschnitt
+	 * @return
+	 */
 	private String mappeDurchschnitt(Double durchschnitt){
 		if (durchschnitt <= 1.5) {
 			return "sehr gut";
@@ -98,7 +106,11 @@ public class NotenFuerPdf {
 			return "ungenügend";
 		}
 	}
-	
+	/**
+	 * Die Methode gibFachNotenStrings gibt die Strings der Fächer und Noten zurück
+	 * @param format
+	 * @return
+	 */
 	public String[][] gibFachNotenStrings(Short format) {
 		String[][] strings = new String[2][8];
 		if (format == 3) {
@@ -150,7 +162,11 @@ public class NotenFuerPdf {
 
 		return strings;
 	}
-	
+	/**
+	 * Die Methode holeZeugnisNote gibt zu einem Zeugnis alles Zeugnispositionen zurück
+	 * @param zeugnis Zeugnis-Objekt
+	 * @throws Exception
+	 */
 	public void holeZeugnisnote(Zeugnis zeugnis) throws Exception {
 		StandardDataProvider dataGetter = StandardDataProvider.getInstance();
 		noten = dataGetter.gibPositionenZuZeugnis(zeugnis);
