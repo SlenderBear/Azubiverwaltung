@@ -8,9 +8,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Vector;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -20,8 +17,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -37,7 +32,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
 
 import businesslogik.dataprovider.StandardDataProvider;
 
-import com.itextpdf.text.pdf.internal.ZugferdChecker;
 import com.toedter.calendar.JYearChooser;
 /**
  * 
@@ -210,6 +204,11 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 
 	}
 
+	/**
+	 * Methode fillFachList
+	 * fuellt die FachJliste mit
+	 * Faechern aus der ArrayListe von Faechern
+	 */
 	private void fillFachList() {
 		dlmFach.removeAllElements();
 		for(int i = 0; i < fachList.size(); i++){
@@ -217,10 +216,22 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Methode fillAzubiList
+	 * fuellt die Azubi-Array-Liste
+	 * mit den Azubis einer Bestimmter Klasse
+	 * @param klasse
+	 */
 	private void fillAzubiList(Klasse klasse) {
 		azubiList = sdp.gibAzubiVon(klasse);
 	}
 
+	/**
+	 * Methode fillTable
+	 * fuellt die Tabelle mit den Schuellern einer Klasse
+	 * und ihren Noten in diesem Fach
+	 * @param fach Fach
+	 */
 	private void fillTable(Fach fach) {
 		dtmNoten.setRowCount(0);
 		for (int i = 0; i < azubiList.size(); i++) {
@@ -238,6 +249,14 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Methode findZeugnis
+	 * sucht aus der Liste mit allen Zeugnissen
+	 * das von einem Bestimmten Azubi in einem bestimmten Jahr
+	 * @param azubi, Azubi, der gesucht wird
+	 * @param jahr, int
+	 * @return Zeugnis
+	 */
 	private Zeugnis findZeugnis(Azubi azubi, int jahr) {
 		for (int i = 0; i < zeugnisList.size(); i++) {
 			if (zeugnisList.get(i).getAzubi().getID().compareTo(azubi.getID()) == 0
@@ -248,6 +267,13 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 		return null;
 	}
 
+	/**
+	 * Methode getNote
+	 * gibt die Note von einem Fach aus einem Zeugnis, 
+	 * @param fach gesuchter Fach
+	 * @param zeugnis Zeugnis
+	 * @return Note, objekt
+	 */
 	private Note getNote(Fach fach, Zeugnis zeugnis) {
 		Note foundNote = null;
 		if(zeugnis != null){
@@ -262,6 +288,12 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 		
 	}
 
+	/**
+	 * Methode getPunkte
+	 * gibt zurueck die Ziffer der Note (ID)
+	 * @param note Gesuchte Note
+	 * @return int
+	 */
 	private int getPunkte(Note note){
 		if(note != null){
 			return Integer.parseInt(note.getNoteID());

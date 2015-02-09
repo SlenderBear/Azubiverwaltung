@@ -21,8 +21,6 @@ import javax.swing.event.ListSelectionListener;
 
 import businesslogik.dataprovider.StandardDataProvider;
 
-import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
-
 import objects.Betrieb;
 
 /**
