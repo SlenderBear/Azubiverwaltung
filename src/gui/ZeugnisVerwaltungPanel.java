@@ -224,12 +224,17 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 	private void fillTable(Fach fach) {
 		dtmNoten.setRowCount(0);
 		for (int i = 0; i < azubiList.size(); i++) {
-			dtmNoten.addRow(new Object[] {
-					azubiList.get(i),
-					getNote((Fach) dlmFach.getElementAt(faecherList
-							.getSelectedIndex()),
-							findZeugnis(azubiList.get(i),
-									jahrAusbildung.getYear())).toString() });
+			try {
+				Note n = getNote((Fach) dlmFach.getElementAt(faecherList
+						.getSelectedIndex()),
+						findZeugnis(azubiList.get(i), jahrAusbildung.getYear()));
+				if (n == null) {
+					continue;
+				}
+				dtmNoten.addRow(new Object[] { azubiList.get(i), n.toString() });
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 
