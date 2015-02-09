@@ -73,8 +73,8 @@ public class RegisterVerwaltungPanel extends JPanel{
 
 
 		addButton = tools.createButton("Erstellen", 150, 25);
-		editButton = tools.createButton("�ndern", 150, 25);
-		eraseButton = tools.createButton("L�schen", 150, 25);
+		editButton = tools.createButton("Aendern", 150, 25);
+		eraseButton = tools.createButton("Loeschen", 150, 25);
 		initialize();
 	}
 	
@@ -186,7 +186,7 @@ public class RegisterVerwaltungPanel extends JPanel{
 								passField);
 					} else {
 						JOptionPane.showMessageDialog(addButton.getParent(),
-								"Felder falsch gef�llt", "Fehler",
+								"Felder falsch gefuellt", "Fehler",
 								JOptionPane.ERROR_MESSAGE);
 					}
 

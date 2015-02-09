@@ -63,8 +63,8 @@ public class KlassenVerwaltungPanel extends JPanel{
 		cmbLehrer.setPreferredSize(new Dimension(200, 25));
 
 		addButton = tools.createButton("Erstellen", 150, 25);
-		editButton = tools.createButton("�ndern", 150, 25);
-		eraseButton = tools.createButton("L�schen", 150, 25);
+		editButton = tools.createButton("Aendern", 150, 25);
+		eraseButton = tools.createButton("Loeschen", 150, 25);
 		
 		initialize();
 	}

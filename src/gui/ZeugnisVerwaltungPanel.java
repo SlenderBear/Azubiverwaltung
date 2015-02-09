@@ -87,7 +87,7 @@ public class ZeugnisVerwaltungPanel extends JPanel {
 
 		dpZeug = tools.createNewDatePicker();
 
-		btZeugDruck = tools.createButton("Sch�ler", 150, 25);
+		btZeugDruck = tools.createButton("Schueler", 150, 25);
 		btZeugKlasseDruck = tools.createButton("Gesamte Klasse", 150, 25);
 		initialize();
 	}

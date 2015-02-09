@@ -74,8 +74,8 @@ public class AusbilderVerwaltungPanel extends JPanel{
 
 
 		addButton = tools.createButton("Erstellen", 150, 25);
-		editButton = tools.createButton("�ndern", 150, 25);
-		eraseButton = tools.createButton("L�schen", 150, 25);
+		editButton = tools.createButton("Aendern", 150, 25);
+		eraseButton = tools.createButton("Loeschen", 150, 25);
 		
 		if(zugangsStufe < 2)addButton.setEnabled(false);
 		if(zugangsStufe < 2)eraseButton.setEnabled(false);
