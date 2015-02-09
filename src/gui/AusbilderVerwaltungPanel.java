@@ -89,7 +89,7 @@ public class AusbilderVerwaltungPanel extends JPanel{
 	private JButton editButton;
 	private JButton eraseButton;
 	
-	public void initialize(){
+	private void initialize(){
 		this.setLayout(new BorderLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		tools.setConstraintsDefault(c);

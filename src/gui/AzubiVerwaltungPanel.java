@@ -145,7 +145,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 	
 	private Azubi selectedAzubi;
 
-	public void initialize() {
+	private void initialize() {
 		this.setLayout(new BorderLayout());
 		JTabbedPane innerAzubiPanel = new JTabbedPane();
 		JPanel innerAzubiPanelStamm = new JPanel(new GridBagLayout());
@@ -180,6 +180,8 @@ public class AzubiVerwaltungPanel extends JPanel {
 		ButtonGroup btgrVolljahr = new ButtonGroup();
 		
 		zuzugYC.setEnabled(false);
+		ausbYC.setYear(0);
+		ausbYC.setPreferredSize(new Dimension(150, 25));
 
 		rbAdult.setEnabled(false);
 		rbTeen.setSelected(true);
@@ -422,7 +424,8 @@ public class AzubiVerwaltungPanel extends JPanel {
 									staatAng1Field, staatAng2Field)
 							&& tools.validate(eMailField.getText())) {
 						if (tools.checkTFZahlen(15, tNummerField, hNummerField)) {
-							Azubi newAzubi = createAzubi();
+							Azubi newAzubi = new Azubi();
+							changeAzubi(newAzubi);
 							azubiListModel.addElement(newAzubi);
 
 						}
@@ -598,100 +601,6 @@ public class AzubiVerwaltungPanel extends JPanel {
 		fehlTageField.setText(""+selectedAzubi.getFehltage());
 		cmbAusbilder.setSelectedItem(selectedAzubi.getAusbilder());
 		
-	}
-
-	private Azubi createAzubi() {
-		Azubi newAzubi = new Azubi();
-		newAzubi.setVorname(vorField.getText());
-		newAzubi.setName(nachField.getText());
-		newAzubi.setOrt(ortField.getText());
-		newAzubi.setGeburtsort(gebOrtField.getText());
-		newAzubi.setGeburtsland(gebLandField.getText());
-		newAzubi.setStrasse(strField.getText());
-		newAzubi.setPlz(plzField.getText());
-		newAzubi.setLehrjahr(Integer.parseInt(ausJahrField.getText()));
-		if (dpAusEnde.getModel().getValue() != null) {
-			DateModel<?> ausEndeModel = dpAusEnde.getModel();
-			newAzubi.setAusbildungsende(ausEndeModel.getDay() + "-"
-					+ ausEndeModel.getMonth() + "-" + ausEndeModel.getYear());
-		}
-		{
-			DateModel<?> ausAnfModel = dpAusBeg.getModel();
-			newAzubi.setAusbildungsbeginn(ausAnfModel.getDay() + "-"
-					+ ausAnfModel.getMonth() + "-" + ausAnfModel.getYear());
-		}
-		if (!gebNameField.getText().isEmpty()) {
-			newAzubi.setGeburtsname(gebNameField.getText());
-		}
-		if (!gebLandMutterField.getText().isEmpty()) {
-			newAzubi.setGeburtsland_Mutter(gebLandMutterField.getText());
-		}
-		if (!gebLandVaterField.getText().isEmpty()) {
-			newAzubi.setGeburtsland_Vater(gebLandVaterField.getText());
-		}
-		newAzubi.setStaatsangehoerigkeit_1(staatAng1Field.getText());
-		if (!staatAng2Field.getText().isEmpty()) {
-			newAzubi.setStaatsangehoerigkeit_2(staatAng2Field.getText());
-		}
-
-		newAzubi.setTelefon(tNummerField.getText());
-		newAzubi.setMobiltelefon(hNummerField.getText());
-		if (!anmerkField.getText().isEmpty()) {
-			newAzubi.setAnmerkung_Schulabschluss(anmerkField.getText());
-		}
-		newAzubi.setEmail(eMailField.getText());
-		newAzubi.setFehltage(Integer.parseInt(fehlTageField.getText()));
-		if (!sonstReliField.isEnabled()) {
-			newAzubi.setKonfession((String) cmbKonfession.getSelectedItem());
-		} else {
-			newAzubi.setKonfession(sonstReliField.getText());
-		}
-		if (!sonstAbschlusField.isEnabled()) {
-			newAzubi.setSchulabschluss((String) cmbletzterAbschluss
-					.getSelectedItem());
-		} else {
-			newAzubi.setSchulabschluss(sonstAbschlusField.getText());
-		}
-		if (!sonstSchulformField.isEnabled()) {
-			newAzubi.setLetzte_Schulform((String) cmbletzteSchule
-					.getSelectedItem());
-		} else {
-			newAzubi.setLetzte_Schulform(sonstSchulformField.getText());
-		}
-		if (cbZuzug.isSelected()) {
-			newAzubi.setZuzugsjahr(zuzugYC.getValue());
-		}
-		if (cmbFachrichtung.getSelectedIndex() == 0) {
-			newAzubi.setFachrichtung('f');
-		} else {
-			newAzubi.setFachrichtung('s');
-		}
-		if (rbAdult.isSelected()) {
-			newAzubi.setVolljaehrigkeit('j');
-		} else {
-			newAzubi.setVolljaehrigkeit('n');
-		}
-		if (rbBraucht.isSelected()) {
-			newAzubi.setInklusionsberatung('j');
-		} else {
-			newAzubi.setInklusionsberatung('n');
-		}
-		if (rbMann.isSelected()) {
-			newAzubi.setGeschlecht('m');
-		} else {
-			newAzubi.setGeschlecht('f');
-
-		}
-		if (cmbAusbilder.getSelectedIndex() > -1) {
-			newAzubi.setAusbilder((Ausbilder) dcbAusbilder
-					.getElementAt(cmbAusbilder.getSelectedIndex()));
-		}
-		if (cmbKlasse.getSelectedIndex() > -1) {
-			newAzubi.setKlasse((Klasse) dcbmKlasse.getElementAt(cmbKlasse
-					.getSelectedIndex()));
-		}
-
-		return newAzubi;
 	}
 
 	private void changeAzubi(Azubi selectedAzubi) {

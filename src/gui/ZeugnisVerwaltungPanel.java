@@ -5,9 +5,14 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Vector;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -17,7 +22,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import objects.Azubi;
+import objects.Fach;
+import objects.Klasse;
+
 import org.jdatepicker.impl.JDatePickerImpl;
+
+import com.toedter.calendar.JYearChooser;
 
 public class ZeugnisVerwaltungPanel extends JPanel{
 
@@ -28,48 +39,70 @@ public class ZeugnisVerwaltungPanel extends JPanel{
 	
 	private GUITools tools;
 	private String[] tHeads = { "Azubi", "Note" };
+	private ArrayList<Klasse> klasseList;
+	private ArrayList<Fach> fachList;
+	private ArrayList<Azubi> azubiList;
 
-	public ZeugnisVerwaltungPanel(GUITools tools) {
+	public ZeugnisVerwaltungPanel(ArrayList<Klasse> klasseList, GUITools tools) {
+		this.klasseList = klasseList;
 		this.tools = tools;
+		innerZeugnisPanel = new JPanel(new GridBagLayout());
+		druckPanel = new JPanel(new GridLayout(0, 1, 0, 25));
+		
+		dcbmKlasse = new DefaultComboBoxModel(this.klasseList.toArray());
+		cmbKlasse = new JComboBox(dcbmKlasse);
+		cmbKlasse.setPreferredSize(new Dimension(200, 25));
+		
+		jahrAusbildung = new JYearChooser();
+
+		dlmFach = new DefaultListModel();
+		faecherList = new JList(dlmFach);
+		azubiScrollPane = new JScrollPane(faecherList);
+		azubiScrollPane.setPreferredSize(new Dimension(200, 150));
+
+		dtmNoten = new MyTable(8, 2);
+		dtmNoten.setColumnIdentifiers(tHeads);
+
+		notenTable = new JTable(dtmNoten);
+
+		tableScrollPane = new JScrollPane(notenTable);
+		tableScrollPane.setPreferredSize(new Dimension(250, 148));
+
+		dpZeug = tools.createNewDatePicker();
+
+		btZeugDruck = tools.createButton("Schüler", 150, 25);
+		btZeugKlasseDruck = tools.createButton("Gesamte Klasse", 150, 25);
 		initialize();
 	}
 	
-	public void initialize(){
+	private JPanel innerZeugnisPanel,druckPanel;
+	
+	private DefaultComboBoxModel dcbmKlasse;
+	private JComboBox cmbKlasse;
+	
+	private JYearChooser jahrAusbildung;
+
+	private DefaultListModel dlmFach;
+	private JList faecherList;
+	private JScrollPane azubiScrollPane;
+
+	private DefaultTableModel dtmNoten;
+
+	private JTable notenTable;
+
+	private JScrollPane tableScrollPane;
+
+	private JDatePickerImpl dpZeug;
+
+	private JButton btZeugDruck;
+	private JButton btZeugKlasseDruck;
+	
+	private void initialize(){
 		this.setLayout(new BorderLayout());
-		JPanel innerZeugnisPanel = new JPanel(new GridBagLayout());
-		JPanel druckPanel = new JPanel(new GridLayout(0, 1, 0, 25));
+		
+		
 		GridBagConstraints c = new GridBagConstraints();
 		tools.setConstraintsDefault(c);
-		// //////////////////////////////////////////////////////////
-		Calendar now = Calendar.getInstance();
-		int jahr = now.get(Calendar.YEAR);
-		Vector<Integer> years = new Vector<Integer>();
-		for (int i = 0; i < 5; i++) {
-			years.add(jahr - i);
-		}
-
-		JComboBox cmbKlasse = new JComboBox();
-		cmbKlasse.setPreferredSize(new Dimension(200, 25));
-		JComboBox cmbJahrBox = new JComboBox(years);
-		cmbJahrBox.setPreferredSize(new Dimension(150, 25));
-
-		JList azubiList = new JList();
-		JScrollPane azubiScrollPane = new JScrollPane(azubiList);
-		azubiScrollPane.setPreferredSize(new Dimension(200, 150));
-
-		DefaultTableModel dtmNoten = new MyTable(8, 2);
-		dtmNoten.setColumnIdentifiers(tHeads);
-
-		JTable notenTable = new JTable(dtmNoten);
-
-		JScrollPane tableScrollPane = new JScrollPane(notenTable);
-		tableScrollPane.setPreferredSize(new Dimension(250, 148));
-
-		JDatePickerImpl dpZeug = tools.createNewDatePicker();
-
-		JButton btZeugDruck = tools.createButton("Schüler", 150, 25);
-		JButton btZeugKlasseDruck = tools.createButton("Gesamte Klasse", 150, 25);
-		// //////////////////////////////////////////////////////////
 		c.gridy = 0;
 		c.gridx = 0;
 		c.gridwidth = 1;
@@ -81,7 +114,7 @@ public class ZeugnisVerwaltungPanel extends JPanel{
 		c.gridx = 1;
 		c.gridy = 0;
 		c.gridheight = 1;
-		innerZeugnisPanel.add(tools.createTiteledPanel("Jahr", cmbJahrBox), c);
+		innerZeugnisPanel.add(tools.createTiteledPanel("Jahr", jahrAusbildung), c);
 		c.gridheight = 3;
 		tools.addComponentNextLine(innerZeugnisPanel,
 				tools.createTiteledPanel("Noten", tableScrollPane),c);
@@ -107,7 +140,47 @@ public class ZeugnisVerwaltungPanel extends JPanel{
 		this.add(tools.createTitlePanel("Zeugnisverwaltung"),
 				BorderLayout.NORTH);
 		this.add(innerZeugnisPanel, BorderLayout.CENTER);
+		
+		btZeugDruck.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		btZeugKlasseDruck.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		cmbKlasse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
+	}
+	
+	private void fillFachList(Klasse klasse){
+		
+	}
+	
+	private void fillTable(Klasse klasse){
+		/////////////////////////////////////
+		azubiList = new ArrayList<Azubi>();
+		////////////////////////////////////
+		for(int i = 0; i < azubiList.size(); i++) {
+			dtmNoten.addRow(new Object[]{azubiList.get(i),"Note"});
+		}
 	}
 
 }
