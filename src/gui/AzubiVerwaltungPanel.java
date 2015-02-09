@@ -531,7 +531,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 		tNummerField.setText(selectedAzubi.getTelefon());
 		hNummerField.setText(selectedAzubi.getMobiltelefon());
 		eMailField.setText(selectedAzubi.getEmail());
-		DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.GERMANY);
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 		Date date;
 		try {
 			date = format.parse(selectedAzubi.getGeburtsdatum());
@@ -626,13 +626,13 @@ public class AzubiVerwaltungPanel extends JPanel {
 		selectedAzubi.setLehrjahr(Integer.parseInt(ausJahrField.getText()));
 		if (dpAusEnde.getModel().getValue() != null) {
 			DateModel<?> ausEndeModel = dpAusEnde.getModel();
-			selectedAzubi.setAusbildungsende(ausEndeModel.getDay() + "-"
-					+ ausEndeModel.getMonth() + "-" + ausEndeModel.getYear());
+			selectedAzubi.setAusbildungsende(ausEndeModel.getDay() + "."
+					+ ausEndeModel.getMonth() + "." + ausEndeModel.getYear());
 		}
 		{
 			DateModel<?> ausAnfModel = dpAusBeg.getModel();
-			selectedAzubi.setAusbildungsbeginn(ausAnfModel.getDay() + "-"
-					+ ausAnfModel.getMonth() + "-" + ausAnfModel.getYear());
+			selectedAzubi.setAusbildungsbeginn(ausAnfModel.getDay() + "."
+					+ ausAnfModel.getMonth() + "." + ausAnfModel.getYear());
 		}
 		if (!gebNameField.getText().isEmpty()) {
 			selectedAzubi.setGeburtsname(gebNameField.getText());
