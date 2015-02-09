@@ -64,7 +64,7 @@ public class MySQLConnector implements StandardSqlConnector {
 	private void executeInitSkript() {
 		try {
 			PropertyHandling p = new PropertyHandling();
-			String path = p.liesPropAus(Konstanten.sqlite_path);
+			String path = p.liesPropAus(Konstanten.mysql_path);
 			if(path == null || path.isEmpty()) {
 				path = DEFAULT_PATH;
 			}
