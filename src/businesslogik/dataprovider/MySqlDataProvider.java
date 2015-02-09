@@ -33,20 +33,20 @@ import datenbank.dao.mySQL.MySqlZeugnisPositionDAO;
 public class MySqlDataProvider extends StandardDataProvider{
 	
 	//Erstellung der DAO-Objekte zur Verwendung der MySQL-Methoden
-	MySqlAusbilderDAO ausbilderDAO = new MySqlAusbilderDAO();
-	MySqlAzubiDAO azubiDAO = new MySqlAzubiDAO();
-	MySqlBerechtigungDAO berechtigungDAO = new MySqlBerechtigungDAO();
-	MySqlBetriebDAO betriebDAO = new MySqlBetriebDAO();
-	MySqlFachDAO fachDAO = new MySqlFachDAO();
-	MySqlKlasseDAO klasseDAO = new MySqlKlasseDAO();
-	MySqlLehrerDAO lehrerDAO = new MySqlLehrerDAO();
-	MySqlLoginDatenDAO loginDatenDAO = new MySqlLoginDatenDAO();
-	MySqlNoteDAO noteDAO = new MySqlNoteDAO();
-	MySqlZeugnisDAO zeugnisDAO = new MySqlZeugnisDAO();
-	MySqlZeugnisPositionDAO zeugnisPositionDAO = new MySqlZeugnisPositionDAO();
+	private MySqlAusbilderDAO ausbilderDAO = new MySqlAusbilderDAO();
+	private MySqlAzubiDAO azubiDAO = new MySqlAzubiDAO();
+	private MySqlBerechtigungDAO berechtigungDAO = new MySqlBerechtigungDAO();
+	private MySqlBetriebDAO betriebDAO = new MySqlBetriebDAO();
+	private MySqlFachDAO fachDAO = new MySqlFachDAO();
+	private MySqlKlasseDAO klasseDAO = new MySqlKlasseDAO();
+	private MySqlLehrerDAO lehrerDAO = new MySqlLehrerDAO();
+	private MySqlLoginDatenDAO loginDatenDAO = new MySqlLoginDatenDAO();
+	private MySqlNoteDAO noteDAO = new MySqlNoteDAO();
+	private MySqlZeugnisDAO zeugnisDAO = new MySqlZeugnisDAO();
+	private MySqlZeugnisPositionDAO zeugnisPositionDAO = new MySqlZeugnisPositionDAO();
 	@SuppressWarnings("rawtypes")
-	ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
-	static MySqlDataProvider provider = null;
+	private ArrayList<StandardDAO> daoListe = new ArrayList<StandardDAO>();
+	private static MySqlDataProvider provider = null;
 	/**
 	 * Der Konstruktor von MySqlDataProvider erstellt eine Liste, in der sämtliche DAOS gespeichert werden
 	 */

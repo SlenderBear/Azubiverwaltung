@@ -11,7 +11,6 @@ package objects;
 public class Zeugnisposition implements StandardValueObject{
 
 	private String ID;
-	private Zeugnis zeugnis;
 	private Note note;
 	private Fach fach;
 
@@ -21,14 +20,6 @@ public class Zeugnisposition implements StandardValueObject{
 
 	public void setID(String iD) {
 		ID = iD;
-	}
-
-	public Zeugnis getZeugnis() {
-		return zeugnis;
-	}
-
-	public void setZeugnis(Zeugnis zeugnis) {
-		this.zeugnis = zeugnis;
 	}
 
 	public Note getNote() {

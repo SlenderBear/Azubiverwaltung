@@ -17,7 +17,6 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 	
 	private static final String DAO_NAME= Zeugnisposition.class.getName();
 	
-	MySqlZeugnisDAO zeugnisDao = new MySqlZeugnisDAO();
 	MySqlNoteDAO noteDao = new MySqlNoteDAO();
 	MySqlFachDAO fachDao = new MySqlFachDAO();
 
@@ -30,7 +29,7 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 	public Zeugnisposition insert(Zeugnisposition t) {
 		String guid = MySQLConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO zeugnisposition values('" + guid + "','"
-				+ t.getZeugnis().getID() + "','" + t.getNote().getNoteID()
+				+"','" + t.getNote().getNoteID()
 				+ "','" + t.getFach().getID() + "');";
 		MySQLConnector.getInstance().statementExecute(sql);
 		t.setID(guid);
@@ -40,7 +39,6 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 	@Override
 	public boolean update(Zeugnisposition t) {
 		String sql = "UPDATE zeugnisposition" + "SET "
-				+ "zeugnisid='"	+ t.getZeugnis().getID()
 				+ "',noteid='" + t.getNote().getNoteID()
 				+ "',fachid='" + t.getFach().getID()
 				+ "' WHERE zeugnispositionid='" + t.getID() + "';";
@@ -65,7 +63,6 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 			while (rs.next()) {
 				Zeugnisposition z = new Zeugnisposition();
 				z.setID(rs.getString("zeugnispositionid"));
-				z.setZeugnis(zeugnisDao.getByGuid(rs.getString("zeugnisID")));
 				z.setNote(noteDao.getByGuid(rs.getString("noteid")));
 				z.setFach(fachDao.getByGuid(rs.getString("fachID")));
 
@@ -86,7 +83,6 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 		try {
 			rs.next();
 			z.setID(rs.getString("zeugnispositionid"));
-			z.setZeugnis(zeugnisDao.getByGuid(rs.getString("zeugnisID")));
 			z.setNote(noteDao.getByGuid(rs.getString("noteid")));
 			z.setFach(fachDao.getByGuid(rs.getString("fachID")));
 
@@ -99,7 +95,6 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 	@Override
 	public boolean isVorhanden(Zeugnisposition t) {
 		String sql = "select * from zeugnisposition where "
-				+ "zeugnisid='"	+ t.getZeugnis().getID()
 				+ "',noteid='" + t.getNote().getNoteID()
 				+ "',fachid='" + t.getFach().getID()
 				+"';";
@@ -121,7 +116,6 @@ public class MySqlZeugnisPositionDAO implements StandardDAO<Zeugnisposition> {
 			while (rs.next()) {
 				Zeugnisposition zp = new Zeugnisposition();
 				zp.setID(rs.getString("zeugnispositionid"));
-				zp.setZeugnis(zeugnisDao.getByGuid(rs.getString("zeugnisID")));
 				zp.setNote(noteDao.getByGuid(rs.getString("noteid")));
 				zp.setFach(fachDao.getByGuid(rs.getString("fachID")));
 

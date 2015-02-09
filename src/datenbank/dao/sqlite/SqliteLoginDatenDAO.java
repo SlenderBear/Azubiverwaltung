@@ -119,7 +119,7 @@ public class SqliteLoginDatenDAO implements StandardDAO<Login> {
 	}
 	
 	public boolean checkLogin(Login l){
-		String sql = "select * from login_daten where " + "benutzername='"
+		String sql = "select * from login_daten where benutzername='"
 				+ l.getLoginName() + "' AND passwort='"+l.getLoginPasswort()+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		try {
@@ -131,7 +131,7 @@ public class SqliteLoginDatenDAO implements StandardDAO<Login> {
 	}
 	
 	public Login getLoginByLoginDaten(Login l){
-		String sql = "select * from login_daten where " + "benutzername='"
+		String sql = "select * from login_daten where benutzername='"
 				+ l.getLoginName() + "' AND passwort='"+l.getLoginPasswort()+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		try {

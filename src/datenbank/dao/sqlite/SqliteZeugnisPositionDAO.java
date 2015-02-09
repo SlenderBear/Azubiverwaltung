@@ -32,7 +32,7 @@ private static final String DAO_NAME= Zeugnisposition.class.getName();
 	public Zeugnisposition insert(Zeugnisposition t) {
 		String guid = SqliteConnector.getInstance().getNewGUID();
 		String sql = "INSERT INTO zeugnisposition values('" + guid + "','"
-				+ t.getZeugnis().getID() + "','" + t.getNote().getNoteID()
+				+ "','" + t.getNote().getNoteID()
 				+ "','" + t.getFach().getID() + "');";
 		SqliteConnector.getInstance().statementExecute(sql);
 		t.setID(guid);
@@ -42,7 +42,6 @@ private static final String DAO_NAME= Zeugnisposition.class.getName();
 	@Override
 	public boolean update(Zeugnisposition t) {
 		String sql = "UPDATE zeugnisposition" + "SET "
-				+ "zeugnisid='"	+ t.getZeugnis().getID()
 				+ "',noteid='" + t.getNote().getNoteID()
 				+ "',fachid='" + t.getFach().getID()
 				+ "' WHERE zeugnispositionid='" + t.getID() + "';";
@@ -67,7 +66,6 @@ private static final String DAO_NAME= Zeugnisposition.class.getName();
 			while (rs.next()) {
 				Zeugnisposition z = new Zeugnisposition();
 				z.setID(rs.getString("zeugnispositionid"));
-				z.setZeugnis(zeugnisDao.getByGuid(rs.getString("zeugnisID")));
 				z.setNote(noteDao.getByGuid(rs.getString("noteid")));
 				z.setFach(fachDao.getByGuid(rs.getString("fachID")));
 
@@ -88,7 +86,6 @@ private static final String DAO_NAME= Zeugnisposition.class.getName();
 		try {
 			rs.next();
 			z.setID(rs.getString("zeugnispositionid"));
-			z.setZeugnis(zeugnisDao.getByGuid(rs.getString("zeugnisID")));
 			z.setNote(noteDao.getByGuid(rs.getString("noteid")));
 			z.setFach(fachDao.getByGuid(rs.getString("fachID")));
 
@@ -102,7 +99,6 @@ private static final String DAO_NAME= Zeugnisposition.class.getName();
 	@Override
 	public boolean isVorhanden(Zeugnisposition t) {
 		String sql = "select * from zeugnisposition where "
-				+ "zeugnisid='"	+ t.getZeugnis().getID()
 				+ "',noteid='" + t.getNote().getNoteID()
 				+ "',fachid='" + t.getFach().getID()
 				+"';";
@@ -124,7 +120,6 @@ private static final String DAO_NAME= Zeugnisposition.class.getName();
 			while (rs.next()) {
 				Zeugnisposition zp = new Zeugnisposition();
 				zp.setID(rs.getString("zeugnispositionid"));
-				zp.setZeugnis(zeugnisDao.getByGuid(rs.getString("zeugnisID")));
 				zp.setNote(noteDao.getByGuid(rs.getString("noteid")));
 				zp.setFach(fachDao.getByGuid(rs.getString("fachID")));
 
