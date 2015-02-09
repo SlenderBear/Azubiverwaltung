@@ -105,7 +105,11 @@ public abstract class StandardDataProvider {
 	 * @return true wenn vorhanden.
 	 */
 	public abstract boolean gibtLogin(String login);
-	
+	/**
+	 * Prüft ob Loginname zu Passwort passt 
+	 * @param login
+	 * @return
+	 */
 	public abstract boolean checkLogin(Login login);
 
 	/**

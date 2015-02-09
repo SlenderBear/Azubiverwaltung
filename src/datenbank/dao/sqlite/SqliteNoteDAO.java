@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import objects.Note;
+import objects.Zeugnisposition;
 import datenbank.connector.SqliteConnector;
 import datenbank.dao.StandardDAO;
 /**
@@ -48,8 +49,8 @@ private static final String DAO_NAME= Note.class.getName();
 	}
 
 	@Override
-	public Note getByGuid(String beschreibung) {
-		String sql = "select * from note where beschreibung='"+beschreibung+"';";
+	public Note getByGuid(String noteid) {
+		String sql = "select * from note where noteid='"+noteid+"';";
 		ResultSet rs = SqliteConnector.getInstance().executeQuery(sql);
 		Note b = new Note();
 		try {
@@ -61,6 +62,7 @@ private static final String DAO_NAME= Note.class.getName();
 		}
 		return b;
 	}
+	
 
 	@Override
 	public boolean isVorhanden(Note t) {

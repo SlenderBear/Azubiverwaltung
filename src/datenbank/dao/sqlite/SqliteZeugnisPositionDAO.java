@@ -97,6 +97,7 @@ private static final String DAO_NAME= Zeugnisposition.class.getName();
 		}
 		return z;
 	}
+	
 
 	@Override
 	public boolean isVorhanden(Zeugnisposition t) {
