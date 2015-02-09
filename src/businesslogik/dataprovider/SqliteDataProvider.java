@@ -129,6 +129,11 @@ public class SqliteDataProvider extends StandardDataProvider{
 		public boolean gibtKlasse(Klasse klasse) {
 			return klasseDAO.isVorhanden(klasse);
 		}
+		
+		@Override
+		public ArrayList<Zeugnis> gibAlleZeugnisse() {
+			return zeugnisDAO.getAll();
+		}
 
 		@Override
 		public ArrayList<Zeugnisposition> gibPositionenZuZeugnis(Zeugnis z) {

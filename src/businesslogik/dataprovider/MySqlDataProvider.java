@@ -191,4 +191,9 @@ public class MySqlDataProvider extends StandardDataProvider{
 		}
 	}
 
+	@Override
+	public ArrayList<Zeugnis> gibAlleZeugnisse() {
+		return zeugnisDAO.getAll();
+	}
+
 }

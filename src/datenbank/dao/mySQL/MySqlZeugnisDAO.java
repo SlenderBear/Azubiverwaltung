@@ -68,7 +68,7 @@ public class MySqlZeugnisDAO implements StandardDAO<Zeugnis>{
 		 while (rs.next())
 	      {
 	        Zeugnis z = new Zeugnis();
-	        z.setID(rs.getString("lehrerid"));
+	        z.setID(rs.getString("zeugnisid"));
 	        z.setJahr(rs.getInt("jahr"));
 	        z.setZeugnisKonferenz(rs.getString("zeugniskonferenz"));
 	        z.setAzubi(azubiDao.getByGuid(rs.getString("azubiid")));
@@ -88,7 +88,7 @@ public class MySqlZeugnisDAO implements StandardDAO<Zeugnis>{
 		Zeugnis z = new Zeugnis();
 		try {
 			rs.next();
-			z.setID(rs.getString("lehrerid"));
+			z.setID(rs.getString("zeugnisid"));
 	        z.setJahr(rs.getInt("jahr"));
 	        z.setZeugnisKonferenz(rs.getString("zeugniskonferenz"));
 	        z.setAzubi(azubiDao.getByGuid(rs.getString("azubiid"))); 

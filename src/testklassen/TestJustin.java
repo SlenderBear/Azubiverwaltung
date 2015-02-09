@@ -8,6 +8,8 @@ import objects.Betrieb;
 import objects.Fach;
 import objects.Klasse;
 import objects.Lehrer;
+import objects.Zeugnis;
+import objects.Zeugnisposition;
 import businesslogik.dataprovider.StandardDataProvider;
 
 public class TestJustin {
@@ -46,6 +48,18 @@ public class TestJustin {
 		for (Azubi  a : al) {
 			System.out.println(a.getName());
 		}
+		System.out.println("--------------Zeugnisliste-----------------");
+		ArrayList<Zeugnis> zl = provider.gibAlleZeugnisse();
+		for (Zeugnis  z : zl) {
+			System.out.println(z.getAzubi());
+			System.out.println("------------- Positionen ----------------");
+			
+			for (Zeugnisposition zeugnis : provider.gibPositionenZuZeugnis(z)) {
+				System.out.println(zeugnis.getNote());
+			}
+		}
+		
+
 
 	}
 

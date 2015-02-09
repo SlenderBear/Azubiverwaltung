@@ -37,6 +37,8 @@ public abstract class StandardDataProvider {
 	 * @return {@link ArrayList}
 	 */
 	public abstract ArrayList<Lehrer> gibAlleLehrer();
+	
+	public abstract ArrayList<Zeugnis> gibAlleZeugnisse();
 
 	/**
 	 * Liefert alle Klassen.

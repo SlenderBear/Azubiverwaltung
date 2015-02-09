@@ -67,7 +67,7 @@ private static final String DAO_NAME= Zeugnis.class.getName();
 		 while (rs.next())
 	      {
 	        Zeugnis z = new Zeugnis();
-	        z.setID(rs.getString("lehrerid"));
+	        z.setID(rs.getString("zeugnisid"));
 	        z.setJahr(rs.getInt("jahr"));
 	        z.setZeugnisKonferenz(rs.getString("zeugniskonferenz"));
 	        z.setAzubi(dao.getByGuid(rs.getString("azubiid")));
@@ -75,6 +75,8 @@ private static final String DAO_NAME= Zeugnis.class.getName();
 	        zeugnisListe.add(z);
 	      }
 		}catch(Exception e){
+			System.out.println(e.getMessage());
+
 			System.out.println("Fehler in SqliteZeugnisDAO");
 		}
 		return zeugnisListe;
@@ -87,7 +89,7 @@ private static final String DAO_NAME= Zeugnis.class.getName();
 		Zeugnis z = new Zeugnis();
 		try {
 			rs.next();
-			z.setID(rs.getString("lehrerid"));
+			z.setID(rs.getString("zeugnisid"));
 	        z.setJahr(rs.getInt("jahr"));
 	        z.setZeugnisKonferenz(rs.getString("zeugniskonferenz"));
 	        z.setAzubi(dao.getByGuid(rs.getString("azubiid"))); 
