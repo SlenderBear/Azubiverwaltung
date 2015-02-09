@@ -10,16 +10,18 @@ import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 
+import datenbank.Konstanten;
+import datenbank.PropertyHandling;
+
 /**
  * @author dunkel.gregor
  * 
  */
 public class SqliteConnector implements StandardSqlConnector {
 	
-	private static final String FILE_SKRIPT = "W:\\git\\Azubiverwaltung\\src\\Erstellung_DB_SqLite.sql";
-	
 	private static SqliteConnector connector;
 	private static Connection con;
+	private static final String DEFAULT_PATH = "Erstellung_DB_SQLite.sql";
 
 	/**
 	 * Private da Singleton.
@@ -76,7 +78,12 @@ public class SqliteConnector implements StandardSqlConnector {
 	 */
 	private void executeInitSkript() {
 		try {
-			File f = new File(FILE_SKRIPT);
+			PropertyHandling p = new PropertyHandling();
+			String path = p.liesPropAus(Konstanten.sqlite_path);
+			if(path == null || path.isEmpty()) {
+				path = DEFAULT_PATH;
+			}
+			File f = new File(path);
 			List<String> sqlList = FileUtils.readLines(f);
 
 			 Class.forName("org.sqlite.JDBC"); // Datenbanktreiber für JDBC
