@@ -83,7 +83,7 @@ public class MainWindow {
 	 */
 	public void initialize() {
 		mainFrame = new JFrame("HHBK Azubiverwaltung");
-		mainFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		mainFrame.setSize(1050, 750);
 		mainFrame.setResizable(false);
 		mainPanel = new JPanel();

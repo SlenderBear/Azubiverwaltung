@@ -84,7 +84,6 @@ INSERT INTO Zeugnis VALUES ('edfa9964-5a6e-4772-a26f-882bcca39020','2015','13.12
 INSERT INTO Zeugnis VALUES ('3bd82796-1b63-485b-a9b1-3ba4802b784c','2015','13.12.2015','e6985eb6-0c9e-45e1-bcc1-5d472c12642a');
 INSERT INTO Zeugnis VALUES ('40d0fcff-2404-47d3-90e9-6b473096b3c1','2015','06.01.2016','a2e35b39-6562-4457-906e-1605355493c4');
 
--- Zeugnisposition 
 INSERT INTO Zeugnisposition VALUES ('d8b78761-dc34-4da3-9db7-31e6b612d602', 'fc12f7ff-589e-45cd-84b8-5dc013dee8a8', '1', '79c6c8de-63d8-462c-ba6e-0471499e90a6');
 INSERT INTO Zeugnisposition VALUES ('7c9eae04-d63b-4e01-9756-a7b00e2bef1c', 'fc12f7ff-589e-45cd-84b8-5dc013dee8a8', '2', 'eb810b59-4d2c-48b3-b2bd-599d418952e0');
 INSERT INTO Zeugnisposition VALUES ('03213c6a-3b54-4bdb-81ce-295371daa4f4', 'fc12f7ff-589e-45cd-84b8-5dc013dee8a8', '3', 'f56023c8-2a78-455a-a854-bb62493b641d');
@@ -121,6 +120,7 @@ INSERT INTO Zeugnisposition VALUES ('8d6adeef-cf30-4247-b378-eb57d7d7dc15', '005
 INSERT INTO Zeugnisposition VALUES ('e798959e-d875-409a-a696-0eabcb7cb878', '005b8b8a-e3cd-4cf3-a52c-fc830c96b42f', '3', '20228e27-31bc-4dce-879e-85d2403e1d77');
 INSERT INTO Zeugnisposition VALUES ('5fdff34b-1d7e-4b61-ad23-0cdaca93ee9b', '005b8b8a-e3cd-4cf3-a52c-fc830c96b42f', '1', '4135c274-b7f2-4f31-994a-943834469307');
 
+INSERT INTO Zeugnisposition VALUES ('e30c0ad9-5c4c-4bce-ac98-1d9e74695390', '005b8b8a-e3cd-4cf3-a52c-fc830c96b42f', '3', '79c6c8de-63d8-462c-ba6e-0471499e90a6');
 INSERT INTO Zeugnisposition VALUES ('5957355d-6a50-44f8-8283-36d12be2569f', 'edfa9964-5a6e-4772-a26f-882bcca39020', '4', 'eb810b59-4d2c-48b3-b2bd-599d418952e0');
 INSERT INTO Zeugnisposition VALUES ('11b7b90c-ebae-48af-8e35-79291b5397e2', 'edfa9964-5a6e-4772-a26f-882bcca39020', '2', 'f56023c8-2a78-455a-a854-bb62493b641d');
 INSERT INTO Zeugnisposition VALUES ('def21f3e-d142-4bdd-becb-f2a021316f78', 'edfa9964-5a6e-4772-a26f-882bcca39020', '3', 'b575279b-5c46-4613-8519-856575ea73b7');
@@ -129,6 +129,7 @@ INSERT INTO Zeugnisposition VALUES ('eecd2b85-b501-4f5e-9fc4-314d7f9c82e6', 'edf
 INSERT INTO Zeugnisposition VALUES ('bbc17200-5b03-45ae-8f5e-20845af53db9', 'edfa9964-5a6e-4772-a26f-882bcca39020', '3', '20228e27-31bc-4dce-879e-85d2403e1d77');
 INSERT INTO Zeugnisposition VALUES ('1863f978-48f0-48d5-a9e1-f5d040ec535d', 'edfa9964-5a6e-4772-a26f-882bcca39020', '2', '4135c274-b7f2-4f31-994a-943834469307');
 
+INSERT INTO Zeugnisposition VALUES ('e30c0ad9-5c4c-4bce-ac98-1d9e74695390', '3bd82796-1b63-485b-a9b1-3ba4802b784c', '3', '79c6c8de-63d8-462c-ba6e-0471499e90a6');
 INSERT INTO Zeugnisposition VALUES ('1885ab57-93ce-4223-9e95-8a1c5237655d', '3bd82796-1b63-485b-a9b1-3ba4802b784c', '4', 'eb810b59-4d2c-48b3-b2bd-599d418952e0');
 INSERT INTO Zeugnisposition VALUES ('5fccd9fc-be62-4583-ae6e-5da6901f74dc', '3bd82796-1b63-485b-a9b1-3ba4802b784c', '2', 'f56023c8-2a78-455a-a854-bb62493b641d');
 INSERT INTO Zeugnisposition VALUES ('1f194fb4-ea95-4875-a0e0-70c8ca95ec28', '3bd82796-1b63-485b-a9b1-3ba4802b784c', '3', 'b575279b-5c46-4613-8519-856575ea73b7');
@@ -137,6 +138,7 @@ INSERT INTO Zeugnisposition VALUES ('0fe8b7a1-5d07-4943-813e-42b16bfdef07', '3bd
 INSERT INTO Zeugnisposition VALUES ('006d51a6-8b6e-4cc6-a9f7-fd14ff26f26a', '3bd82796-1b63-485b-a9b1-3ba4802b784c', '3', '20228e27-31bc-4dce-879e-85d2403e1d77');
 INSERT INTO Zeugnisposition VALUES ('ee8f8aea-9ac9-4710-9552-d30b6bce2524', '3bd82796-1b63-485b-a9b1-3ba4802b784c', '2', '4135c274-b7f2-4f31-994a-943834469307');
 
+INSERT INTO Zeugnisposition VALUES ('e30c0ad9-5c4c-4bce-ac98-1d9e74695390', '40d0fcff-2404-47d3-90e9-6b473096b3c1', '3', '79c6c8de-63d8-462c-ba6e-0471499e90a6');
 INSERT INTO Zeugnisposition VALUES ('988b3469-5470-4ca2-b3e0-bd126f319447', '40d0fcff-2404-47d3-90e9-6b473096b3c1', '4', 'eb810b59-4d2c-48b3-b2bd-599d418952e0');
 INSERT INTO Zeugnisposition VALUES ('428fb67c-473a-49c8-addd-ce8f85d11c28', '40d0fcff-2404-47d3-90e9-6b473096b3c1', '3', 'f56023c8-2a78-455a-a854-bb62493b641d');
 INSERT INTO Zeugnisposition VALUES ('60e29cb0-f26f-4cf1-b720-6fba7f156143', '40d0fcff-2404-47d3-90e9-6b473096b3c1', '1', 'b575279b-5c46-4613-8519-856575ea73b7');
@@ -144,4 +146,5 @@ INSERT INTO Zeugnisposition VALUES ('fcb79816-e740-4792-a94a-124653c48b75', '40d
 INSERT INTO Zeugnisposition VALUES ('5d6a6031-34fa-414f-9a9d-160dfc6a48a2', '40d0fcff-2404-47d3-90e9-6b473096b3c1', '1', '11fad0e6-86b4-4d77-ac37-9343dfdad468');
 INSERT INTO Zeugnisposition VALUES ('243b5305-24ef-46f7-b39a-7e5f8f14d7c3', '40d0fcff-2404-47d3-90e9-6b473096b3c1', '3', '20228e27-31bc-4dce-879e-85d2403e1d77');
 INSERT INTO Zeugnisposition VALUES ('215c1f2d-ea4b-49bc-894b-495f726b40aa', '40d0fcff-2404-47d3-90e9-6b473096b3c1', '2', '4135c274-b7f2-4f31-994a-943834469307');
+
 
