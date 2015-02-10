@@ -75,7 +75,7 @@ public class AzubiVerwaltungPanel extends JPanel {
 		this.klasseList = klasseList;
 		this.ausbilderList = ausbilderList;
 		this.tools = tools;
-		this.azubiList = new ArrayList<>();
+		this.azubiList = new ArrayList<Azubi>();
 		
 		innerAzubiPanel = new JTabbedPane();
 		innerAzubiPanelStamm = new JPanel(new GridBagLayout());
